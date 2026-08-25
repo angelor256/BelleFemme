@@ -1,11 +1,16 @@
 /* Belle Femme · service worker
    Cache-first para los archivos propios, red para lo demás.
    Suba la versión cada vez que publique cambios. */
-const VERSION = 'bf-v2';
+const VERSION = 'bf-v4';
 const ASSETS = [
   './',
   './index.html',
+  './admin.html',
   './manifest.webmanifest',
+  './manifest-admin.webmanifest',
+  './icons/admin-192.png',
+  './icons/admin-512.png',
+  './icons/admin-apple-touch-icon.png',
   './icons/icon-192.png',
   './icons/icon-512.png',
   './icons/apple-touch-icon.png',
