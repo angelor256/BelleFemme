@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="es-CR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Belle Femme · Panel</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#241C1F">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="BF Panel">
+<link rel="manifest" href="manifest-admin.webmanifest">
+<link rel="apple-touch-icon" href="icons/admin-apple-touch-icon.png">
+<link rel="icon" href="icons/admin-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#241C1F; --paper:#F7F3F2; --card:#fff; --accent:#A8586E;
+    --line:#E8DEDD; --line-2:#F0E8E7; --muted:#8E8183; --muted-2:#A69A9B;
+    --ok:#4B7B62; --warn:#B07A2B; --bad:#A8484B;
+    --serif:'Cormorant Garamond',Georgia,serif;
+    --sans:'Jost',system-ui,-apple-system,sans-serif;
+    --gut:24px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{background:#EDE7E6;font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased}
+  .app{width:100%;max-width:480px;margin:0 auto;min-height:100vh;background:var(--paper);display:flex;flex-direction:column}
+  button{font:inherit;color:inherit;cursor:pointer}
+  .eyebrow{font:500 8.5px/1 var(--sans);letter-spacing:.28em;text-transform:uppercase;color:var(--muted-2)}
+  .h1{font-family:var(--serif);font-weight:300;font-size:26px;line-height:1.2}
+  .hint{font:300 11.5px/1.7 var(--sans);color:var(--muted)}
+  [hidden]{display:none !important}
+
+  /* Acceso */
+  .gate{position:fixed;inset:0;z-index:60;background:var(--ink);color:#F5E9EA;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:32px}
+  .gate .mark{font-family:var(--serif);font-style:italic;font-size:34px;color:#F2DCE1}
+  .pin{display:flex;gap:10px}
+  .pin i{width:12px;height:12px;border-radius:50%;background:#4A3C3F;display:block}
+  .pin i.on{background:#F2DCE1}
+  .pad{display:grid;grid-template-columns:repeat(3,72px);gap:12px}
+  .pad button{height:60px;background:none;border:1px solid #403437;color:#F5E9EA;font-size:19px;font-weight:300}
+  .pad button:active{background:#312629}
+
+  /* Cabecera */
+  header{position:sticky;top:0;z-index:10;background:var(--ink);color:#F7EFEF;padding:calc(16px + env(safe-area-inset-top)) var(--gut) 18px}
+  .hrow{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  header .mark{font-family:var(--serif);font-style:italic;font-size:20px;color:#F2DCE1}
+  header .who{font:300 11px var(--sans);color:#B8A6A9}
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:20px}
+  .kpi{border-left:1px solid #3D3134;padding-left:12px}
+  .kpi:first-child{border-left:0;padding-left:0}
+  .kpi .n{font-family:var(--serif);font-size:23px;line-height:1.1;color:#F7EFEF}
+  .kpi .l{font:500 8.5px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:#9A888C;margin-top:6px}
+
+  main{flex:1;padding:22px var(--gut) 110px}
+  .secthd{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:14px}
+
+  /* Tira de días */
+  .days{display:flex;gap:7px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch}
+  .day{flex:0 0 54px;text-align:center;padding:11px 0;border:1px solid var(--line);background:var(--card)}
+  .day[aria-pressed="true"]{background:var(--ink);border-color:var(--ink)}
+  .day .dw{font:500 8.5px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2)}
+  .day .dn{font-family:var(--serif);font-size:19px;margin-top:5px;display:block}
+  .day[aria-pressed="true"] .dw{color:#C9AFB4}
+  .day[aria-pressed="true"] .dn{color:#fff}
+
+  /* Citas */
+  .appt{width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-left:3px solid var(--line);padding:15px 16px;display:flex;gap:14px;align-items:flex-start;margin-bottom:9px}
+  .appt .t{font:500 12.5px var(--sans);width:76px;flex:none;letter-spacing:.02em;white-space:nowrap}
+  .appt .t small{display:block;font-weight:300;font-size:10.5px;color:var(--muted-2);margin-top:3px}
+  .appt .who{font-family:var(--serif);font-size:18px;line-height:1.25;display:block}
+  .appt .sv{font:300 11.5px/1.6 var(--sans);color:var(--muted);margin-top:3px;display:block}
+  .appt .p{margin-left:auto;text-align:right;flex:none;font:400 12.5px var(--sans)}
+  .tag{display:inline-block;margin-top:7px;padding:3px 8px;font:500 8.5px var(--sans);letter-spacing:.16em;text-transform:uppercase;border:1px solid currentColor}
+  .st-pend{color:var(--warn)} .st-conf{color:var(--ok)} .st-done{color:var(--muted)} .st-no{color:var(--bad)}
+  .appt.pend{border-left-color:var(--warn)} .appt.conf{border-left-color:var(--ok)}
+  .appt.done{border-left-color:var(--line)} .appt.no{border-left-color:var(--bad)}
+  .block{background:#EFE8E7;border:1px dashed #D8CBC9;padding:12px 16px;margin-bottom:9px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+  .block .l{font:400 11.5px var(--sans);color:#6E6163}
+  .empty{background:var(--card);border:1px solid var(--line);padding:26px;text-align:center}
+
+  /* Semana */
+  .wk{display:flex;flex-direction:column;gap:10px}
+  .wkrow{background:var(--card);border:1px solid var(--line);padding:14px 16px}
+  .wkrow .top{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+  .wkrow .d{font-family:var(--serif);font-size:18px}
+  .wkrow .v{font:400 12px var(--sans)}
+  .track{margin-top:10px;height:6px;background:var(--line-2);position:relative}
+  .track span{position:absolute;inset:0 auto 0 0;background:var(--accent)}
+
+  /* Servicios */
+  .srow{background:var(--card);border:1px solid var(--line);padding:14px 16px;display:flex;align-items:center;gap:14px;margin-bottom:9px}
+  .srow .n{font-family:var(--serif);font-size:17.5px;line-height:1.3;display:block}
+  .srow .m{font:300 11px var(--sans);color:var(--muted);margin-top:3px;display:block}
+  .srow .pz{font:400 12.5px var(--sans);white-space:nowrap}
+  .sw{width:38px;height:21px;border-radius:999px;background:#DCD2D1;position:relative;flex:none;border:0;padding:0}
+  .sw i{position:absolute;top:2px;left:2px;width:17px;height:17px;border-radius:50%;background:#fff;transition:left .18s}
+  .sw[aria-pressed="true"]{background:var(--ok)}
+  .sw[aria-pressed="true"] i{left:19px}
+
+  /* Botones */
+  .btn{width:100%;padding:15px;border:0;background:var(--ink);color:var(--paper);font:400 11px var(--sans);letter-spacing:.18em;text-transform:uppercase}
+  .btn.ghost{background:none;border:1px solid var(--ink);color:var(--ink)}
+  .btn.rose{background:var(--accent);color:#fff}
+  .btn.bad{background:none;border:1px solid var(--bad);color:var(--bad)}
+  .btn.sm{padding:11px 14px;width:auto;font-size:10px}
+
+  /* Hoja inferior */
+  .sheetbg{position:fixed;inset:0;z-index:40;background:rgba(36,28,31,.42);opacity:0;pointer-events:none;transition:opacity .2s}
+  .sheetbg.on{opacity:1;pointer-events:auto}
+  .sheet{position:fixed;left:50%;bottom:0;transform:translate(-50%,100%);z-index:50;width:100%;max-width:480px;background:var(--paper);padding:22px var(--gut) calc(24px + env(safe-area-inset-bottom));transition:transform .26s cubic-bezier(.2,.8,.2,1);max-height:88vh;overflow:auto}
+  .sheet.on{transform:translate(-50%,0)}
+  .sheet .grab{width:42px;height:3px;background:#D9CFCE;margin:0 auto 18px}
+  .fld{display:block;margin-top:14px}
+  .fld .lb{font:500 8.5px var(--sans);letter-spacing:.22em;text-transform:uppercase;color:var(--muted-2)}
+  .fld input,.fld select{width:100%;margin-top:7px;padding:13px 14px;border:1px solid var(--line);background:var(--card);font:400 13px var(--sans);color:var(--ink)}
+  .acts{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:20px}
+  .acts .full{grid-column:1 / -1}
+
+  /* Barra de pestañas */
+  nav.tabs{position:fixed;left:50%;transform:translateX(-50%);bottom:0;z-index:30;width:100%;max-width:480px;background:rgba(247,243,242,.94);backdrop-filter:blur(10px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding-bottom:env(safe-area-inset-bottom)}
+  nav.tabs button{background:none;border:0;padding:14px 4px 16px;font:500 9px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2)}
+  nav.tabs button[aria-pressed="true"]{color:var(--ink)}
+  nav.tabs button span{display:block;font-size:15px;margin-bottom:5px;font-weight:300}
+  .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:96px;z-index:70;background:var(--ink);color:#F5E9EA;padding:12px 18px;font:300 12px var(--sans);opacity:0;transition:opacity .2s;pointer-events:none;max-width:88vw;text-align:center}
+  .toast.on{opacity:1}
+</style>
+</head>
+<body>
+
+<!-- Acceso por PIN (demostración: 1234) -->
+<div class="gate" id="gate">
+  <div class="mark">Belle Femme</div>
+  <div class="eyebrow" style="color:#9A888C">Panel de administración</div>
+  <div class="pin" id="pinDots"><i></i><i></i><i></i><i></i></div>
+  <div class="pad" id="pad"></div>
+  <div class="hint" style="color:#9A888C;text-align:center">PIN de demostración: 1234<br>En producción se reemplaza por Supabase Auth con rol de administradora.</div>
+</div>
+
+<div class="app" id="app" hidden>
+  <header>
+    <div class="hrow">
+      <div>
+        <div class="mark">Belle Femme</div>
+        <div class="who">Celine Barrantes · Administradora</div>
+      </div>
+      <button class="btn ghost sm" id="logout" style="border-color:#4A3C3F;color:#D8C6C9">Salir</button>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><div class="n" id="kCitas">0</div><div class="l">Citas hoy</div></div>
+      <div class="kpi"><div class="n" id="kMonto">₡0</div><div class="l">Por cobrar</div></div>
+      <div class="kpi"><div class="n" id="kHoras">0 h</div><div class="l">Ocupación</div></div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Agenda del día -->
+    <section id="tab-agenda">
+      <div class="days" id="days"></div>
+      <div class="secthd" style="margin-top:22px">
+        <div><div class="eyebrow">Agenda</div><div class="h1" id="agendaTitle" style="margin-top:8px">Jueves 27</div></div>
+        <button class="btn ghost sm" id="addAppt">Nueva cita</button>
+      </div>
+      <div id="agendaList"></div>
+    </section>
+
+    <!-- Semana -->
+    <section id="tab-semana" hidden>
+      <div class="secthd"><div><div class="eyebrow">Resumen</div><div class="h1" style="margin-top:8px">Semana del 25 al 30</div></div></div>
+      <div class="wk" id="weekList"></div>
+      <p class="hint">La ocupación compara las horas reservadas contra las 9 horas de atención por día.</p>
+    </section>
+
+    <!-- Bloqueos -->
+    <section id="tab-bloqueos" hidden>
+      <div class="secthd">
+        <div><div class="eyebrow">Horarios</div><div class="h1" style="margin-top:8px">Bloqueos</div></div>
+        <button class="btn ghost sm" id="addBlock">Agregar</button>
+      </div>
+      <div id="blockList"></div>
+      <p class="hint">Los bloqueos se descuentan de la disponibilidad que ven las clientas al reservar: almuerzos, días libres, capacitaciones o citas fuera del salón.</p>
+    </section>
+
+    <!-- Servicios -->
+    <section id="tab-servicios" hidden>
+      <div class="secthd"><div><div class="eyebrow">Catálogo</div><div class="h1" style="margin-top:8px">Servicios y precios</div></div></div>
+      <div id="svcList"></div>
+      <p class="hint">Toque un servicio para ajustar precio o duración. El interruptor lo oculta del catálogo sin borrarlo.</p>
+    </section>
+  </main>
+
+  <nav class="tabs" id="tabs"></nav>
+</div>
+
+<div class="sheetbg" id="sheetbg"></div>
+<div class="sheet" id="sheet"><div class="grab"></div><div id="sheetBody"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ─────────────────────────────────────────────────────────
+   Datos de demostración. En producción vienen de Supabase:
+   appointments, profiles, services, time_off, payments.
+   ───────────────────────────────────────────────────────── */
+const DAYS = [
+  { key:'d1', dow:'mar', num:25, full:'Martes 25' },
+  { key:'d2', dow:'mié', num:26, full:'Miércoles 26' },
+  { key:'d3', dow:'jue', num:27, full:'Jueves 27' },
+  { key:'d4', dow:'vie', num:28, full:'Viernes 28' },
+  { key:'d5', dow:'sáb', num:29, full:'Sábado 29' },
+  { key:'d6', dow:'dom', num:30, full:'Domingo 30', closed:true },
+];
+
+let APPTS = [
+  { id:'a1', day:'d3', t:'9:00',  min:90,  client:'María José Rojas',  phone:'88881122', svc:'Manicure ruso spa + semipermanente', price:16000, status:'conf',  pay:'sinpe' },
+  { id:'a2', day:'d3', t:'10:45', min:120, client:'Andrea Solís',      phone:'87775566', svc:'Híbridas · primera colocación',      price:20000, status:'pend',  pay:'efectivo' },
+  { id:'a3', day:'d3', t:'14:00', min:75,  client:'Laura Vargas',      phone:'86663344', svc:'Lavado, blower, plancha y corte',    price:20000, status:'conf',  pay:'sinpe' },
+  { id:'a4', day:'d3', t:'15:30', min:120, client:'Nataly Chaves',     phone:'85552211', svc:'Botox capilar',                      price:30000, status:'pend',  pay:'sinpe' },
+  { id:'a5', day:'d1', t:'9:00',  min:90,  client:'Sofía Méndez',      phone:'84441199', svc:'Clásicas · primera colocación',      price:15000, status:'done',  pay:'efectivo' },
+  { id:'a6', day:'d1', t:'11:00', min:60,  client:'Karla Jiménez',     phone:'83338877', svc:'Tratamientos hidratantes',           price:15000, status:'no',    pay:'sinpe' },
+  { id:'a7', day:'d2', t:'13:00', min:120, client:'Valeria Núñez',     phone:'82227766', svc:'Maquillaje y peinado',               price:45000, status:'conf',  pay:'sinpe' },
+  { id:'a8', day:'d4', t:'9:30',  min:180, client:'Daniela Fallas',    phone:'81116655', svc:'Nanoplastia',                        price:50000, status:'conf',  pay:'efectivo' },
+  { id:'a9', day:'d5', t:'10:00', min:135, client:'Fiorella Araya',    phone:'87651234', svc:'Volumen · primera colocación',       price:24000, status:'pend',  pay:'sinpe' },
+];
+
+let BLOCKS = [
+  { id:'b1', day:'todos', from:'12:00', to:'13:00', why:'Almuerzo' },
+  { id:'b2', day:'d4',    from:'16:00', to:'18:00', why:'Cita fuera del salón' },
+  { id:'b3', day:'d6',    from:'09:00', to:'18:00', why:'Día libre' },
+];
+
+let SERVICES = [
+  { id:'s1',  cat:'Uñas',       name:'Manicure ruso spa + semipermanente', price:16000, min:90,  on:true },
+  { id:'s2',  cat:'Pestañas',   name:'Pestañas pelo a pelo',               price:15000, min:120, on:true },
+  { id:'s3',  cat:'Pestañas',   name:'Clásicas · primera colocación',      price:15000, min:90,  on:true },
+  { id:'s4',  cat:'Pestañas',   name:'Naturales · primera colocación',     price:17000, min:105, on:true },
+  { id:'s5',  cat:'Pestañas',   name:'Híbridas · primera colocación',      price:20000, min:120, on:true },
+  { id:'s6',  cat:'Pestañas',   name:'Volumen · primera colocación',       price:24000, min:135, on:true },
+  { id:'s7',  cat:'Pestañas',   name:'Mega volumen · primera colocación',  price:34000, min:150, on:true },
+  { id:'s8',  cat:'Cabello',    name:'Tratamientos hidratantes',           price:15000, min:60,  on:true },
+  { id:'s9',  cat:'Cabello',    name:'Lavado, blower, plancha y corte',    price:20000, min:75,  on:true },
+  { id:'s10', cat:'Cabello',    name:'Botox capilar',                      price:30000, min:120, on:true },
+  { id:'s11', cat:'Cabello',    name:'Nanoplastia',                        price:50000, min:180, on:true },
+  { id:'s12', cat:'Cabello',    name:'Peinados',                           price:10000, min:45,  on:true },
+  { id:'s13', cat:'Maquillaje', name:'Maquillaje y peinado',               price:45000, min:120, on:true },
+];
+
+const ST = {
+  pend: { label:'Por confirmar', cls:'st-pend' },
+  conf: { label:'Confirmada',    cls:'st-conf' },
+  done: { label:'Atendida',      cls:'st-done' },
+  no:   { label:'No asistió',    cls:'st-no'   },
+};
+const PAY = { sinpe:'SINPE Móvil', efectivo:'Efectivo' };
+
+let ui = { tab:'agenda', day:'d3' };
+
+/* ── Utilidades ─────────────────────────────────────────── */
+const el = id => document.getElementById(id);
+const crc = n => '₡' + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+const dur = m => m < 60 ? m + ' min' : Math.floor(m/60) + ' h' + (m%60 ? ' ' + (m%60) + ' min' : '');
+const hr = t => { const [h,m] = t.split(':'); const H = +h; return (H>12?H-12:H) + ':' + m + (H>=12?' p. m.':' a. m.'); };
+const end = (t, min) => { const [h,m] = t.split(':').map(Number); const x = h*60 + m + min; return Math.floor(x/60) + ':' + String(x%60).padStart(2,'0'); };
+const byTime = (a,b) => a.t.split(':').map(Number)[0]*60 + +a.t.split(':')[1] - (b.t.split(':').map(Number)[0]*60 + +b.t.split(':')[1]);
+const dayOf = k => DAYS.find(d => d.key === k);
+function tag(html){ const t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstElementChild; }
+let toastT;
+function toast(msg){ const t = el('toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 2200); }
+
+/* ── Acceso por PIN ─────────────────────────────────────── */
+let pin = '';
+const PIN_OK = '1234';
+['1','2','3','4','5','6','7','8','9','','0','←'].forEach(k => {
+  const b = tag(`<button ${k?'':'style="visibility:hidden"'}>${k || ''}</button>`);
+  b.onclick = () => {
+    if (k === '←') pin = pin.slice(0, -1);
+    else if (k && pin.length < 4) pin += k;
+    el('pinDots').querySelectorAll('i').forEach((d,i) => d.classList.toggle('on', i < pin.length));
+    if (pin.length === 4) setTimeout(() => {
+      if (pin === PIN_OK){ el('gate').hidden = true; el('app').hidden = false; sessionStorage.setItem('bf-admin','1'); }
+      else { toast('PIN incorrecto'); pin = ''; el('pinDots').querySelectorAll('i').forEach(d => d.classList.remove('on')); }
+    }, 150);
+  };
+  el('pad').appendChild(b);
+});
+if (sessionStorage.getItem('bf-admin') === '1'){ el('gate').hidden = true; el('app').hidden = false; }
+el('logout').onclick = () => { sessionStorage.removeItem('bf-admin'); location.reload(); };
+
+/* ── Hoja inferior ──────────────────────────────────────── */
+function openSheet(html){
+  el('sheetBody').replaceChildren(typeof html === 'string' ? tag('<div>' + html + '</div>') : html);
+  el('sheet').classList.add('on'); el('sheetbg').classList.add('on');
+}
+function closeSheet(){ el('sheet').classList.remove('on'); el('sheetbg').classList.remove('on'); }
+el('sheetbg').onclick = closeSheet;
+
+/* ── Pestañas ───────────────────────────────────────────── */
+const TABS = [
+  { id:'agenda',   icon:'▤', label:'Agenda' },
+  { id:'semana',   icon:'▦', label:'Semana' },
+  { id:'bloqueos', icon:'◫', label:'Bloqueos' },
+  { id:'servicios',icon:'✦', label:'Servicios' },
+];
+el('tabs').replaceChildren(...TABS.map(t => {
+  const b = tag(`<button aria-pressed="false"><span>${t.icon}</span>${t.label}</button>`);
+  b.onclick = () => { ui.tab = t.id; window.scrollTo(0,0); render(); };
+  return b;
+}));
+
+/* ── Render ─────────────────────────────────────────────── */
+function render(){
+  TABS.forEach((t,i) => {
+    el('tabs').children[i].setAttribute('aria-pressed', ui.tab === t.id);
+    el('tab-' + t.id).hidden = ui.tab !== t.id;
+  });
+
+  /* Indicadores del día seleccionado */
+  const list = APPTS.filter(a => a.day === ui.day).sort(byTime);
+  const activos = list.filter(a => a.status !== 'no');
+  el('kCitas').textContent = activos.length;
+  el('kMonto').textContent = crc(activos.filter(a => a.status !== 'done').reduce((s,a) => s + a.price, 0));
+  el('kHoras').textContent = dur(activos.reduce((s,a) => s + a.min, 0));
+
+  /* Tira de días */
+  el('days').replaceChildren(...DAYS.map(d => {
+    const b = tag(`<button class="day" aria-pressed="${ui.day===d.key}">
+      <span class="dw">${d.dow}</span><span class="dn">${d.num}</span></button>`);
+    b.onclick = () => { ui.day = d.key; render(); };
+    return b;
+  }));
+  el('agendaTitle').textContent = dayOf(ui.day).full;
+
+  /* Agenda: citas + bloqueos del día, en orden */
+  const blocks = BLOCKS.filter(b => b.day === 'todos' || b.day === ui.day)
+    .map(b => ({ block:true, t:b.from, ...b }));
+  const rows = [...list, ...blocks].sort(byTime);
+  const nodes = rows.map(r => {
+    if (r.block) return tag(`<div class="block"><span class="l">${r.why}</span>
+      <span class="hint" style="margin:0">${hr(r.from)} – ${hr(r.to)}</span></div>`);
+    const s = ST[r.status];
+    const n = tag(`<button class="appt ${r.status}">
+      <span class="t">${hr(r.t)}<small>${dur(r.min)}</small></span>
+      <span><span class="who">${r.client}</span><span class="sv">${r.svc}</span>
+        <span class="tag ${s.cls}">${s.label}</span></span>
+      <span class="p">${crc(r.price)}<span class="sv" style="display:block">${PAY[r.pay]}</span></span>
+    </button>`);
+    n.onclick = () => apptSheet(r.id);
+    return n;
+  });
+  el('agendaList').replaceChildren(...(nodes.length ? nodes : [tag(`<div class="empty">
+    <div class="hint" style="margin:0">${dayOf(ui.day).closed ? 'Domingo: el salón no atiende.' : 'Sin citas para este día.'}</div></div>`)]));
+
+  /* Semana */
+  el('weekList').replaceChildren(...DAYS.map(d => {
+    const ls = APPTS.filter(a => a.day === d.key && a.status !== 'no');
+    const mins = ls.reduce((s,a) => s + a.min, 0);
+    const monto = ls.reduce((s,a) => s + a.price, 0);
+    const pct = Math.min(100, Math.round(mins / 540 * 100));
+    const row = tag(`<div class="wkrow">
+      <div class="top"><span class="d">${d.full}</span><span class="v">${crc(monto)}</span></div>
+      <div class="hint" style="margin-top:4px">${d.closed ? 'Cerrado' : ls.length + (ls.length === 1 ? ' cita · ' : ' citas · ') + dur(mins) + ' · ' + pct + '% de ocupación'}</div>
+      <div class="track"><span style="width:${d.closed ? 0 : pct}%"></span></div>
+    </div>`);
+    row.onclick = () => { ui.day = d.key; ui.tab = 'agenda'; window.scrollTo(0,0); render(); };
+    return row;
+  }));
+
+  /* Bloqueos */
+  el('blockList').replaceChildren(...BLOCKS.map(b => {
+    const label = b.day === 'todos' ? 'Todos los días' : dayOf(b.day).full;
+    const n = tag(`<div class="block" style="align-items:flex-start">
+      <span><span class="l" style="display:block">${b.why}</span>
+        <span class="hint" style="margin:0">${label} · ${hr(b.from)} – ${hr(b.to)}</span></span>
+      <button class="btn bad sm">Quitar</button></div>`);
+    n.querySelector('button').onclick = () => {
+      BLOCKS = BLOCKS.filter(x => x.id !== b.id); toast('Bloqueo eliminado'); render();
+    };
+    return n;
+  }));
+
+  /* Servicios */
+  el('svcList').replaceChildren(...SERVICES.map(s => {
+    const n = tag(`<div class="srow">
+      <span style="flex:1"><span class="n">${s.name}</span><span class="m">${s.cat} · ${dur(s.min)}</span></span>
+      <span class="pz">${crc(s.price)}</span>
+      <button class="sw" aria-pressed="${s.on}" aria-label="Visible en el catálogo"><i></i></button>
+    </div>`);
+    n.querySelector('.sw').onclick = e => {
+      e.stopPropagation(); s.on = !s.on;
+      toast(s.on ? 'Visible en el catálogo' : 'Oculto del catálogo'); render();
+    };
+    n.onclick = () => svcSheet(s.id);
+    return n;
+  }));
+}
+
+/* ── Detalle de cita ────────────────────────────────────── */
+function apptSheet(id){
+  const a = APPTS.find(x => x.id === id);
+  const s = ST[a.status];
+  const body = tag(`<div>
+    <div class="eyebrow">${dayOf(a.day).full} · ${hr(a.t)} – ${hr(end(a.t, a.min))}</div>
+    <div class="h1" style="margin-top:8px">${a.client}</div>
+    <div class="hint">${a.svc} · ${dur(a.min)}<br>${crc(a.price)} · ${PAY[a.pay]}<br>Teléfono ${a.phone}</div>
+    <div class="tag ${s.cls}" style="margin-top:12px">${s.label}</div>
+    <div class="acts">
+      <button class="btn rose" data-do="conf">Confirmar</button>
+      <button class="btn ghost" data-do="done">Marcar atendida</button>
+      <button class="btn ghost" data-do="wa">WhatsApp</button>
+      <button class="btn ghost" data-do="move">Reprogramar</button>
+      <button class="btn bad full" data-do="no">Registrar que no asistió</button>
+      <button class="btn ghost full" data-do="close" style="border:0">Cerrar</button>
+    </div></div>`);
+  body.querySelectorAll('[data-do]').forEach(b => b.onclick = () => {
+    const act = b.dataset.do;
+    if (act === 'conf'){ a.status = 'conf'; toast('Cita confirmada. Se envía el aviso a la clienta.'); }
+    if (act === 'done'){ a.status = 'done'; toast('Cita marcada como atendida y cobrada.'); }
+    if (act === 'no'){ a.status = 'no'; toast('Registrada como no asistió.'); }
+    if (act === 'wa'){ window.open('https://wa.me/506' + a.phone, '_blank'); return; }
+    if (act === 'move'){ toast('Aquí se abre el selector de nueva fecha y hora.'); }
+    closeSheet(); render();
+  });
+  openSheet(body);
+}
+
+/* ── Nueva cita ─────────────────────────────────────────── */
+el('addAppt').onclick = () => {
+  const opts = SERVICES.filter(s => s.on).map(s => `<option value="${s.id}">${s.name} · ${crc(s.price)}</option>`).join('');
+  const body = tag(`<div>
+    <div class="eyebrow">Agenda de ${dayOf(ui.day).full}</div>
+    <div class="h1" style="margin-top:8px">Nueva cita</div>
+    <label class="fld"><span class="lb">Clienta</span><input id="nClient" placeholder="Nombre y apellido"></label>
+    <label class="fld"><span class="lb">Teléfono</span><input id="nPhone" placeholder="8888 8888" inputmode="numeric"></label>
+    <label class="fld"><span class="lb">Servicio</span><select id="nSvc">${opts}</select></label>
+    <label class="fld"><span class="lb">Hora de inicio</span><input id="nTime" type="time" value="09:00"></label>
+    <label class="fld"><span class="lb">Forma de pago</span><select id="nPay"><option value="sinpe">SINPE Móvil</option><option value="efectivo">Efectivo</option></select></label>
+    <div class="acts">
+      <button class="btn ghost" data-x>Cancelar</button>
+      <button class="btn" data-ok>Guardar</button>
+    </div></div>`);
+  body.querySelector('[data-x]').onclick = closeSheet;
+  body.querySelector('[data-ok]').onclick = () => {
+    const client = body.querySelector('#nClient').value.trim();
+    if (!client){ toast('Escriba el nombre de la clienta'); return; }
+    const svc = SERVICES.find(s => s.id === body.querySelector('#nSvc').value);
+    APPTS.push({
+      id:'a' + Date.now(), day: ui.day, t: body.querySelector('#nTime').value,
+      min: svc.min, client, phone: body.querySelector('#nPhone').value.trim() || '00000000',
+      svc: svc.name, price: svc.price, status:'conf', pay: body.querySelector('#nPay').value,
+    });
+    closeSheet(); toast('Cita agregada a la agenda'); render();
+  };
+  openSheet(body);
+};
+
+/* ── Nuevo bloqueo ──────────────────────────────────────── */
+el('addBlock').onclick = () => {
+  const opts = ['<option value="todos">Todos los días</option>']
+    .concat(DAYS.map(d => `<option value="${d.key}">${d.full}</option>`)).join('');
+  const body = tag(`<div>
+    <div class="eyebrow">Horarios</div>
+    <div class="h1" style="margin-top:8px">Nuevo bloqueo</div>
+    <label class="fld"><span class="lb">Motivo</span><input id="bWhy" placeholder="Almuerzo, día libre, capacitación"></label>
+    <label class="fld"><span class="lb">Día</span><select id="bDay">${opts}</select></label>
+    <label class="fld"><span class="lb">Desde</span><input id="bFrom" type="time" value="12:00"></label>
+    <label class="fld"><span class="lb">Hasta</span><input id="bTo" type="time" value="13:00"></label>
+    <div class="acts">
+      <button class="btn ghost" data-x>Cancelar</button>
+      <button class="btn" data-ok>Guardar</button>
+    </div></div>`);
+  body.querySelector('[data-x]').onclick = closeSheet;
+  body.querySelector('[data-ok]').onclick = () => {
+    const why = body.querySelector('#bWhy').value.trim();
+    if (!why){ toast('Escriba el motivo del bloqueo'); return; }
+    BLOCKS.push({ id:'b' + Date.now(), day: body.querySelector('#bDay').value,
+      from: body.querySelector('#bFrom').value, to: body.querySelector('#bTo').value, why });
+    closeSheet(); toast('Bloqueo guardado'); render();
+  };
+  openSheet(body);
+};
+
+/* ── Editar servicio ────────────────────────────────────── */
+function svcSheet(id){
+  const s = SERVICES.find(x => x.id === id);
+  const body = tag(`<div>
+    <div class="eyebrow">${s.cat}</div>
+    <div class="h1" style="margin-top:8px">${s.name}</div>
+    <label class="fld"><span class="lb">Precio en colones</span><input id="sP" type="number" inputmode="numeric" value="${s.price}"></label>
+    <label class="fld"><span class="lb">Duración en minutos</span><input id="sM" type="number" inputmode="numeric" value="${s.min}"></label>
+    <div class="acts">
+      <button class="btn ghost" data-x>Cancelar</button>
+      <button class="btn" data-ok>Guardar</button>
+    </div></div>`);
+  body.querySelector('[data-x]').onclick = closeSheet;
+  body.querySelector('[data-ok]').onclick = () => {
+    s.price = Math.max(0, +body.querySelector('#sP').value || s.price);
+    s.min = Math.max(15, +body.querySelector('#sM').value || s.min);
+    closeSheet(); toast('Servicio actualizado'); render();
+  };
+  openSheet(body);
+}
+
+render();
+
+/* Service worker: permite abrirla sin conexión y en modo app */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
+</script>
+</body>
+</html>
