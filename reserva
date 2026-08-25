@@ -4,6 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Belle Femme · Reservar cita</title>
+<meta name="theme-color" content="#FBF3F1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Belle Femme">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..600&family=Jost:wght@300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet">
@@ -101,7 +109,7 @@
     <div class="hrow">
       <button class="back" id="back" aria-label="Volver">&#8592;</button>
       <div class="eyebrow" id="stepLabel">Paso 1 de 4</div>
-      <div style="width:34px"></div>
+      <a href="./" style="width:34px;text-align:right;font:400 10px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);text-decoration:none">Salón</a>
     </div>
     <div class="h1" id="stepTitle" style="margin-top:12px">Elija sus servicios</div>
     <div class="bar"><span id="progress" style="width:25%"></span></div>
@@ -346,6 +354,11 @@ el('reminder').onclick = () => { state.reminder = !state.reminder; render(); };
 el('ics').onclick = () => alert('Aquí se genera el archivo .ics o se llama al calendario nativo.');
 
 render();
+
+/* Service worker: permite abrirla sin conexión y en modo app */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}
 </script>
 </body>
 </html>
