@@ -111,6 +111,42 @@
   .toast .tx{font:300 12px/1.45 var(--sans);color:#5E5254}
   .toast button{padding:10px 16px;font-size:10px}
   .toast .x{background:none;border:0;color:var(--muted);font-size:16px;cursor:pointer;padding:0 4px}
+
+  /* ── Panel de inicio estilo app (móvil) ── */
+  .dash{display:none}
+  .tabbar{display:none}
+  @media (max-width:760px){
+    .hero{display:none}
+    .dash{display:block;padding:22px 0 30px}
+    body{padding-bottom:calc(70px + env(safe-area-inset-bottom))}
+  }
+  .dash-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+  .dash-title{font-size:clamp(30px,8vw,36px);margin-top:6px}
+  .dash-sub{margin-top:6px}
+  .dash-bell{width:46px;height:46px;border-radius:50%;background:#F2DCE1;flex:none;display:flex;align-items:center;justify-content:center;color:var(--accent)}
+  .dash-cta{margin-top:24px;display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:17px;background:var(--accent);color:#fff;font:400 12.5px var(--sans);letter-spacing:.1em;border:0;cursor:pointer}
+  .dash-quick{margin-top:22px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center}
+  .dash-quick a{display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--ink);font:400 10.5px var(--sans)}
+  .dash-quick .qi{width:100%;aspect-ratio:1;border-radius:16px;background:#F7EAEC;display:flex;align-items:center;justify-content:center;color:var(--accent);position:relative}
+  .dash-badge{position:absolute;top:-4px;right:-4px;background:var(--accent);color:#fff;font:400 9px/1 var(--sans);width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+  .dash-row{margin-top:30px;display:flex;justify-content:space-between;align-items:baseline}
+  .dash-row .eyebrow{color:var(--muted-2)}
+  .dash-row a{font:400 11px var(--sans)}
+  .dash-card{margin-top:14px;background:var(--card);border:1px solid var(--line);padding:16px;display:flex;gap:14px;align-items:center}
+  .dash-thumb{width:56px;height:56px;flex:none;border-radius:12px;background:#EEDCE0}
+  .dash-card .name{font-family:var(--serif);font-size:17px;line-height:1.25}
+  .dash-card .meta{font:300 11.5px var(--sans);color:var(--muted);margin-top:4px;display:flex;align-items:center;gap:6px}
+  .dash-card .who{font:300 11.5px var(--sans);color:var(--muted);margin-top:4px;display:flex;align-items:center;gap:6px}
+  .dash-promo{margin-top:16px;background:linear-gradient(135deg,#F7EAEC,#F1DEE3);display:flex;justify-content:space-between;align-items:center;gap:14px;padding:20px;color:var(--ink)}
+  .dash-promo .t{font-family:var(--serif);font-size:19px}
+  .dash-promo .s{font:300 11.5px var(--sans);color:#7A6C6E;margin-top:4px}
+
+  .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:8px 4px calc(8px + env(safe-area-inset-bottom))}
+  @media (max-width:760px){ .tabbar{display:flex} }
+  .tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 2px;color:var(--muted-2);background:none;border:0;font:400 9.5px var(--sans)}
+  .tab svg{width:21px;height:21px}
+  .tab.active{color:var(--accent)}
+  #inicio,#servicios,#celine,#visita{scroll-margin-top:76px}
 </style>
 <style>
 /* ── Flujo de reserva, misma página ── */
@@ -199,6 +235,69 @@
     <a class="btn" href="#reserva">Reservar</a>
   </div>
 </nav>
+
+<section class="dash" id="inicio">
+  <div class="wrap">
+    <div class="dash-head">
+      <div>
+        <div class="eyebrow">Belle Femme</div>
+        <h1 class="dash-title">¡Bienvenida!</h1>
+        <p class="dash-sub">Lista para su mejor versión.</p>
+      </div>
+      <a class="dash-bell" href="https://wa.me/50687299860" aria-label="Escribir por WhatsApp">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 11.5a8.38 8.38 0 0 1-4.8 7.6 8.5 8.5 0 0 1-8.4-.3L3 20l1.3-4.5A8.5 8.5 0 1 1 21 11.5Z"/></svg>
+      </a>
+    </div>
+
+    <a class="dash-cta" href="#reserva">
+      <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+      Reservar cita
+    </a>
+
+    <div class="dash-quick">
+      <a href="#servicios">
+        <span class="qi"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="6" cy="6" r="2.6"/><circle cx="6" cy="18" r="2.6"/><path d="M20 4 8.5 15.5M12.5 12 20 20M9.7 8.2 15 13.5"/></svg></span>
+        Servicios
+      </a>
+      <a href="#visita">
+        <span class="qi"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8.3"/><path d="M12 7.5V12l3 2"/></svg></span>
+        Horario
+      </a>
+      <a href="#celine">
+        <span class="qi"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c1.4-4 4-6 7.5-6s6.1 2 7.5 6"/></svg></span>
+        Celine
+      </a>
+      <a href="https://wa.me/50687299860">
+        <span class="qi"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 11.5a8.38 8.38 0 0 1-4.8 7.6 8.5 8.5 0 0 1-8.4-.3L3 20l1.3-4.5A8.5 8.5 0 1 1 21 11.5Z"/></svg></span>
+        WhatsApp
+      </a>
+    </div>
+
+    <div class="dash-row">
+      <div class="eyebrow">Servicio destacado</div>
+      <a href="#servicios">Ver carta &#8594;</a>
+    </div>
+    <a class="dash-card" href="#reserva" style="color:inherit;text-decoration:none">
+      <div class="dash-thumb"></div>
+      <div>
+        <div class="name">Manicure ruso spa + semipermanente</div>
+        <div class="meta">1 h 30 min · ₡16.000</div>
+        <div class="who">
+          <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c1.4-4 4-6 7.5-6s6.1 2 7.5 6"/></svg>
+          Con Celine Barrantes
+        </div>
+      </div>
+    </a>
+
+    <a class="dash-promo" href="https://instagram.com/bellefemme_costarica">
+      <div>
+        <div class="t">Síganos en Instagram</div>
+        <div class="s">Fotos del salón y trabajos recientes</div>
+      </div>
+      <span>&#8250;</span>
+    </a>
+  </div>
+</section>
 
 <header class="hero">
   <div class="wrap grid">
@@ -329,6 +428,29 @@
   </div>
 </footer>
 
+<nav class="tabbar" id="tabbar">
+  <a href="#inicio" class="tab active" data-tab="inicio">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 11 12 4l8 7"/><path d="M6 10v9h12v-9"/></svg>
+    Inicio
+  </a>
+  <a href="#reserva" class="tab" data-tab="reservar">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
+    Reservar
+  </a>
+  <a href="#servicios" class="tab" data-tab="servicios">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="6" cy="6" r="2.6"/><circle cx="6" cy="18" r="2.6"/><path d="M20 4 8.5 15.5M12.5 12 20 20M9.7 8.2 15 13.5"/></svg>
+    Servicios
+  </a>
+  <a href="#celine" class="tab" data-tab="celine">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c1.4-4 4-6 7.5-6s6.1 2 7.5 6"/></svg>
+    Celine
+  </a>
+  <a href="#visita" class="tab" data-tab="visita">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21Z"/><circle cx="12" cy="9.3" r="2.3"/></svg>
+    Visítenos
+  </a>
+</nav>
+
 </div><!-- /#sitio -->
 
 <div id="reserva" hidden>
@@ -429,6 +551,23 @@ document.querySelectorAll('a[href="#reserva"]').forEach(a => {
   a.addEventListener('click', e => { e.preventDefault(); view('reserva', true); });
 });
 window.addEventListener('popstate', () => view(location.hash === '#reserva' ? 'reserva' : 'sitio', false));
+
+/* ── Barra inferior: resalta la sección visible ───────────── */
+const tabs = document.querySelectorAll('.tab');
+const setActiveTab = name => tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+const spySections = ['inicio', 'servicios', 'celine', 'visita']
+  .map(id => document.getElementById(id))
+  .filter(Boolean);
+if ('IntersectionObserver' in window && spySections.length) {
+  const spy = new IntersectionObserver(entries => {
+    const visible = entries.filter(e => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    if (visible) setActiveTab(visible.target.id);
+  }, { rootMargin: '-45% 0px -45% 0px', threshold: [0, .25, .5, .75, 1] });
+  spySections.forEach(s => spy.observe(s));
+}
+tabs.forEach(t => {
+  if (t.dataset.tab === 'reservar') t.addEventListener('click', () => setActiveTab('reservar'));
+});
 
 /* ── Lógica del flujo de reserva ──────────────────────────── */
 /* Datos de demostración. En producción vienen de Supabase:
