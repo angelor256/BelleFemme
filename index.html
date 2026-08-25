@@ -3,8 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Belle Femme · Salón de belleza & Nail Studio</title>
-<meta name="description" content="Belle Femme by Celine Barrantes. Uñas, pestañas, cejas, cabello y maquillaje en Pavas Centro. Reserve su cita en línea.">
+<title>Belle Femme · App Studio</title>
 <meta name="theme-color" content="#FAF6F5">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -15,519 +14,330 @@
 <link rel="icon" href="icons/icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --brand-dark: #7A3B4A;
-    --brand-accent: #9E4B60;
-    --brand-light: #F4EAEB;
+    --brand-dark: #A25367;
+    --brand-accent: #873E51;
+    --brand-light: #F6EBEF;
     --ink: #21191B;
-    --ink-light: #63575A;
+    --ink-light: #706366;
     --paper: #FAF6F5;
     --card: #FFFFFF;
-    --line: #EFE6E5;
+    --line: #EFE5E7;
     --sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-    --serif: 'Playfair Display', Georgia, serif;
     --radius-pill: 999px;
     --radius-card: 20px;
-    --radius-sm: 12px;
-    --pad: 24px;
-    --shadow-soft: 0 10px 30px rgba(122, 59, 74, 0.05);
-    --shadow-hover: 0 16px 36px rgba(122, 59, 74, 0.1);
+    --radius-sm: 14px;
+    --shadow-soft: 0 8px 24px rgba(162, 83, 103, 0.06);
   }
 
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
-  a{color:inherit;text-decoration:none}
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;padding-bottom:80px}
+
+  .app-container{max-width:480px;margin:0 auto;min-height:100vh;background:var(--paper);position:relative;display:flex;flex-direction:column}
   
-  .wrap{max-width:1120px;margin:0 auto;padding:0 var(--pad)}
-  .eyebrow{font:600 10px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--brand-dark)}
-  
-  /* Botones Estilo Alinea/Valyioo */
-  .btn{display:inline-flex;align-items:center;justify-content:center;padding:14px 28px;border-radius:var(--radius-pill);background:var(--brand-dark);color:#fff;font:500 13px var(--sans);transition:all .25s ease;border:1px solid transparent;cursor:pointer}
-  .btn:hover{background:var(--brand-accent);transform:translateY(-1px);box-shadow:0 6px 20px rgba(122,59,74,.25)}
-  .btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
-  .btn.ghost:hover{border-color:var(--brand-dark);background:#fff}
-  .btn.sm{padding:10px 20px;font-size:12px}
+  /* Top App Bar */
+  .top-bar{position:sticky;top:0;z-index:20;background:rgba(250,246,245,.92);backdrop-filter:blur(12px);padding:calc(12px + env(safe-area-inset-top)) 20px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}
+  .top-bar .brand{font-size:18px;font-weight:700;letter-spacing:-0.02em;color:var(--brand-dark);display:flex;align-items:center;gap:6px}
+  .top-bar .icon-btn{width:38px;height:38px;border-radius:50%;background:var(--card);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer}
 
-  /* Barra Superior */
-  .nav{position:sticky;top:0;z-index:30;background:rgba(250,246,245,.88);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
-  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:72px}
-  .nav .mark{font-family:var(--sans);font-weight:700;font-size:20px;letter-spacing:-0.02em;color:var(--ink)}
-  .nav .mark span{color:var(--brand-dark)}
-  .nav ul{display:flex;gap:32px;list-style:none;font:500 13px var(--sans);color:var(--ink-light)}
-  .nav ul a:hover{color:var(--brand-dark)}
-  @media (max-width:768px){ .nav ul{display:none} }
+  /* Vistas Pestañas */
+  .tab-view{display:none;padding:20px;animation:fadeIn .2s ease-in-out}
+  .tab-view.active{display:block}
+  @keyframes fadeIn { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:translateY(0)} }
 
-  /* Hero Editorial Estilo AlineaStudio */
-  .hero{padding:60px 0 80px;background:radial-gradient(circle at 80% 20%, rgba(244,234,235,0.7) 0%, rgba(250,246,245,0) 60%)}
-  .hero .grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
-  .hero h1{font-family:var(--sans);font-weight:600;font-size:clamp(40px,5vw,62px);line-height:1.08;letter-spacing:-0.03em;color:var(--ink)}
-  .hero h1 em{font-family:var(--serif);font-weight:400;font-style:italic;color:var(--brand-dark)}
-  .hero p{margin-top:22px;font:300 16px/1.65 var(--sans);color:var(--ink-light);max-width:460px}
-  .hero .cta{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
+  /* Elementos Estilo Valyioo */
+  .greeting-box{margin-bottom:20px}
+  .greeting-box h1{font-size:26px;font-weight:700;color:var(--ink)}
+  .greeting-box p{font-size:13px;color:var(--ink-light);margin-top:2px}
 
-  .hero-img-box{position:relative;border-radius:var(--radius-card);overflow:hidden;background:var(--brand-light);aspect-ratio:4/4.5;box-shadow:var(--shadow-soft)}
-  .hero-img-box img{width:100%;height:100%;object-fit:cover}
+  .main-cta-btn{width:100%;padding:16px;border-radius:16px;background:var(--brand-dark);color:#fff;border:0;font:600 14px var(--sans);display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 8px 20px rgba(162, 83, 103, 0.25);cursor:pointer;margin-bottom:24px}
 
-  @media (max-width:860px){
-    .hero .grid{grid-template-columns:1fr;gap:40px}
-    .hero{padding:40px 0 60px}
-  }
+  /* Acceso Rápido Grid */
+  .grid-menu{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px}
+  .menu-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-sm);padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;text-align:center}
+  .menu-card .ic{width:44px;height:44px;border-radius:12px;background:var(--brand-light);color:var(--brand-dark);display:flex;align-items:center;justify-content:center;font-size:20px}
+  .menu-card span{font-size:11.5px;font-weight:500;color:var(--ink)}
 
-  /* Accesos Rápicos App (Estilo Valyioo) */
-  .quick-app{padding:20px 0 60px}
-  .app-shortcuts{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;background:var(--card);padding:24px;border-radius:var(--radius-card);border:1px solid var(--line);box-shadow:var(--shadow-soft)}
-  .sc-item{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;cursor:pointer;padding:12px;border-radius:var(--radius-sm);transition:background .2s}
-  .sc-item:hover{background:var(--paper)}
-  .sc-icon{width:54px;height:54px;border-radius:16px;background:var(--brand-light);color:var(--brand-dark);display:flex;align-items:center;justify-content:center;font-size:22px}
-  .sc-label{font:500 12.5px var(--sans);color:var(--ink)}
-  @media (max-width:640px){ .app-shortcuts{grid-template-columns:repeat(2,1fr)} }
+  /* Tarjeta Próxima Cita / Destacado */
+  .sec-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+  .sec-title h2{font-size:15px;font-weight:700;color:var(--ink)}
+  .sec-title a{font-size:12px;font-weight:600;color:var(--brand-dark);text-decoration:none}
 
-  /* Grid de Servicios Destacados (Estilo Alinea) */
-  .featured-services{padding:60px 0}
-  .sec-header{text-align:center;max-width:540px;margin:0 auto 48px}
-  .sec-header h2{font-size:clamp(30px,4vw,42px);font-weight:600;letter-spacing:-0.02em}
-  .sec-header h2 em{font-family:var(--serif);font-weight:400;font-style:italic;color:var(--brand-dark)}
-  .sec-header p{margin-top:12px;font:300 15px/1.6 var(--sans);color:var(--ink-light)}
+  .card-box{background:var(--card);border-radius:var(--radius-card);border:1px solid var(--line);padding:16px;box-shadow:var(--shadow-soft);margin-bottom:24px}
+  .appt-card{display:flex;gap:14px;align-items:center}
+  .appt-card .img-thumb{width:64px;height:64px;border-radius:14px;object-fit:cover;background:#EEDCE0}
+  .appt-card .info h3{font-size:14.5px;font-weight:600;color:var(--ink)}
+  .appt-card .info p{font-size:12px;color:var(--ink-light);margin-top:3px}
 
-  .cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-  .service-card{background:var(--card);border-radius:var(--radius-card);padding:16px;border:1px solid var(--line);box-shadow:var(--shadow-soft);transition:all .3s ease;display:flex;flex-direction:column}
-  .service-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-hover)}
-  .service-card .img-container{width:100%;height:200px;border-radius:14px;overflow:hidden;background:#EEDCE0;margin-bottom:18px}
-  .service-card .img-container img{width:100%;height:100%;object-fit:cover}
-  .service-card h3{font-size:18px;font-weight:600;color:var(--ink);margin-bottom:8px}
-  .service-card p{font:300 13px/1.5 var(--sans);color:var(--ink-light);flex:1;margin-bottom:16px}
-  .service-card .card-footer{display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid var(--line)}
-  .service-card .price-tag{font-weight:700;font-size:16px;color:var(--brand-dark)}
+  /* Promociones / Banner */
+  .promo-banner{background:linear-gradient(135deg, #FFF 0%, #F8ECEF 100%);border-radius:var(--radius-card);border:1px solid var(--line);padding:18px;display:flex;align-items:center;justify-content:space-between}
+  .promo-banner h3{font-size:15px;font-weight:700;color:var(--brand-dark)}
+  .promo-banner p{font-size:12px;color:var(--ink-light);margin-top:2px}
 
-  @media (max-width:860px){ .cards-grid{grid-template-columns:1fr} }
+  /* Pestaña Servicios */
+  .chips-scroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px;margin-bottom:16px}
+  .chip{padding:8px 16px;border-radius:var(--radius-pill);border:1px solid var(--line);background:var(--card);font:500 12px var(--sans);color:var(--ink-light);white-space:nowrap;cursor:pointer}
+  .chip.active{background:var(--brand-dark);border-color:var(--brand-dark);color:#fff}
 
-  /* Visita / Especialista */
-  .about-sec{background:var(--card);border-y:1px solid var(--line);padding:80px 0;margin:40px 0}
-  .about-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:50px;align-items:center}
-  .about-img{aspect-ratio:1;border-radius:var(--radius-card);background:var(--brand-light);overflow:hidden}
+  .service-item{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+  .service-item h3{font-size:14px;font-weight:600;color:var(--ink)}
+  .service-item p{font-size:11.5px;color:var(--ink-light);margin-top:2px}
+  .service-item .price{font-size:14px;font-weight:700;color:var(--brand-dark)}
 
-  /* Sección App Banner */
-  .app-banner{background:var(--ink);color:#fff;border-radius:var(--radius-card);padding:48px;margin:60px 0;position:relative;overflow:hidden}
-  .app-banner h2{font-size:32px;font-weight:600;margin-top:10px}
-  .app-banner p{color:#B8A9AC;margin-top:12px;max-width:480px}
-</style>
-<style>
-/* ── Flujo de Reserva Integrado en Modal / View Estilo Valyioo ── */
-#reserva:not([hidden]){min-height:100vh;display:flex;justify-content:center}
-
-#reserva{
-    --brand-dark: #7A3B4A; --brand-accent: #9E4B60; --paper: #FAF6F5;
-    --card: #FFFFFF; --line: #EFE6E5; --ink: #21191B; --muted: #8E7F82;
-    --radius-pill: 999px; --radius-card: 20px;
-    font-family: var(--sans);
-}
-#reserva *{box-sizing:border-box}
-#reserva{background:var(--paper)}
-#reserva .app{width:100%;max-width:480px;margin:0 auto;min-height:100vh;background:var(--paper);display:flex;flex-direction:column;position:relative}
-
-#reserva header{position:sticky;top:0;z-index:10;background:rgba(250,246,245,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:18px 24px}
-#reserva .hrow{display:flex;align-items:center;justify-content:space-between}
-#reserva .back{width:36px;height:36px;border-radius:50%;background:var(--card);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer}
-#reserva .bar{margin-top:14px;height:3px;background:var(--line);border-radius:999px;overflow:hidden}
-#reserva .bar span{display:block;height:100%;background:var(--brand-dark);transition:width .3s ease}
-
-#reserva main{flex:1;padding:24px}
-#reserva .chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:8px}
-#reserva .chip{padding:10px 18px;border-radius:var(--radius-pill);border:1px solid var(--line);background:var(--card);font:500 12px var(--sans);color:var(--muted);cursor:pointer;white-space:nowrap}
-#reserva .chip[aria-pressed="true"]{background:var(--brand-dark);border-color:var(--brand-dark);color:#fff}
-
-#reserva .list{display:flex;flex-direction:column;gap:12px;margin-top:20px}
-#reserva .row{width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:all .2s}
-#reserva .row[aria-pressed="true"]{border-color:var(--brand-dark);box-shadow:0 0 0 1px var(--brand-dark)}
-#reserva .row .name{font-weight:600;font-size:15px;color:var(--ink)}
-#reserva .row .meta{font:300 12px var(--sans);color:var(--muted);margin-top:4px}
-#reserva .row .price{font-weight:700;font-size:14px;color:var(--brand-dark)}
-#reserva .dot{width:22px;height:22px;border-radius:50%;border:1px solid var(--line);display:inline-flex;align-items:center;justify-content:center;font-size:11px;color:#fff}
-#reserva .row[aria-pressed="true"] .dot{background:var(--brand-dark);border-color:var(--brand-dark)}
-
-#reserva .days{display:flex;gap:8px}
-#reserva .day{flex:1;text-align:center;padding:12px 0;border-radius:14px;border:1px solid var(--line);background:var(--card);cursor:pointer}
-#reserva .day[aria-pressed="true"]{background:var(--brand-dark);border-color:var(--brand-dark);color:#fff}
-#reserva .day .dw{font:600 9px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-#reserva .day .dn{font-size:18px;font-weight:600;margin-top:4px}
-#reserva .day[aria-pressed="true"] .dw, #reserva .day[aria-pressed="true"] .dn{color:#fff}
-
-#reserva .slots{margin-top:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-#reserva .slot{padding:12px 0;border-radius:12px;border:1px solid var(--line);background:var(--card);font:500 13px var(--sans);color:var(--ink);cursor:pointer;text-align:center}
-#reserva .slot[aria-pressed="true"]{background:var(--brand-dark);border-color:var(--brand-dark);color:#fff}
-
-#reserva footer{position:sticky;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:16px 24px}
-#reserva .ftop{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-#reserva .total{font-weight:700;font-size:20px;color:var(--brand-dark)}
-#reserva .cta{width:100%;padding:16px;border-radius:var(--radius-pill);border:0;background:var(--brand-dark);color:#fff;font:600 13px var(--sans);letter-spacing:.05em;text-transform:uppercase;cursor:pointer}
-#reserva .cta:disabled{opacity:.5;cursor:not-allowed}
+  /* Bottom Tab Bar (Fija Estilo Valyioo) */
+  .bottom-nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:rgba(255,255,255,.94);backdrop-filter:blur(16px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding:8px 0 calc(8px + env(safe-area-inset-bottom));z-index:40}
+  .tab-btn{background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--ink-light);font:500 10px var(--sans);cursor:pointer;padding:4px 0}
+  .tab-btn .ic{font-size:18px}
+  .tab-btn.active{color:var(--brand-dark)}
 </style>
 </head>
 <body>
 
-<div id="sitio">
-<!-- Barra de Navegación -->
-<nav class="nav">
-  <div class="wrap">
-    <a href="#" class="mark">Belle Femme <span>.</span></a>
-    <ul>
-      <li><a href="#servicios">Servicios</a></li>
-      <li><a href="#celine">Especialista</a></li>
-      <li><a href="#visita">Ubicación</a></li>
-      <li><a href="#app">App Móvil</a></li>
-    </ul>
-    <a class="btn sm" href="#reserva">Reservar Cita</a>
-  </div>
-</nav>
-
-<!-- Hero Section Editorial (Estilo AlineaStudio) -->
-<header class="hero">
-  <div class="wrap grid">
-    <div>
-      <div class="eyebrow">Nail Studio &amp; Beauty Experience</div>
-      <h1 style="margin-top:16px">The confidence that changes <em>your mood.</em></h1>
-      <p>Un espacio donde el cuidado personal se transforma en confianza. Diseños exclusivos, manicura rusa spa y atención personalizada en Pavas Centro.</p>
-      <div class="cta">
-        <a class="btn" href="#reserva">Reservar Tu Cita</a>
-        <a class="btn ghost" href="#servicios">Ver Servicios</a>
-      </div>
+<div class="app-container">
+  
+  <!-- Barra Superior -->
+  <header class="top-bar">
+    <div class="brand">
+      <span style="width:10px;height:10px;border-radius:50%;background:var(--brand-dark)"></span>
+      Belle Femme
     </div>
-    <div class="hero-img-box">
-      <!-- Foto promocional con manicura elegante -->
-      <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=1000&auto=format&fit=crop" alt="Manicura Belle Femme">
-    </div>
-  </div>
-</header>
-
-<!-- Accesos Rápicos App Móvil (Estilo Valyioo) -->
-<div class="wrap quick-app">
-  <div class="app-shortcuts">
-    <div class="sc-item" onclick="location.href='#reserva'">
-      <div class="sc-icon">💅</div>
-      <div class="sc-label">Uñas Spa</div>
-    </div>
-    <div class="sc-item" onclick="location.href='#reserva'">
-      <div class="sc-icon">👁️</div>
-      <div class="sc-label">Pestañas</div>
-    </div>
-    <div class="sc-item" onclick="location.href='#reserva'">
-      <div class="sc-icon">💇‍♀️</div>
-      <div class="sc-label">Cabello</div>
-    </div>
-    <div class="sc-item" onclick="location.href='#reserva'">
-      <div class="sc-icon">✨</div>
-      <div class="sc-label">Maquillaje</div>
-    </div>
-  </div>
-</div>
-
-<!-- Servicios Destacados (Estilo Tarjetas Alinea) -->
-<section class="wrap featured-services" id="servicios">
-  <div class="sec-header">
-    <div class="eyebrow">Estilos que hablan por ti</div>
-    <h2 style="margin-top:8px">Styles that speak <em>for you.</em></h2>
-    <p>Cada servicio está diseñado para destacar tu elegancia natural con productos de máxima durabilidad.</p>
-  </div>
-
-  <div class="cards-grid">
-    <div class="service-card">
-      <div class="img-container">
-        <img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?q=80&w=600&auto=format&fit=crop" alt="Classic Manicure">
-      </div>
-      <h3>Manicure Ruso Spa</h3>
-      <p>Cuidado profundo de cutícula con técnica rusa, exfoliación spa y acabado semipermanente perfecto.</p>
-      <div class="card-footer">
-        <span class="price-tag">₡16.000</span>
-        <a class="btn sm" href="#reserva">Reservar</a>
-      </div>
-    </div>
-
-    <div class="service-card">
-      <div class="img-container">
-        <img src="https://images.unsplash.com/photo-1583001931096-959e9a1a6223?q=80&w=600&auto=format&fit=crop" alt="Custom Nail Art">
-      </div>
-      <h3>Pestañas Híbridas</h3>
-      <p>Mezcla perfecta entre efecto natural y volumen. La combinación ideal para resaltar tu mirada.</p>
-      <div class="card-footer">
-        <span class="price-tag">₡20.000</span>
-        <a class="btn sm" href="#reserva">Reservar</a>
-      </div>
-    </div>
-
-    <div class="service-card">
-      <div class="img-container">
-        <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=600&auto=format&fit=crop" alt="Gel & Long Lasting">
-      </div>
-      <h3>Botox Capilar</h3>
-      <p>Tratamiento intensivo de restauración e hidratación para devolver la suavidad y brillo a tu cabello.</p>
-      <div class="card-footer">
-        <span class="price-tag">₡30.000</span>
-        <a class="btn sm" href="#reserva">Reservar</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Especialista -->
-<section class="about-sec" id="celine">
-  <div class="wrap about-grid">
-    <div class="about-img">
-      <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=800&auto=format&fit=crop" alt="Celine Barrantes" style="width:100%;height:100%;object-fit:cover">
-    </div>
-    <div>
-      <div class="eyebrow">La Especialista</div>
-      <h2 style="font-size:36px;font-weight:600;margin-top:10px">Celine Barrantes</h2>
-      <p style="margin-top:16px;font:300 15px/1.7 var(--sans);color:var(--ink-light)">
-        Fundadora de Belle Femme. Atiende personalmente cada cita en un estudio exclusivo en Pavas Centro. Nuestro sistema de agenda por bloques te garantiza atención puntual y dedicada sin esperas.
-      </p>
-      <div style="margin-top:28px;display:flex;gap:14px">
-        <a class="btn" href="#reserva">Ver Disponibilidad</a>
-        <a class="btn ghost" href="https://wa.me/50687299860" target="_blank">WhatsApp Directo</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Banner Instalación App -->
-<div class="wrap" id="app">
-  <div class="app-banner">
-    <div class="eyebrow" style="color:#D4A8B3">Belle Femme App</div>
-    <h2>Lleva tu salón favorito en la pantalla de inicio</h2>
-    <p>Agrega la aplicación a tu teléfono sin pasar por tiendas de descarga. Agenda o reprograma en segundos.</p>
-    <div style="margin-top:24px;display:flex;gap:14px">
-      <button class="btn sm" id="installBtn" style="background:#fff;color:var(--ink)">Instalar Aplicación</button>
-      <a class="btn sm ghost" href="#reserva" style="color:#fff;border-color:#52313A">Abrir Web App</a>
-    </div>
-  </div>
-</div>
-
-<footer style="padding:40px 0;text-align:center;border-top:1px solid var(--line);font:300 13px var(--sans);color:var(--ink-light)">
-  <div class="wrap">
-    <p style="font-weight:600;color:var(--ink);margin-bottom:6px">Belle Femme Studio</p>
-    <p>Pavas Centro, San José, Costa Rica · <a href="admin.html" style="color:var(--brand-dark);text-decoration:underline">Panel Administrativo</a></p>
-  </div>
-</footer>
-</div>
-
-<!-- Flujo de Reserva Integrado estilo App Móvil -->
-<div id="reserva" hidden>
-<div class="app">
-  <header>
-    <div class="hrow">
-      <button class="back" id="back">←</button>
-      <div class="eyebrow" id="stepLabel">Paso 1 de 4</div>
-      <button id="backToSite" style="background:none;border:0;font:600 11px var(--sans);color:var(--brand-dark);cursor:pointer">Cerrar</button>
-    </div>
-    <div style="font-size:22px;font-weight:600;margin-top:12px;color:var(--ink)" id="stepTitle">Selecciona tu Servicio</div>
-    <div class="bar"><span id="progress" style="width:25%"></span></div>
+    <div class="icon-btn" onclick="switchTab('perfil')">🔔</div>
   </header>
 
-  <main>
-    <section id="step0">
-      <div class="chips" id="chips"></div>
-      <div class="list" id="services"></div>
-    </section>
+  <!-- PESTAÑA 1: INICIO -->
+  <main id="tab-inicio" class="tab-view active">
+    <div class="greeting-box">
+      <h1>¡Bienvenida!</h1>
+      <p>Lista para tu mejor versión.</p>
+    </div>
 
-    <section id="step1" hidden>
-      <div class="list" id="specialists"></div>
-    </section>
+    <button class="main-cta-btn" onclick="switchTab('reservar')">
+      📅 Reservar cita
+    </button>
 
-    <section id="step2" hidden>
-      <div class="days" id="days"></div>
-      <div class="eyebrow" style="margin-top:24px">Horarios Disponibles</div>
-      <div class="slots" id="amSlots"></div>
-      <div class="slots" id="pmSlots" style="margin-top:10px"></div>
-    </section>
-
-    <section id="step3" hidden>
-      <div style="background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px">
-        <div class="eyebrow">Resumen de Cita</div>
-        <div id="sumLines" style="margin-top:12px"></div>
-        <div id="sumWhen" style="margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font:300 13px/1.6 var(--sans);color:var(--muted)"></div>
+    <!-- Accesos Directos Estilo Valyioo -->
+    <div class="grid-menu">
+      <div class="menu-card" onclick="switchTab('servicios')">
+        <div class="ic">✂️</div>
+        <span>Servicios</span>
       </div>
-      <div class="eyebrow" style="margin-top:24px">Método de Pago</div>
-      <div class="list" id="methods"></div>
-    </section>
-
-    <section id="step4" hidden>
-      <div style="text-align:center;padding:40px 0">
-        <div style="width:60px;height:60px;border-radius:50%;background:var(--brand-light);color:var(--brand-dark);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto">✓</div>
-        <h2 style="font-size:24px;font-weight:600;margin-top:20px">¡Cita Confirmada!</h2>
-        <p id="doneWhen" style="font:300 14px/1.6 var(--sans);color:var(--muted);margin-top:8px"></p>
-        <button class="btn" id="restart" style="margin-top:30px">Volver al Inicio</button>
+      <div class="menu-card" onclick="switchTab('reservar')">
+        <div class="ic">📅</div>
+        <span>Agenda</span>
       </div>
-    </section>
+      <div class="menu-card" onclick="switchTab('especialista')">
+        <div class="ic">👩‍🎨</div>
+        <span>Estilista</span>
+      </div>
+      <div class="menu-card" onclick="window.open('https://wa.me/50687299860')">
+        <div class="ic">💬</div>
+        <span>Contacto</span>
+      </div>
+    </div>
+
+    <!-- Próxima Cita -->
+    <div class="sec-title">
+      <h2>Próxima cita</h2>
+      <a href="#" onclick="switchTab('reservar')">Ver agenda ›</a>
+    </div>
+    <div class="card-box">
+      <div class="appt-card">
+        <img src="https://images.unsplash.com/photo-1632345031435-8727f6897d53?q=80&w=200&auto=format&fit=crop" class="img-thumb" alt="Uñas">
+        <div class="info">
+          <h3>Manicure Ruso Spa</h3>
+          <p>📅 Sáb, 29 de agosto · ⏰ 10:30 a. m.</p>
+          <p style="color:var(--brand-dark);font-weight:600;margin-top:4px">Celine Barrantes</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Promociones -->
+    <div class="sec-title">
+      <h2>Ofertas especiales</h2>
+    </div>
+    <div class="promo-banner">
+      <div>
+        <h3>Combo Uñas + Pestañas</h3>
+        <p>15% de descuento los días martes.</p>
+      </div>
+      <button class="main-cta-btn" style="width:auto;padding:8px 14px;font-size:11px;margin:0" onclick="switchTab('reservar')">Aprovechar</button>
+    </div>
   </main>
 
-  <footer id="footer">
-    <div class="ftop">
-      <span style="font:300 12px var(--sans);color:var(--muted)" id="barNote"></span>
-      <span class="total" id="total">₡0</span>
+  <!-- PESTAÑA 2: RESERVAR (Flujo) -->
+  <main id="tab-reservar" class="tab-view">
+    <div class="greeting-box">
+      <h1>Agendar Cita</h1>
+      <p>Selecciona fecha y hora disponible.</p>
     </div>
-    <button class="cta" id="cta">Continuar</button>
-  </footer>
-</div>
+
+    <div class="chips-scroll">
+      <div class="chip active">Uñas</div>
+      <div class="chip">Pestañas</div>
+      <div class="chip">Cabello</div>
+    </div>
+
+    <div class="card-box">
+      <div class="sec-title">
+        <h2>Servicio seleccionado</h2>
+      </div>
+      <div class="service-item" style="border:0;padding:0">
+        <div>
+          <h3>Manicure Ruso Spa + Semipermanente</h3>
+          <p>Duración: 1 h 30 min</p>
+        </div>
+        <div class="price">₡16.000</div>
+      </div>
+    </div>
+
+    <div class="sec-title">
+      <h2>Día disponible</h2>
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:20px">
+      <button class="chip active" style="flex:1;text-align:center">Jue 27</button>
+      <button class="chip" style="flex:1;text-align:center">Vie 28</button>
+      <button class="chip" style="flex:1;text-align:center">Sáb 29</button>
+    </div>
+
+    <div class="sec-title">
+      <h2>Horario</h2>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:24px">
+      <button class="chip active" style="text-align:center">9:00 a.m.</button>
+      <button class="chip" style="text-align:center">10:30 a.m.</button>
+      <button class="chip" style="text-align:center">2:00 p.m.</button>
+    </div>
+
+    <button class="main-cta-btn" onclick="alert('¡Cita agendada con éxito!')">
+      Confirmar Reserva
+    </button>
+  </main>
+
+  <!-- PESTAÑA 3: SERVICIOS -->
+  <main id="tab-servicios" class="tab-view">
+    <div class="greeting-box">
+      <h1>Servicios & Precios</h1>
+      <p>Catálogo completo de tratamientos.</p>
+    </div>
+
+    <div class="service-item">
+      <div>
+        <h3>Manicure Ruso Spa</h3>
+        <p>Técnica rusa + semipermanente</p>
+      </div>
+      <div class="price">₡16.000</div>
+    </div>
+
+    <div class="service-item">
+      <div>
+        <h3>Pestañas Pelo a Pelo</h3>
+        <p>Efecto natural · 2 h</p>
+      </div>
+      <div class="price">₡15.000</div>
+    </div>
+
+    <div class="service-item">
+      <div>
+        <h3>Pestañas Híbridas</h3>
+        <p>Volumen intermedio · 2 h</p>
+      </div>
+      <div class="price">₡20.000</div>
+    </div>
+
+    <div class="service-item">
+      <div>
+        <h3>Botox Capilar</h3>
+        <p>Restauración e hidratación</p>
+      </div>
+      <div class="price">₡30.000</div>
+    </div>
+  </main>
+
+  <!-- PESTAÑA 4: ESPECIALISTA -->
+  <main id="tab-especialista" class="tab-view">
+    <div class="greeting-box">
+      <h1>La Especialista</h1>
+      <p>Conoce más sobre el estudio.</p>
+    </div>
+
+    <div class="card-box" style="text-align:center">
+      <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=300&auto=format&fit=crop" style="width:90px;height:90px;border-radius:50%;object-fit:cover;margin:0 auto 12px" alt="Celine">
+      <h2>Celine Barrantes</h2>
+      <p style="font-size:12px;color:var(--ink-light);margin-top:4px">Fundadora y especialista en técnica rusa y pestañas.</p>
+    </div>
+
+    <div class="card-box">
+      <h3>📍 Ubicación del Estudio</h3>
+      <p style="font-size:12.5px;color:var(--ink-light);margin-top:6px">Pavas Centro, San José, Costa Rica.<br>Atención personalizada únicamente con cita previa.</p>
+    </div>
+  </main>
+
+  <!-- PESTAÑA 5: PERFIL -->
+  <main id="tab-perfil" class="tab-view">
+    <div class="greeting-box">
+      <h1>Mi Perfil & App</h1>
+      <p>Opciones de la aplicación.</p>
+    </div>
+
+    <div class="card-box">
+      <h3>📱 Instalar la Aplicación</h3>
+      <p style="font-size:12px;color:var(--ink-light);margin-top:4px;margin-bottom:14px">Guárdala en tu pantalla de inicio para acceder rápido.</p>
+      <button class="main-cta-btn" style="padding:10px;font-size:12px;margin:0" onclick="alert('Usa la opción «Agregar a inicio» de tu navegador')">Instalar App</button>
+    </div>
+
+    <div class="card-box">
+      <a href="admin.html" style="color:var(--brand-dark);font-size:13px;font-weight:600;text-decoration:none">🔒 Acceso Panel Administrativo</a>
+    </div>
+  </main>
+
+  <!-- BARRA DE NAVEGACIÓN INFERIOR (BOTTOM TAB BAR) -->
+  <nav class="bottom-nav">
+    <button class="tab-btn active" onclick="switchTab('inicio')">
+      <span class="ic">🏠</span>
+      <span>Inicio</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('reservar')">
+      <span class="ic">📅</span>
+      <span>Reservar</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('servicios')">
+      <span class="ic">✂️</span>
+      <span>Servicios</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('especialista')">
+      <span class="ic">👩‍🎨</span>
+      <span>Estilista</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('perfil')">
+      <span class="ic">👤</span>
+      <span>Perfil</span>
+    </button>
+  </nav>
+
 </div>
 
 <script>
-/* ── Control de Vistas ────────────────────────────────── */
-const sitio = document.getElementById('sitio');
-const reservaView = document.getElementById('reserva');
+function switchTab(tabId){
+  // Ocultar todas las vistas
+  document.querySelectorAll('.tab-view').forEach(view => view.classList.remove('active'));
+  // Desmarcar botones
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
 
-function view(name, push){
-  const booking = name === 'reserva';
-  sitio.hidden = booking;
-  reservaView.hidden = !booking;
-  if (push) history.pushState(null, '', booking ? '#reserva' : location.pathname);
+  // Activar vista seleccionada
+  const targetView = document.getElementById('tab-' + tabId);
+  if(targetView) targetView.classList.add('active');
+
+  // Marcar botón activo
+  const tabs = ['inicio', 'reservar', 'servicios', 'especialista', 'perfil'];
+  const index = tabs.indexOf(tabId);
+  if(index !== -1){
+    document.querySelectorAll('.tab-btn')[index].classList.add('active');
+  }
+
   window.scrollTo(0, 0);
 }
-
-document.querySelectorAll('a[href="#reserva"]').forEach(a => {
-  a.addEventListener('click', e => { e.preventDefault(); view('reserva', true); });
-});
-window.addEventListener('popstate', () => view(location.hash === '#reserva' ? 'reserva' : 'sitio', false));
-
-/* ── Datos de Servicios & Reserva ─────────────────────── */
-const CATS = [
-  { id:'unas', name:'Uñas' },
-  { id:'pestanas', name:'Pestañas' },
-  { id:'cabello', name:'Cabello' },
-  { id:'maquillaje', name:'Maquillaje' },
-];
-
-const SERVICES = [
-  { id:'s1', cat:'unas', name:'Manicure Ruso Spa + Semipermanente', price:16000, min:90 },
-  { id:'s2', cat:'pestanas', name:'Pestañas Pelo a Pelo', price:15000, min:120 },
-  { id:'s3', cat:'pestanas', name:'Pestañas Híbridas', price:20000, min:120 },
-  { id:'s4', cat:'cabello', name:'Botox Capilar', price:30000, min:120 },
-  { id:'s5', cat:'cabello', name:'Nanoplastia', price:50000, min:180 },
-  { id:'s6', cat:'maquillaje', name:'Maquillaje y Peinado', price:45000, min:120 },
-];
-
-const SPECIALISTS = [
-  { id:'celine', name:'Celine Barrantes', note:'Especialista Principal · Fundadora' }
-];
-
-const METHODS = [
-  { id:'sinpe', name:'SINPE Móvil', note:'Pago al finalizar el servicio' },
-  { id:'efectivo', name:'Efectivo en Recepción', note:'Pago directo el día de la cita' }
-];
-
-const DAYS = [
-  { key:'d1', dow:'Mar', num:25 },
-  { key:'d2', dow:'Mié', num:26 },
-  { key:'d3', dow:'Jue', num:27 },
-  { key:'d4', dow:'Vie', num:28 },
-  { key:'d5', dow:'Sáb', num:29 }
-];
-
-const AM = ['9:00','10:30','11:30'];
-const PM = ['1:00','2:30','4:00'];
-
-const state = { step:0, cat:'unas', picked:['s1'], who:'celine', day:'d3', time:'10:30', method:'sinpe' };
-
-const crc = n => '₡' + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-const el = id => document.getElementById(id);
-const tag = html => { const t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstElementChild; };
-
-function render(){
-  const s = state.step;
-  el('stepLabel').textContent = s < 4 ? `Paso ${s+1} de 4` : 'Confirmación';
-  el('progress').style.width = [25,50,75,100,100][s] + '%';
-  
-  for (let i = 0; i < 5; i++) el('step' + i).hidden = i !== s;
-
-  // Render Categorías
-  el('chips').replaceChildren(...CATS.map(c => {
-    const b = tag(`<button class="chip" aria-pressed="${state.cat===c.id}">${c.name}</button>`);
-    b.onclick = () => { state.cat = c.id; render(); };
-    return b;
-  }));
-
-  // Render Servicios
-  el('services').replaceChildren(...SERVICES.filter(x => x.cat === state.cat).map(x => {
-    const on = state.picked.includes(x.id);
-    const r = tag(`<div class="row" aria-pressed="${on}">
-      <div>
-        <div class="name">${x.name}</div>
-        <div class="meta">${x.min} min · Celine</div>
-      </div>
-      <div style="display:flex;align-items:center;gap:12px">
-        <span class="price">${crc(x.price)}</span>
-        <span class="dot">${on?'✓':''}</span>
-      </div>
-    </div>`);
-    r.onclick = () => {
-      state.picked = on ? state.picked.filter(i => i !== x.id) : [...state.picked, x.id];
-      render();
-    };
-    return r;
-  }));
-
-  // Render Especialistas
-  el('specialists').replaceChildren(...SPECIALISTS.map(p => {
-    const on = state.who === p.id;
-    const r = tag(`<div class="row" aria-pressed="${on}">
-      <div><div class="name">${p.name}</div><div class="meta">${p.note}</div></div>
-      <span class="dot">${on?'✓':''}</span>
-    </div>`);
-    return r;
-  }));
-
-  // Render Días
-  el('days').replaceChildren(...DAYS.map(d => {
-    const b = tag(`<div class="day" aria-pressed="${state.day===d.key}">
-      <div class="dw">${d.dow}</div><div class="dn">${d.num}</div>
-    </div>`);
-    b.onclick = () => { state.day = d.key; render(); };
-    return b;
-  }));
-
-  // Render Slots
-  const slotBtns = list => list.map(t => {
-    const b = tag(`<div class="slot" aria-pressed="${state.time===t}">${t}</div>`);
-    b.onclick = () => { state.time = t; render(); };
-    return b;
-  });
-  el('amSlots').replaceChildren(...slotBtns(AM));
-  el('pmSlots').replaceChildren(...slotBtns(PM));
-
-  // Totales
-  const chosen = SERVICES.filter(s => state.picked.includes(s.id));
-  const total = chosen.reduce((a,s) => a + s.price, 0);
-  el('total').textContent = crc(total);
-  el('barNote').textContent = `${chosen.length} servicio(s) seleccionado(s)`;
-
-  // Resumen
-  el('sumLines').replaceChildren(...chosen.map(x => tag(`<div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-weight:500">${x.name}</span><span>${crc(x.price)}</span></div>`)));
-  el('sumWhen').innerHTML = `Fecha: Jueves 27 de Agosto · ${state.time}<br>Especialista: Celine Barrantes`;
-
-  // Métodos de Pago
-  el('methods').replaceChildren(...METHODS.map(m => {
-    const on = state.method === m.id;
-    const r = tag(`<div class="row" aria-pressed="${on}">
-      <div><div class="name">${m.name}</div><div class="meta">${m.note}</div></div>
-      <span class="dot">${on?'✓':''}</span>
-    </div>`);
-    r.onclick = () => { state.method = m.id; render(); };
-    return r;
-  }));
-
-  el('doneWhen').innerHTML = `Te esperamos el Jueves 27 a las ${state.time}<br>Pavas Centro, San José.`;
-  el('footer').hidden = s === 4;
-}
-
-const go = n => { state.step = Math.max(0, Math.min(4, n)); window.scrollTo(0,0); render(); };
-el('cta').onclick = () => go(state.step + 1);
-el('back').onclick = () => go(state.step - 1);
-el('restart').onclick = () => { go(0); view('sitio', true); };
-el('backToSite').onclick = () => view('sitio', true);
-
-render();
-if (location.hash === '#reserva') view('reserva', false);
 </script>
 </body>
 </html>
