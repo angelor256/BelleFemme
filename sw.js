@@ -1,7 +1,7 @@
 /* Belle Femme · service worker
    Cache-first para los archivos propios, red para lo demás.
    Suba la versión cada vez que publique cambios. */
-const VERSION = 'bf-v4';
+const VERSION = 'bf-v3';
 const ASSETS = [
   './',
   './index.html',
