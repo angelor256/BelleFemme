@@ -113,26 +113,29 @@
   .toast .x{background:none;border:0;color:var(--muted);font-size:16px;cursor:pointer;padding:0 4px}
 
   /* ── Panel de inicio estilo app (móvil) ── */
-  .dash{display:none}
+  .screen{display:none}
   .tabbar{display:none}
   @media (max-width:760px){
-    .hero{display:none}
-    .dash{display:block;padding:22px 0 30px}
+    .hero,.strip,.install{display:none}
+    #servicios,.about,#visita{display:none}
+    footer.site-footer{display:none}
+    .dash{padding:22px 0 30px}
     body{padding-bottom:calc(70px + env(safe-area-inset-bottom))}
+    .screen.active{display:block;animation:scr-in .22s ease}
   }
+  @keyframes scr-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
   .dash-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
   .dash-title{font-size:clamp(30px,8vw,36px);margin-top:6px}
   .dash-sub{margin-top:6px}
   .dash-bell{width:46px;height:46px;border-radius:50%;background:#F2DCE1;flex:none;display:flex;align-items:center;justify-content:center;color:var(--accent)}
   .dash-cta{margin-top:24px;display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:17px;background:var(--accent);color:#fff;font:400 12.5px var(--sans);letter-spacing:.1em;border:0;cursor:pointer}
   .dash-quick{margin-top:22px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;text-align:center}
-  .dash-quick a{display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--ink);font:400 10.5px var(--sans)}
+  .dash-quick a,.dash-quick button{display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--ink);font:400 10.5px var(--sans);background:none;border:0;padding:0;cursor:pointer;font-family:var(--sans)}
   .dash-quick .qi{width:100%;aspect-ratio:1;border-radius:16px;background:#F7EAEC;display:flex;align-items:center;justify-content:center;color:var(--accent);position:relative}
-  .dash-badge{position:absolute;top:-4px;right:-4px;background:var(--accent);color:#fff;font:400 9px/1 var(--sans);width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center}
   .dash-row{margin-top:30px;display:flex;justify-content:space-between;align-items:baseline}
   .dash-row .eyebrow{color:var(--muted-2)}
-  .dash-row a{font:400 11px var(--sans)}
-  .dash-card{margin-top:14px;background:var(--card);border:1px solid var(--line);padding:16px;display:flex;gap:14px;align-items:center}
+  .dash-row button{background:none;border:0;padding:0;font:400 11px var(--sans);color:var(--accent);cursor:pointer}
+  .dash-card{margin-top:14px;background:var(--card);border:1px solid var(--line);padding:16px;display:flex;gap:14px;align-items:center;width:100%;text-align:left;cursor:pointer}
   .dash-thumb{width:56px;height:56px;flex:none;border-radius:12px;background:#EEDCE0}
   .dash-card .name{font-family:var(--serif);font-size:17px;line-height:1.25}
   .dash-card .meta{font:300 11.5px var(--sans);color:var(--muted);margin-top:4px;display:flex;align-items:center;gap:6px}
@@ -146,6 +149,36 @@
   .tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 2px;color:var(--muted-2);background:none;border:0;font:400 9.5px var(--sans)}
   .tab svg{width:21px;height:21px}
   .tab.active{color:var(--accent)}
+
+  /* ── Pantallas de app: Servicios / Celine / Visítenos ── */
+  .scr-top{position:sticky;top:64px;z-index:10;background:rgba(251,243,241,.96);backdrop-filter:blur(8px);padding:18px 0 14px;border-bottom:1px solid var(--line)}
+  .scr-top h2{font-size:24px}
+  .scr-top p{margin-top:4px}
+  .scr-body{padding:18px 0 30px}
+  .scr-chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .scr-chip{padding:9px 15px;border-radius:999px;border:1px solid #E0CDD0;background:none;font:400 10.5px var(--sans);letter-spacing:.08em;text-transform:uppercase;color:#8C7E80;cursor:pointer}
+  .scr-chip.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+  .scr-list{display:flex;flex-direction:column;gap:10px;margin-top:16px}
+  .scr-row{display:flex;justify-content:space-between;align-items:center;gap:14px;background:var(--card);border:1px solid var(--line);padding:16px 18px;cursor:pointer;width:100%;text-align:left;font:inherit;color:inherit}
+  .scr-row .name{font-family:var(--serif);font-size:17px;line-height:1.3}
+  .scr-row .meta{font:300 11px var(--sans);color:var(--muted);margin-top:4px}
+  .scr-row .right{text-align:right;flex:none;display:flex;align-items:center;gap:10px}
+  .scr-row .price{font:400 12.5px var(--sans)}
+  .scr-row .go{color:var(--muted-2)}
+  .profile-card{margin-top:4px;background:var(--card);border:1px solid var(--line);padding:28px 22px;text-align:center}
+  .profile-avatar{width:72px;height:72px;border-radius:50%;background:#EEDCE0;color:var(--accent);display:flex;align-items:center;justify-content:center;font:400 19px var(--sans);margin:0 auto}
+  .profile-name{font-family:var(--serif);font-size:22px;margin-top:14px}
+  .profile-role{font:300 11px var(--sans);color:var(--muted);margin-top:4px;letter-spacing:.04em}
+  .map-card{margin-top:4px;border:1px solid var(--line);overflow:hidden}
+  .map-card iframe{display:block;width:100%;height:160px;border:0;filter:saturate(.8) contrast(1.02)}
+  .info-rows{margin-top:6px;display:flex;flex-direction:column}
+  .info-row{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid #F2E7E7}
+  .info-row:last-child{border-bottom:0}
+  .info-row .ic{width:36px;height:36px;border-radius:50%;background:#F7EAEC;color:var(--accent);display:flex;align-items:center;justify-content:center;flex:none}
+  .info-row .t{font:400 12.5px var(--sans)}
+  .info-row .s{font:300 12px/1.6 var(--sans);color:var(--muted);margin-top:2px}
+  .scr-fine{margin-top:22px;font:300 11px/1.8 var(--sans);color:var(--muted);text-align:center}
+  @media (max-width:760px){ .toast{bottom:calc(78px + env(safe-area-inset-bottom))} }
   #inicio,#servicios,#celine,#visita{scroll-margin-top:76px}
 </style>
 <style>
@@ -236,7 +269,7 @@
   </div>
 </nav>
 
-<section class="dash" id="inicio">
+<section class="dash screen active" id="inicio">
   <div class="wrap">
     <div class="dash-head">
       <div>
@@ -255,18 +288,18 @@
     </a>
 
     <div class="dash-quick">
-      <a href="#servicios">
+      <button type="button" data-tab="servicios">
         <span class="qi"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="6" cy="6" r="2.6"/><circle cx="6" cy="18" r="2.6"/><path d="M20 4 8.5 15.5M12.5 12 20 20M9.7 8.2 15 13.5"/></svg></span>
         Servicios
-      </a>
-      <a href="#visita">
+      </button>
+      <button type="button" data-tab="visita">
         <span class="qi"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8.3"/><path d="M12 7.5V12l3 2"/></svg></span>
         Horario
-      </a>
-      <a href="#celine">
+      </button>
+      <button type="button" data-tab="celine">
         <span class="qi"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c1.4-4 4-6 7.5-6s6.1 2 7.5 6"/></svg></span>
         Celine
-      </a>
+      </button>
       <a href="https://wa.me/50687299860">
         <span class="qi"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 11.5a8.38 8.38 0 0 1-4.8 7.6 8.5 8.5 0 0 1-8.4-.3L3 20l1.3-4.5A8.5 8.5 0 1 1 21 11.5Z"/></svg></span>
         WhatsApp
@@ -275,9 +308,9 @@
 
     <div class="dash-row">
       <div class="eyebrow">Servicio destacado</div>
-      <a href="#servicios">Ver carta &#8594;</a>
+      <button type="button" data-tab="servicios">Ver carta &#8594;</button>
     </div>
-    <a class="dash-card" href="#reserva" style="color:inherit;text-decoration:none">
+    <button type="button" class="dash-card" id="dashFeatured">
       <div class="dash-thumb"></div>
       <div>
         <div class="name">Manicure ruso spa + semipermanente</div>
@@ -287,7 +320,7 @@
           Con Celine Barrantes
         </div>
       </div>
-    </a>
+    </button>
 
     <a class="dash-promo" href="https://instagram.com/bellefemme_costarica">
       <div>
@@ -296,6 +329,68 @@
       </div>
       <span>&#8250;</span>
     </a>
+  </div>
+</section>
+
+<section class="screen" id="servicios-screen">
+  <div class="scr-top wrap">
+    <h2>Servicios</h2>
+    <p>Precios en colones · toque un servicio para reservarlo</p>
+    <div class="scr-chips" id="scrChips"></div>
+  </div>
+  <div class="scr-body wrap">
+    <div class="scr-list" id="scrServices"></div>
+  </div>
+</section>
+
+<section class="screen" id="celine-screen">
+  <div class="scr-top wrap">
+    <h2>Celine Barrantes</h2>
+    <p>Especialista y fundadora</p>
+  </div>
+  <div class="scr-body wrap">
+    <div class="profile-card">
+      <div class="profile-avatar">CB</div>
+      <div class="profile-name">Celine Barrantes</div>
+      <div class="profile-role">UÑAS · PESTAÑAS · CABELLO · MAQUILLAJE</div>
+    </div>
+    <p style="margin-top:20px">Fundadora de Belle Femme. Atiende personalmente cada cita de uñas, pestañas, cabello y maquillaje en el estudio de Pavas Centro.</p>
+    <p style="margin-top:12px">La agenda se maneja por bloques según el servicio, de manera que no haya traslapes ni esperas: al reservar en línea usted ve únicamente los horarios en los que hay tiempo real disponible.</p>
+    <div style="margin-top:22px;display:flex;gap:10px">
+      <a class="btn rose" href="#reserva" id="bookWithCeline" style="flex:1;text-align:center">Ver disponibilidad</a>
+      <a class="btn ghost" href="https://instagram.com/bellefemme_costarica" style="flex:1;text-align:center">Instagram</a>
+    </div>
+  </div>
+</section>
+
+<section class="screen" id="visita-screen">
+  <div class="scr-top wrap">
+    <h2>Visítenos</h2>
+    <p>Pavas Centro, San José</p>
+  </div>
+  <div class="scr-body wrap">
+    <div class="map-card">
+      <iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Pavas+Centro,+San+Jos%C3%A9,+Costa+Rica&output=embed" title="Ubicación de Belle Femme en Pavas Centro"></iframe>
+    </div>
+    <div class="info-rows">
+      <div class="info-row">
+        <span class="ic"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21Z"/><circle cx="12" cy="9.3" r="2.3"/></svg></span>
+        <div><div class="t">Dirección</div><div class="s">Pavas Centro, San José, Costa Rica. Confirmamos el punto exacto al aprobar su cita.</div></div>
+      </div>
+      <div class="info-row">
+        <span class="ic"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8.3"/><path d="M12 7.5V12l3 2"/></svg></span>
+        <div><div class="t">Horario</div><div class="s">Martes a sábado, 9:00 a. m. – 6:00 p. m. Domingo y lunes cerrado.</div></div>
+      </div>
+      <div class="info-row">
+        <span class="ic"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 11.5a8.38 8.38 0 0 1-4.8 7.6 8.5 8.5 0 0 1-8.4-.3L3 20l1.3-4.5A8.5 8.5 0 1 1 21 11.5Z"/></svg></span>
+        <div><div class="t">WhatsApp</div><div class="s"><a href="https://wa.me/50687299860">8729 9860</a></div></div>
+      </div>
+      <div class="info-row">
+        <span class="ic"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/><circle cx="12" cy="12" r="3.6"/><circle cx="16.6" cy="7.4" r=".6" fill="currentColor" stroke="none"/></svg></span>
+        <div><div class="t">Instagram</div><div class="s"><a href="https://instagram.com/bellefemme_costarica">@bellefemme_costarica</a></div></div>
+      </div>
+    </div>
+    <p class="scr-fine">Sin adelanto. El pago se realiza por SINPE Móvil o efectivo al finalizar el servicio.<br>Cancelación sin costo hasta 12 horas antes.<br><a href="admin.html">Panel del salón</a></p>
   </div>
 </section>
 
@@ -421,7 +516,7 @@
   </div>
 </section>
 
-<footer>
+<footer class="site-footer">
   <div class="wrap">
     <div class="mark">Belle Femme</div>
     <p>by Celine Barrantes · Pavas Centro, Costa Rica<br>SINPE Móvil o efectivo · Cancelación hasta 12 h antes<br><a href="admin.html" style="font-size:11px;color:var(--muted)">Panel del salón</a></p>
@@ -552,22 +647,30 @@ document.querySelectorAll('a[href="#reserva"]').forEach(a => {
 });
 window.addEventListener('popstate', () => view(location.hash === '#reserva' ? 'reserva' : 'sitio', false));
 
-/* ── Barra inferior: resalta la sección visible ───────────── */
+/* ── Barra inferior: pantallas reales, no scroll ──────────── */
+const screens = { inicio: document.getElementById('inicio'), servicios: document.getElementById('servicios-screen'), celine: document.getElementById('celine-screen'), visita: document.getElementById('visita-screen') };
 const tabs = document.querySelectorAll('.tab');
-const setActiveTab = name => tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === name));
-const spySections = ['inicio', 'servicios', 'celine', 'visita']
-  .map(id => document.getElementById(id))
-  .filter(Boolean);
-if ('IntersectionObserver' in window && spySections.length) {
-  const spy = new IntersectionObserver(entries => {
-    const visible = entries.filter(e => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-    if (visible) setActiveTab(visible.target.id);
-  }, { rootMargin: '-45% 0px -45% 0px', threshold: [0, .25, .5, .75, 1] });
-  spySections.forEach(s => spy.observe(s));
+function showScreen(name){
+  if (!screens[name]) return;
+  Object.values(screens).forEach(s => s.classList.remove('active'));
+  screens[name].classList.add('active');
+  tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+  screens[name].scrollTop = 0;
+  window.scrollTo(0, 0);
 }
-tabs.forEach(t => {
-  if (t.dataset.tab === 'reservar') t.addEventListener('click', () => setActiveTab('reservar'));
+document.querySelectorAll('[data-tab]').forEach(elm => {
+  elm.addEventListener('click', e => {
+    const name = elm.dataset.tab;
+    if (name === 'reservar') return; /* ya lo maneja el listener de #reserva */
+    e.preventDefault();
+    showScreen(name);
+  });
 });
+document.getElementById('dashFeatured').addEventListener('click', () => {
+  state.cat = 'unas'; state.picked = ['s1']; state.step = 0;
+  view('reserva', true); render();
+});
+document.getElementById('bookWithCeline').addEventListener('click', () => { state.who = 'celine'; });
 
 /* ── Lógica del flujo de reserva ──────────────────────────── */
 /* Datos de demostración. En producción vienen de Supabase:
@@ -622,6 +725,7 @@ const TITLES = ['Elija sus servicios','¿Con quién desea atenderse?','Fecha y h
 const CTAS   = ['Continuar','Elegir fecha','Revisar','Confirmar cita',''];
 
 const state = { step:0, cat:'unas', picked:['s1'], who:'celine', day:'d3', time:null, method:'sinpe', reminder:true };
+let scrCat = 'unas';
 
 const crc = n => '₡' + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 const dur = m => m < 60 ? m + ' min' : Math.floor(m/60) + ' h' + (m%60 ? ' ' + (m%60) + ' min' : '');
@@ -731,6 +835,27 @@ el('ics').onclick = () => alert('Aquí se genera el archivo .ics o se llama al c
 render();
 document.getElementById('backToSite').addEventListener('click', () => view('sitio', true));
 if (location.hash === '#reserva') view('reserva', false);
+
+/* ── Pantalla “Servicios” de la barra inferior ────────────── */
+function renderServiciosScreen(){
+  el('scrChips').replaceChildren(...CATS.map(c => {
+    const b = tag(`<button class="scr-chip ${scrCat===c.id?'on':''}">${c.name}</button>`);
+    b.onclick = () => { scrCat = c.id; renderServiciosScreen(); };
+    return b;
+  }));
+  el('scrServices').replaceChildren(...SERVICES.filter(x => x.cat === scrCat).map(x => {
+    const r = tag(`<button class="scr-row">
+      <span><span class="name">${x.name}</span><span class="meta" style="display:block">${dur(x.min)} · con Celine</span></span>
+      <span class="right"><span class="price">${crc(x.price)}</span><span class="go">&#8250;</span></span>
+    </button>`);
+    r.onclick = () => {
+      state.cat = x.cat; state.picked = [x.id]; state.step = 0; state.time = null;
+      view('reserva', true); render();
+    };
+    return r;
+  }));
+}
+renderServiciosScreen();
 
 /* Service worker: permite abrirla sin conexión y en modo app */
 if ('serviceWorker' in navigator) {
