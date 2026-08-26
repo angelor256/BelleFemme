@@ -124,9 +124,9 @@
 </style>
 <style>
 /* ── Flujo de reserva, misma página ── */
-#reserva:not([hidden]){min-height:100vh;display:flex;justify-content:center}
+:is(#reserva,#perfil):not([hidden]){min-height:100vh;display:flex;justify-content:center}
 
-#reserva{
+:is(#reserva,#perfil){
     --accent:#A8586E; --ink:#241C1F; --paper:#FBF3F1; --card:#fff;
     --line:#EFE1E1; --line-2:#EBD9DB; --muted:#9A8C8E; --muted-2:#A08E90;
     --disabled-bg:#F3EAEA; --disabled-fg:#C0B2B4;
@@ -134,63 +134,81 @@
     --sans:'Jost',system-ui,-apple-system,sans-serif;
     --gut:28px;
   }
-#reserva *{box-sizing:border-box}
+:is(#reserva,#perfil) *{box-sizing:border-box}
 
-#reserva{background:var(--paper)}
-#reserva .app{width:100%;max-width:460px;margin:0 auto;min-height:100vh;background:var(--paper);display:flex;flex-direction:column;position:relative}
-#reserva .eyebrow{font:400 9px/1 var(--sans);letter-spacing:.28em;text-transform:uppercase;color:var(--muted-2)}
-#reserva .h1{font-family:var(--serif);font-weight:300;font-size:28px;line-height:1.22}
-#reserva .hint{font:300 11.5px/1.7 var(--sans);color:var(--muted);margin-top:18px}
-#reserva .price{font:400 13px var(--sans)}
-#reserva .name{font-family:var(--serif);font-size:19px;line-height:1.3}
-#reserva header{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px solid var(--line);padding:calc(16px + env(safe-area-inset-top)) var(--gut) 16px}
-#reserva .hrow{display:flex;align-items:center;justify-content:space-between;gap:12px}
-#reserva .back{width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:17px;background:none;border:0;color:var(--ink);cursor:pointer;margin-left:-9px}
-#reserva .bar{margin-top:16px;height:1px;background:var(--line-2);position:relative}
-#reserva .bar span{position:absolute;inset:0 auto 0 0;background:var(--accent);transition:width .3s ease}
-#reserva main{flex:1;padding:26px var(--gut) 30px}
-#reserva section[hidden]{display:none}
-#reserva .chips{display:flex;gap:8px;flex-wrap:wrap}
-#reserva .chip{padding:10px 17px;border-radius:999px;border:1px solid #E0CDD0;background:none;font:400 11px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:#8C7E80;cursor:pointer}
-#reserva .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
-#reserva .list{display:flex;flex-direction:column;gap:11px;margin-top:20px}
-#reserva .row{width:100%;text-align:left;background:var(--card);border:1px solid var(--line);padding:18px 20px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;cursor:pointer;font:inherit;color:inherit;transition:border-color .15s}
-#reserva .row[aria-pressed="true"]{border-color:var(--accent)}
-#reserva .row .meta{font:300 11.5px/1.6 var(--sans);color:var(--muted);margin-top:5px}
-#reserva .dot{width:22px;height:22px;border-radius:50%;border:1px solid #DFCED1;color:#fff;font:400 12px/20px var(--sans);text-align:center;flex:none;margin-left:auto}
-#reserva .row[aria-pressed="true"] .dot{background:var(--accent);border-color:var(--accent)}
-#reserva .row .right{text-align:right;flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
-#reserva .avatar{width:54px;height:54px;border-radius:50%;background:#EEDCE0;flex:none;display:flex;align-items:center;justify-content:center;font:400 10px var(--sans);letter-spacing:.1em;color:var(--accent)}
-#reserva .days{display:flex;gap:8px}
-#reserva .day{flex:1;min-width:0;text-align:center;padding:13px 0;border:1px solid var(--line-2);background:var(--card);cursor:pointer;font:inherit;color:inherit}
-#reserva .day[aria-pressed="true"]{background:var(--ink);border-color:var(--ink)}
-#reserva .day .dw{font:400 8.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2)}
-#reserva .day .dn{font-family:var(--serif);font-size:20px;margin-top:6px}
-#reserva .day[aria-pressed="true"] .dw{color:#D9AEB9}
-#reserva .day[aria-pressed="true"] .dn{color:#fff}
-#reserva .day:disabled{background:var(--disabled-bg);border-color:transparent;color:var(--disabled-fg);cursor:default}
-#reserva .slots{margin-top:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-#reserva .slot{padding:14px 0;border:1px solid var(--line-2);background:var(--card);font:400 12.5px var(--sans);color:var(--ink);cursor:pointer}
-#reserva .slot[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
-#reserva .slot:disabled{background:var(--disabled-bg);border-color:transparent;color:var(--disabled-fg);text-decoration:line-through;cursor:default}
-#reserva .card{background:var(--card);border:1px solid var(--line);padding:22px}
-#reserva .li{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:7px 0}
-#reserva .li .name{font-size:18px}
-#reserva .rule{margin-top:16px;padding-top:16px;border-top:1px solid #F2E7E7}
-#reserva .switchrow{margin-top:18px;background:#F5E9EA;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:16px;border:0;width:100%;cursor:pointer;font:300 12px/1.6 var(--sans);color:#5E5254;text-align:left}
-#reserva .switch{width:40px;height:22px;border-radius:999px;background:#DDCED0;position:relative;flex:none;transition:background .2s}
-#reserva .switch i{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .2s}
-#reserva .switchrow[aria-pressed="true"] .switch{background:var(--accent)}
-#reserva .switchrow[aria-pressed="true"] .switch i{left:20px}
-#reserva .done{text-align:center;padding-top:28px}
-#reserva .tick{width:66px;height:66px;border-radius:50%;border:1px solid #D9AEB9;margin:0 auto;display:flex;align-items:center;justify-content:center;font:300 24px var(--sans);color:var(--accent)}
-#reserva footer{position:sticky;bottom:0;background:var(--paper);border-top:1px solid var(--line);padding:16px var(--gut) calc(18px + env(safe-area-inset-bottom))}
-#reserva .ftop{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:14px}
-#reserva .total{font-family:var(--serif);font-size:21px}
-#reserva .cta{width:100%;padding:17px;border:0;background:var(--ink);color:var(--paper);font:400 11.5px var(--sans);letter-spacing:.18em;text-transform:uppercase;cursor:pointer}
-#reserva .cta:disabled{background:#E4D6D8;color:#A79B9C;cursor:default}
-#reserva .ghost{width:100%;padding:15px;background:none;border:1px solid var(--ink);color:var(--ink);font:400 11.5px var(--sans);letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
-#reserva .link{width:100%;padding:14px;background:none;border:0;color:var(--accent);font:400 11.5px var(--sans);letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
+:is(#reserva,#perfil){background:var(--paper)}
+:is(#reserva,#perfil) .app{width:100%;max-width:460px;margin:0 auto;min-height:100vh;background:var(--paper);display:flex;flex-direction:column;position:relative}
+:is(#reserva,#perfil) .eyebrow{font:400 9px/1 var(--sans);letter-spacing:.28em;text-transform:uppercase;color:var(--muted-2)}
+:is(#reserva,#perfil) .h1{font-family:var(--serif);font-weight:300;font-size:28px;line-height:1.22}
+:is(#reserva,#perfil) .hint{font:300 11.5px/1.7 var(--sans);color:var(--muted);margin-top:18px}
+:is(#reserva,#perfil) .price{font:400 13px var(--sans)}
+:is(#reserva,#perfil) .name{font-family:var(--serif);font-size:19px;line-height:1.3}
+:is(#reserva,#perfil) header{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px solid var(--line);padding:calc(16px + env(safe-area-inset-top)) var(--gut) 16px}
+:is(#reserva,#perfil) .hrow{display:flex;align-items:center;justify-content:space-between;gap:12px}
+:is(#reserva,#perfil) .back{width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:17px;background:none;border:0;color:var(--ink);cursor:pointer;margin-left:-9px}
+:is(#reserva,#perfil) .bar{margin-top:16px;height:1px;background:var(--line-2);position:relative}
+:is(#reserva,#perfil) .bar span{position:absolute;inset:0 auto 0 0;background:var(--accent);transition:width .3s ease}
+:is(#reserva,#perfil) main{flex:1;padding:26px var(--gut) 30px}
+:is(#reserva,#perfil) section[hidden]{display:none}
+:is(#reserva,#perfil) .chips{display:flex;gap:8px;flex-wrap:wrap}
+:is(#reserva,#perfil) .chip{padding:10px 17px;border-radius:999px;border:1px solid #E0CDD0;background:none;font:400 11px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:#8C7E80;cursor:pointer}
+:is(#reserva,#perfil) .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+:is(#reserva,#perfil) .list{display:flex;flex-direction:column;gap:11px;margin-top:20px}
+:is(#reserva,#perfil) .row{width:100%;text-align:left;background:var(--card);border:1px solid var(--line);padding:18px 20px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;cursor:pointer;font:inherit;color:inherit;transition:border-color .15s}
+:is(#reserva,#perfil) .row[aria-pressed="true"]{border-color:var(--accent)}
+:is(#reserva,#perfil) .row .meta{font:300 11.5px/1.6 var(--sans);color:var(--muted);margin-top:5px}
+:is(#reserva,#perfil) .dot{width:22px;height:22px;border-radius:50%;border:1px solid #DFCED1;color:#fff;font:400 12px/20px var(--sans);text-align:center;flex:none;margin-left:auto}
+:is(#reserva,#perfil) .row[aria-pressed="true"] .dot{background:var(--accent);border-color:var(--accent)}
+:is(#reserva,#perfil) .row .right{text-align:right;flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+:is(#reserva,#perfil) .avatar{width:54px;height:54px;border-radius:50%;background:#EEDCE0;flex:none;display:flex;align-items:center;justify-content:center;font:400 10px var(--sans);letter-spacing:.1em;color:var(--accent)}
+:is(#reserva,#perfil) .days{display:flex;gap:8px}
+:is(#reserva,#perfil) .day{flex:1;min-width:0;text-align:center;padding:13px 0;border:1px solid var(--line-2);background:var(--card);cursor:pointer;font:inherit;color:inherit}
+:is(#reserva,#perfil) .day[aria-pressed="true"]{background:var(--ink);border-color:var(--ink)}
+:is(#reserva,#perfil) .day .dw{font:400 8.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2)}
+:is(#reserva,#perfil) .day .dn{font-family:var(--serif);font-size:20px;margin-top:6px}
+:is(#reserva,#perfil) .day[aria-pressed="true"] .dw{color:#D9AEB9}
+:is(#reserva,#perfil) .day[aria-pressed="true"] .dn{color:#fff}
+:is(#reserva,#perfil) .day:disabled{background:var(--disabled-bg);border-color:transparent;color:var(--disabled-fg);cursor:default}
+:is(#reserva,#perfil) .slots{margin-top:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+:is(#reserva,#perfil) .slot{padding:14px 0;border:1px solid var(--line-2);background:var(--card);font:400 12.5px var(--sans);color:var(--ink);cursor:pointer}
+:is(#reserva,#perfil) .slot[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+:is(#reserva,#perfil) .slot:disabled{background:var(--disabled-bg);border-color:transparent;color:var(--disabled-fg);text-decoration:line-through;cursor:default}
+:is(#reserva,#perfil) .card{background:var(--card);border:1px solid var(--line);padding:22px}
+:is(#reserva,#perfil) .li{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:7px 0}
+:is(#reserva,#perfil) .li .name{font-size:18px}
+:is(#reserva,#perfil) .rule{margin-top:16px;padding-top:16px;border-top:1px solid #F2E7E7}
+:is(#reserva,#perfil) .switchrow{margin-top:18px;background:#F5E9EA;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:16px;border:0;width:100%;cursor:pointer;font:300 12px/1.6 var(--sans);color:#5E5254;text-align:left}
+:is(#reserva,#perfil) .switch{width:40px;height:22px;border-radius:999px;background:#DDCED0;position:relative;flex:none;transition:background .2s}
+:is(#reserva,#perfil) .switch i{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .2s}
+:is(#reserva,#perfil) .switchrow[aria-pressed="true"] .switch{background:var(--accent)}
+:is(#reserva,#perfil) .switchrow[aria-pressed="true"] .switch i{left:20px}
+:is(#reserva,#perfil) .done{text-align:center;padding-top:28px}
+:is(#reserva,#perfil) .tick{width:66px;height:66px;border-radius:50%;border:1px solid #D9AEB9;margin:0 auto;display:flex;align-items:center;justify-content:center;font:300 24px var(--sans);color:var(--accent)}
+:is(#reserva,#perfil) footer{position:sticky;bottom:0;background:var(--paper);border-top:1px solid var(--line);padding:16px var(--gut) calc(18px + env(safe-area-inset-bottom))}
+:is(#reserva,#perfil) .ftop{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:14px}
+:is(#reserva,#perfil) .total{font-family:var(--serif);font-size:21px}
+:is(#reserva,#perfil) .cta{width:100%;padding:17px;border:0;background:var(--ink);color:var(--paper);font:400 11.5px var(--sans);letter-spacing:.18em;text-transform:uppercase;cursor:pointer}
+:is(#reserva,#perfil) .cta:disabled{background:#E4D6D8;color:#A79B9C;cursor:default}
+:is(#reserva,#perfil) .ghost{width:100%;padding:15px;background:none;border:1px solid var(--ink);color:var(--ink);font:400 11.5px var(--sans);letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
+:is(#reserva,#perfil) .link{width:100%;padding:14px;background:none;border:0;color:var(--accent);font:400 11.5px var(--sans);letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
+/* ── Perfil de la clienta ── */
+#perfil .fld{display:block;margin-top:16px}
+#perfil .lb{font:400 9px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2)}
+#perfil input,#perfil select,#perfil textarea{width:100%;margin-top:8px;padding:14px 15px;border:1px solid var(--line-2);background:var(--card);border-radius:0;-webkit-appearance:none;appearance:none;font:400 14px var(--sans);color:var(--ink)}
+#perfil textarea{min-height:74px;resize:vertical;line-height:1.6}
+#perfil select{padding-right:38px;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 22px) 22px,calc(100% - 17px) 22px;background-size:5px 5px;background-repeat:no-repeat;cursor:pointer}
+#perfil input:focus,#perfil select:focus,#perfil textarea:focus{outline:0;border-color:var(--accent)}
+#perfil .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#perfil .two .fld{margin-top:0}
+#perfil .pcard{background:var(--card);border:1px solid var(--line);padding:22px}
+#perfil .pv{font-family:var(--serif);font-size:19px;line-height:1.35;margin-top:8px}
+#perfil .dl{display:grid;grid-template-columns:auto 1fr;gap:10px 18px;font:300 12.5px/1.6 var(--sans);color:#7A6C6E}
+#perfil .dl b{font:400 12.5px var(--sans);color:var(--muted-2);white-space:nowrap}
+#perfil .switchrow.sub{margin-top:1px;background:var(--card);border:1px solid var(--line);padding:15px 18px}
+#perfil .switchrow.sub .n{font:400 13px var(--sans);color:var(--ink)}
+#perfil .switchrow.sub .m{font:300 11.5px/1.5 var(--sans);color:var(--muted);margin-top:3px;display:block}
+#perfil .msg{margin-top:14px;font:300 12px/1.6 var(--sans);color:var(--accent)}
+#perfil .danger{width:100%;padding:14px;background:none;border:0;color:var(--muted);font:400 10.5px var(--sans);letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
 
 </style>
 </head>
@@ -202,8 +220,9 @@
     <span class="mark">Belle Femme</span>
     <ul>
       <li><a href="#servicios">Servicios</a></li>
-      <li><a href="#celine">La especialista</a></li>
+      <li><a href="#celine">El equipo</a></li>
       <li><a href="#visita">Visítenos</a></li>
+      <li><a href="#perfil">Mi perfil</a></li>
       <li><a href="#app">App</a></li>
     </ul>
     <a class="btn" href="#reserva">Reservar</a>
@@ -278,7 +297,7 @@
   <div class="wrap grid">
     <div class="frame"><span class="eyebrow">Retrato de Celine</span></div>
     <div>
-      <div class="eyebrow">La especialista</div>
+      <div class="eyebrow">Fundadora</div>
       <h2 style="margin-top:12px;font-size:clamp(26px,3.6vw,38px)">Celine Barrantes</h2>
       <p style="margin-top:16px">Fundadora de Belle Femme. Atiende uñas, pestañas, cabello y maquillaje, y dirige el equipo del estudio de Pavas Centro.</p>
       <p style="margin-top:12px">La agenda se maneja por bloques según el servicio, de manera que no haya traslapes ni esperas: al reservar en línea usted ve únicamente los horarios en los que hay tiempo real disponible.</p>
@@ -364,7 +383,7 @@
 <footer>
   <div class="wrap">
     <div class="mark">Belle Femme</div>
-    <p>by Celine Barrantes · Pavas Centro, Costa Rica<br>SINPE Móvil o efectivo · Cancelación hasta 12 h antes<br><a href="admin.html" style="font-size:11px;color:var(--muted)">Panel del salón</a></p>
+    <p>by Celine Barrantes · Pavas Centro, Costa Rica<br>SINPE Móvil o efectivo · Cancelación hasta 12 h antes<br><a href="#perfil">Mi perfil</a> · <a href="admin.html" style="font-size:11px;color:var(--muted)">Panel del salón</a></p>
   </div>
 </footer>
 
@@ -445,6 +464,123 @@
 </div>
 </div>
 
+<div id="perfil" hidden>
+<div class="app">
+  <header>
+    <div class="hrow">
+      <button class="back" id="pBack" aria-label="Atrás">&#8592;</button>
+      <span class="eyebrow" id="pStep">Mi cuenta</span>
+      <button type="button" id="pToSite" style="width:44px;text-align:right;font:400 10px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);background:none;border:0;cursor:pointer">Salón</button>
+    </div>
+    <div class="h1" id="pTitle" style="margin-top:14px">Crear mi perfil</div>
+  </header>
+
+  <main>
+    <!-- Registro -->
+    <section id="pAuth">
+      <p class="hint" style="margin-top:0">Guarde su servicio favorito y su especialista de preferencia para reservar en dos toques, y reciba los recordatorios donde prefiera. No pedimos fotografía.</p>
+
+      <div class="two" style="margin-top:22px">
+        <label class="fld"><span class="lb">Nombre</span><input id="fNombre" autocomplete="given-name" placeholder="María José"></label>
+        <label class="fld"><span class="lb">Apellidos</span><input id="fApellidos" autocomplete="family-name" placeholder="Rojas Vargas"></label>
+      </div>
+      <label class="fld"><span class="lb">Teléfono</span><input id="fTel" type="tel" inputmode="numeric" autocomplete="tel" placeholder="8888 8888"></label>
+      <label class="fld"><span class="lb">Correo</span><input id="fCorreo" type="email" autocomplete="email" placeholder="maria@correo.com"></label>
+
+      <div class="eyebrow" style="margin-top:30px">Para atenderla mejor</div>
+      <div class="two" style="margin-top:14px">
+        <label class="fld"><span class="lb">Cumpleaños</span><input id="fNace" type="date"></label>
+        <label class="fld"><span class="lb">Cantón</span><input id="fCanton" placeholder="Pavas"></label>
+      </div>
+      <label class="fld"><span class="lb">¿Cómo nos conoció?</span><select id="fHow"></select></label>
+      <label class="fld"><span class="lb">Alergias o sensibilidades</span><textarea id="fNotas" placeholder="Alergia a algún producto, uñas quebradizas, piel sensible… (opcional)"></textarea></label>
+
+      <div class="eyebrow" style="margin-top:30px">Permisos</div>
+      <button class="switchrow" id="cWa" aria-pressed="true">
+        <span>Quiero recibir avisos de mis citas por WhatsApp al número que registré</span>
+        <span class="switch"><i></i></span>
+      </button>
+      <button class="switchrow" id="cData" aria-pressed="false">
+        <span>Autorizo a Belle Femme a guardar estos datos para gestionar mis citas y enviarme promociones</span>
+        <span class="switch"><i></i></span>
+      </button>
+      <p class="hint">Sus datos quedan solo en el salón. Puede borrarlos por completo desde su perfil cuando quiera.</p>
+      <p class="msg" id="pAuthMsg" hidden></p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:24px">
+        <button class="cta" id="pCreate">Crear mi perfil</button>
+        <button class="link" id="pHasAcct">Ya tengo perfil en este teléfono</button>
+      </div>
+    </section>
+
+    <!-- Verificación -->
+    <section id="pCode" hidden>
+      <p class="hint" style="margin-top:0">Le enviamos un código de cuatro dígitos por WhatsApp al número <b id="pCodeTel"></b>. Escríbalo para confirmar que el número es suyo.</p>
+      <label class="fld"><span class="lb">Código</span><input id="fCode" inputmode="numeric" maxlength="4" placeholder="0000" style="letter-spacing:.5em;text-align:center;font-size:22px"></label>
+      <p class="hint">En esta demostración el código es <b>1234</b>. Al conectar Twilio, llega de verdad al WhatsApp de la clienta.</p>
+      <p class="msg" id="pCodeMsg" hidden></p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:24px">
+        <button class="cta" id="pVerify">Confirmar</button>
+        <button class="link" id="pCodeBack">Corregir mis datos</button>
+      </div>
+    </section>
+
+    <!-- Perfil -->
+    <section id="pMe" hidden>
+      <div class="pcard">
+        <div class="eyebrow" style="color:var(--accent)">Clienta desde <span id="pDesde"></span></div>
+        <div class="pv" id="pNombre" style="font-size:26px"></div>
+        <div class="dl" style="margin-top:16px">
+          <b>Teléfono</b><span id="pTel"></span>
+          <b>Correo</b><span id="pCorreo"></span>
+          <b>Cumpleaños</b><span id="pNace"></span>
+        </div>
+      </div>
+
+      <div class="eyebrow" style="margin-top:32px">Mis preferencias</div>
+      <label class="fld"><span class="lb">Servicio favorito</span><select id="pFavSvc"></select></label>
+      <label class="fld"><span class="lb">Especialista de preferencia</span><select id="pFavWho"></select></label>
+      <button class="cta" id="pBook" style="margin-top:18px">Reservar mi favorito</button>
+
+      <div class="eyebrow" style="margin-top:34px">Notificaciones en la app</div>
+      <button class="switchrow" id="nApp" aria-pressed="false">
+        <span>Avisos en este teléfono</span>
+        <span class="switch"><i></i></span>
+      </button>
+      <div id="nAppList"></div>
+
+      <div class="eyebrow" style="margin-top:30px">Notificaciones por WhatsApp</div>
+      <button class="switchrow" id="nWa" aria-pressed="true">
+        <span id="nWaLabel">Avisos por WhatsApp</span>
+        <span class="switch"><i></i></span>
+      </button>
+      <div id="nWaList"></div>
+      <p class="msg" id="pMsg" hidden></p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:18px">
+        <button class="ghost" id="pTest">Enviarme una notificación de prueba</button>
+      </div>
+
+      <div class="eyebrow" style="margin-top:34px">Mis datos</div>
+      <div class="two" style="margin-top:14px">
+        <label class="fld"><span class="lb">Nombre</span><input id="eNombre"></label>
+        <label class="fld"><span class="lb">Apellidos</span><input id="eApellidos"></label>
+      </div>
+      <label class="fld"><span class="lb">Correo</span><input id="eCorreo" type="email"></label>
+      <div class="two" style="margin-top:16px">
+        <label class="fld"><span class="lb">Cumpleaños</span><input id="eNace" type="date"></label>
+        <label class="fld"><span class="lb">Cantón</span><input id="eCanton"></label>
+      </div>
+      <label class="fld"><span class="lb">¿Cómo nos conoció?</span><select id="eHow"></select></label>
+      <label class="fld"><span class="lb">Alergias o sensibilidades</span><textarea id="eNotas"></textarea></label>
+      <button class="ghost" id="pSave" style="margin-top:18px">Guardar cambios</button>
+
+      <div style="margin-top:30px">
+        <button class="danger" id="pWipe" style="color:#B4576B">Borrar mi perfil de este teléfono</button>
+      </div>
+    </section>
+  </main>
+</div>
+</div>
+
 <div class="toast" id="toast">
   <span class="ic"><img src="icons/icon-192.png" alt=""></span>
   <span class="tx" id="toastText">Agregue Belle Femme a su pantalla de inicio para abrirla como app.</span>
@@ -457,17 +593,22 @@
 /* ── Navegación entre el sitio y la reserva ───────────────── */
 const sitio = document.getElementById('sitio');
 const reservaView = document.getElementById('reserva');
+const perfilView = document.getElementById('perfil');
 function view(name, push){
-  const booking = name === 'reserva';
-  sitio.hidden = booking;
-  reservaView.hidden = !booking;
-  if (push) history.pushState(null, '', booking ? '#reserva' : location.pathname);
+  sitio.hidden   = name !== 'sitio';
+  reservaView.hidden = name !== 'reserva';
+  perfilView.hidden  = name !== 'perfil';
+  if (push) history.pushState(null, '', name === 'sitio' ? location.pathname : '#' + name);
   window.scrollTo(0, 0);
 }
 document.querySelectorAll('a[href="#reserva"]').forEach(a => {
   a.addEventListener('click', e => { e.preventDefault(); view('reserva', true); });
 });
-window.addEventListener('popstate', () => view(location.hash === '#reserva' ? 'reserva' : 'sitio', false));
+document.querySelectorAll('a[href="#perfil"]').forEach(a => {
+  a.addEventListener('click', e => { e.preventDefault(); view('perfil', true); });
+});
+const hashView = () => location.hash === '#reserva' ? 'reserva' : location.hash === '#perfil' ? 'perfil' : 'sitio';
+window.addEventListener('popstate', () => view(hashView(), false));
 
 /* ── Lógica del flujo de reserva ──────────────────────────── */
 /* Datos de demostración. En producción vienen de Supabase:
@@ -683,7 +824,176 @@ el('ics').onclick = () => alert('Aquí se genera el archivo .ics o se llama al c
 
 render();
 document.getElementById('backToSite').addEventListener('click', () => view('sitio', true));
-if (location.hash === '#reserva') view('reserva', false);
+if (location.hash === '#reserva' || location.hash === '#perfil') view(hashView(), false);
+
+/* ── Perfil de la clienta ─────────────────────────────────
+   Se guarda en este teléfono. En producción: tabla profiles
+   de Supabase + push web y WhatsApp por Twilio.
+   ───────────────────────────────────────────────────────── */
+const PKEY = 'bf-cliente';
+const pel = id => document.getElementById(id);
+let me = null;
+try { me = JSON.parse(localStorage.getItem(PKEY) || 'null'); } catch(e){}
+const saveMe = () => { try { localStorage.setItem(PKEY, JSON.stringify(me)); } catch(e){} };
+
+const HOW = ['Instagram','Recomendación de una amiga','Pasé frente al salón','Búsqueda en Google','TikTok','Otro'];
+const NOTIF = [
+  { id:'recordatorio', n:'Recordatorio de la cita',      m:'24 horas antes, con hora y servicio' },
+  { id:'confirmacion', n:'Confirmación y cambios',       m:'Cuando el salón aprueba, mueve o cancela su cita' },
+  { id:'promos',       n:'Promociones y cupos libres',   m:'Espacios de última hora y descuentos' },
+  { id:'cumple',       n:'Saludo de cumpleaños',         m:'Con un detalle de regalo ese mes' },
+];
+const fillSel = (id, list, val) => {
+  pel(id).replaceChildren(...list.map(o => {
+    const op = document.createElement('option');
+    op.value = o.v; op.textContent = o.t; op.selected = o.v === val;
+    return op;
+  }));
+};
+const howOpts = () => [{ v:'', t:'Prefiero no decir' }, ...HOW.map(h => ({ v:h, t:h }))];
+const telFmt = t => t.length === 8 ? t.slice(0,4) + ' ' + t.slice(4) : t;
+const fechaFmt = d => {
+  if (!d) return 'Sin registrar';
+  const [y,m,dd] = d.split('-');
+  const M = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  return +dd + ' de ' + M[+m - 1];
+};
+const msg = (id, text) => { const n = pel(id); n.textContent = text || ''; n.hidden = !text; };
+
+/* Registro */
+fillSel('fHow', howOpts(), '');
+let draft = null;
+const swap = (auth, code, mine) => {
+  pel('pAuth').hidden = !auth; pel('pCode').hidden = !code; pel('pMe').hidden = !mine;
+  pel('pTitle').textContent = auth ? 'Crear mi perfil' : code ? 'Confirme su número' : 'Mi perfil';
+  pel('pStep').textContent = auth ? 'Mi cuenta' : code ? 'Verificación' : 'Mi cuenta';
+  window.scrollTo(0, 0);
+};
+[['cWa', true], ['cData', false]].forEach(([id]) => {
+  pel(id).onclick = () => {
+    const b = pel(id);
+    b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') !== 'true');
+  };
+});
+pel('pCreate').onclick = () => {
+  const tel = pel('fTel').value.replace(/\D/g, '');
+  if (!pel('fNombre').value.trim()) return msg('pAuthMsg', 'Escriba su nombre.');
+  if (tel.length !== 8) return msg('pAuthMsg', 'El teléfono debe tener ocho dígitos.');
+  if (pel('cData').getAttribute('aria-pressed') !== 'true')
+    return msg('pAuthMsg', 'Necesitamos su autorización para guardar los datos.');
+  msg('pAuthMsg', '');
+  const on = pel('cWa').getAttribute('aria-pressed') === 'true';
+  draft = {
+    nombre: pel('fNombre').value.trim(), apellidos: pel('fApellidos').value.trim(),
+    tel, correo: pel('fCorreo').value.trim(), nace: pel('fNace').value,
+    canton: pel('fCanton').value.trim(), how: pel('fHow').value, notas: pel('fNotas').value.trim(),
+    favSvc:'', favWho:'', desde:'agosto 2026',
+    app:{ on:false, recordatorio:true, confirmacion:true, promos:false, cumple:true },
+    wa:{ on, recordatorio:true, confirmacion:true, promos:false, cumple:true },
+  };
+  pel('pCodeTel').textContent = telFmt(tel);
+  pel('fCode').value = '';
+  swap(false, true, false);
+};
+pel('pHasAcct').onclick = () => msg('pAuthMsg', me
+  ? 'Ya hay un perfil guardado en este teléfono. Recargue la página para entrar.'
+  : 'No encontramos un perfil guardado en este teléfono. Créelo aquí y quedará listo.');
+pel('pCodeBack').onclick = () => swap(true, false, false);
+pel('pVerify').onclick = () => {
+  if (pel('fCode').value.trim() !== '1234') return msg('pCodeMsg', 'El código no coincide.');
+  msg('pCodeMsg', '');
+  me = draft; saveMe(); renderPerfil();
+};
+
+/* Perfil */
+function notifRows(host, group){
+  pel(host).replaceChildren(...NOTIF.map(t => {
+    const b = tag(`<button class="switchrow sub" aria-pressed="${!!me[group][t.id]}">
+      <span><span class="n">${t.n}</span><span class="m">${t.m}</span></span>
+      <span class="switch"><i></i></span></button>`);
+    b.disabled = !me[group].on;
+    b.style.opacity = me[group].on ? 1 : .45;
+    b.onclick = () => { me[group][t.id] = !me[group][t.id]; saveMe(); renderPerfil(); };
+    return b;
+  }));
+}
+
+function renderPerfil(){
+  if (!me) { swap(true, false, false); return; }
+  swap(false, false, true);
+
+  pel('pDesde').textContent = me.desde;
+  pel('pNombre').textContent = (me.nombre + ' ' + me.apellidos).trim();
+  pel('pTel').textContent = telFmt(me.tel);
+  pel('pCorreo').textContent = me.correo || 'Sin registrar';
+  pel('pNace').textContent = fechaFmt(me.nace);
+
+  fillSel('pFavSvc', [{ v:'', t:'Sin favorito' }, ...SERVICES.map(s => ({ v:s.id, t:s.name + ' · ' + crc(s.price) }))], me.favSvc);
+  fillSel('pFavWho', [{ v:'', t:'Sin preferencia' }, ...STAFF.map(p => ({ v:p.id, t:p.name + ' · ' + p.role }))], me.favWho);
+  pel('pBook').textContent = me.favSvc ? 'Reservar mi favorito' : 'Reservar una cita';
+
+  pel('nApp').setAttribute('aria-pressed', me.app.on);
+  pel('nWa').setAttribute('aria-pressed', me.wa.on);
+  pel('nWaLabel').textContent = 'Avisos al WhatsApp ' + telFmt(me.tel);
+  notifRows('nAppList', 'app');
+  notifRows('nWaList', 'wa');
+
+  pel('eNombre').value = me.nombre; pel('eApellidos').value = me.apellidos;
+  pel('eCorreo').value = me.correo; pel('eNace').value = me.nace;
+  pel('eCanton').value = me.canton; pel('eNotas').value = me.notas;
+  fillSel('eHow', howOpts(), me.how);
+}
+
+pel('pFavSvc').onchange = e => { me.favSvc = e.target.value; saveMe(); renderPerfil(); };
+pel('pFavWho').onchange = e => { me.favWho = e.target.value; saveMe(); renderPerfil(); };
+pel('pBook').onclick = () => {
+  if (me.favSvc){ state.picked = [me.favSvc]; state.step = 2; }
+  else state.step = 0;
+  if (me.favWho) state.who = me.favWho;
+  state.time = null;
+  view('reserva', true); render();
+};
+
+pel('nApp').onclick = async () => {
+  if (me.app.on){ me.app.on = false; saveMe(); renderPerfil(); return msg('pMsg', ''); }
+  if (!('Notification' in window)) return msg('pMsg', 'Este navegador no admite avisos. Instale la app desde el sitio para recibirlos.');
+  const p = Notification.permission === 'granted' ? 'granted' : await Notification.requestPermission();
+  if (p !== 'granted') return msg('pMsg', 'El teléfono bloqueó los avisos. Actívelos en los ajustes del navegador.');
+  me.app.on = true; saveMe(); renderPerfil();
+  msg('pMsg', 'Listo. Los avisos llegan a este teléfono aunque la app esté cerrada.');
+};
+pel('nWa').onclick = () => { me.wa.on = !me.wa.on; saveMe(); renderPerfil(); };
+pel('pTest').onclick = () => {
+  if (me.app.on && 'Notification' in window && Notification.permission === 'granted'){
+    new Notification('Belle Femme', {
+      body: 'Le recordamos su cita de mañana a las 10:00 a. m. con ' + (me.favWho ? whoName(me.favWho).split(' ')[0] : 'su especialista') + '.',
+      icon: 'icons/icon-192.png',
+    });
+    return msg('pMsg', 'Aviso enviado a este teléfono.');
+  }
+  if (me.wa.on){
+    window.open('https://wa.me/506' + me.tel + '?text=' + encodeURIComponent('Belle Femme · Le recordamos su cita de mañana. Responda CAMBIAR si necesita moverla.'), '_blank');
+    return msg('pMsg', 'Se abrió WhatsApp con el mensaje de ejemplo.');
+  }
+  msg('pMsg', 'Active primero los avisos en la app o por WhatsApp.');
+};
+
+pel('pSave').onclick = () => {
+  Object.assign(me, {
+    nombre: pel('eNombre').value.trim(), apellidos: pel('eApellidos').value.trim(),
+    correo: pel('eCorreo').value.trim(), nace: pel('eNace').value,
+    canton: pel('eCanton').value.trim(), how: pel('eHow').value, notas: pel('eNotas').value.trim(),
+  });
+  saveMe(); renderPerfil(); msg('pMsg', 'Datos actualizados.');
+};
+pel('pWipe').onclick = () => {
+  if (!confirm('Se borran su perfil, sus preferencias y sus permisos de notificación en este teléfono. ¿Continuar?')) return;
+  localStorage.removeItem(PKEY); me = null; swap(true, false, false); view('sitio', true);
+};
+pel('pBack').onclick = () => view('sitio', true);
+pel('pToSite').onclick = () => view('sitio', true);
+
+renderPerfil();
 
 /* Service worker: permite abrirla sin conexión y en modo app */
 if ('serviceWorker' in navigator) {
