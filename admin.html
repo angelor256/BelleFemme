@@ -102,6 +102,12 @@
   .sw[aria-pressed="true"]{background:var(--ok)}
   .sw[aria-pressed="true"] i{left:19px}
 
+  /* Filtro por especialista */
+  .sfil{display:flex;gap:8px;overflow-x:auto;margin-top:14px;padding-bottom:2px;scrollbar-width:none}
+  .sfil::-webkit-scrollbar{display:none}
+  .sfil button{flex:none;background:var(--card);border:1px solid var(--line);padding:8px 13px;font:400 11px var(--sans);color:var(--muted);white-space:nowrap}
+  .sfil button[aria-pressed="true"]{background:var(--ink);color:#F7EFEF;border-color:var(--ink)}
+
   /* Ganancias */
   .seg{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);background:var(--card)}
   .seg button{background:none;border:0;padding:12px 6px;font:500 9.5px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
@@ -176,6 +182,7 @@
     <!-- Agenda del día -->
     <section id="tab-agenda">
       <div class="days" id="days"></div>
+      <div class="sfil" id="staffChips"></div>
       <div class="secthd" style="margin-top:22px">
         <div><div class="eyebrow">Agenda</div><div class="h1" id="agendaTitle" style="margin-top:8px">Jueves 27</div></div>
         <button class="btn ghost sm" id="addAppt">Nueva cita</button>
@@ -213,6 +220,8 @@
       <div class="tot" id="gTot"></div>
       <div class="eyebrow" style="margin:26px 0 10px">Por método de pago</div>
       <div id="gPay"></div>
+      <div class="eyebrow" style="margin:26px 0 10px">Por especialista</div>
+      <div id="gStaff"></div>
       <div class="eyebrow" style="margin:26px 0 10px">Por categoría</div>
       <div id="gCat"></div>
       <div class="eyebrow" style="margin:26px 0 10px">Día por día</div>
@@ -244,16 +253,24 @@ const DAYS = [
   { key:'d6', dow:'dom', num:30, full:'Domingo 30', closed:true },
 ];
 
+const STAFF = [
+  { id:'celine',    name:'Celine Barrantes',  first:'Celine',    initials:'CB', role:'Fundadora · todos los servicios' },
+  { id:'mariana',   name:'Mariana Céspedes',  first:'Mariana',   initials:'MC', role:'Uñas y pestañas · libre los miércoles' },
+  { id:'ximena',    name:'Ximena Ureña',      first:'Ximena',    initials:'XU', role:'Cabello · libre los martes' },
+  { id:'priscilla', name:'Priscilla Zamora',  first:'Priscilla', initials:'PZ', role:'Maquillaje y peinados · libre los sábados' },
+];
+const stf = id => STAFF.find(p => p.id === id) || { name:'Sin asignar', first:'Sin asignar', initials:'—' };
+
 let APPTS = [
-  { id:'a1', day:'d3', t:'9:00',  min:90,  client:'María José Rojas',  phone:'88881122', svc:'Manicure ruso spa + semipermanente', price:16000, status:'conf',  pay:'sinpe' },
-  { id:'a2', day:'d3', t:'10:45', min:120, client:'Andrea Solís',      phone:'87775566', svc:'Híbridas · primera colocación',      price:20000, status:'pend',  pay:'efectivo' },
-  { id:'a3', day:'d3', t:'14:00', min:75,  client:'Laura Vargas',      phone:'86663344', svc:'Lavado, blower, plancha y corte',    price:20000, status:'conf',  pay:'sinpe' },
-  { id:'a4', day:'d3', t:'15:30', min:120, client:'Nataly Chaves',     phone:'85552211', svc:'Botox capilar',                      price:30000, status:'pend',  pay:'sinpe' },
-  { id:'a5', day:'d1', t:'9:00',  min:90,  client:'Sofía Méndez',      phone:'84441199', svc:'Clásicas · primera colocación',      price:15000, status:'done',  pay:'efectivo' },
-  { id:'a6', day:'d1', t:'11:00', min:60,  client:'Karla Jiménez',     phone:'83338877', svc:'Tratamientos hidratantes',           price:15000, status:'no',    pay:'sinpe' },
-  { id:'a7', day:'d2', t:'13:00', min:120, client:'Valeria Núñez',     phone:'82227766', svc:'Maquillaje y peinado',               price:45000, status:'conf',  pay:'sinpe' },
-  { id:'a8', day:'d4', t:'9:30',  min:180, client:'Daniela Fallas',    phone:'81116655', svc:'Nanoplastia',                        price:50000, status:'conf',  pay:'efectivo' },
-  { id:'a9', day:'d5', t:'10:00', min:135, client:'Fiorella Araya',    phone:'87651234', svc:'Volumen · primera colocación',       price:24000, status:'pend',  pay:'sinpe' },
+  { id:'a1', day:'d3', t:'9:00',  min:90,  who:'mariana',   client:'María José Rojas',  phone:'88881122', svc:'Manicure ruso spa + semipermanente', price:16000, status:'conf',  pay:'sinpe' },
+  { id:'a2', day:'d3', t:'10:45', min:120, who:'mariana',   client:'Andrea Solís',      phone:'87775566', svc:'Híbridas · primera colocación',      price:20000, status:'pend',  pay:'efectivo' },
+  { id:'a3', day:'d3', t:'14:00', min:75,  who:'ximena',    client:'Laura Vargas',      phone:'86663344', svc:'Lavado, blower, plancha y corte',    price:20000, status:'conf',  pay:'sinpe' },
+  { id:'a4', day:'d3', t:'15:30', min:120, who:'ximena',    client:'Nataly Chaves',     phone:'85552211', svc:'Botox capilar',                      price:30000, status:'pend',  pay:'sinpe' },
+  { id:'a5', day:'d1', t:'9:00',  min:90,  who:'celine',    client:'Sofía Méndez',      phone:'84441199', svc:'Clásicas · primera colocación',      price:15000, status:'done',  pay:'efectivo' },
+  { id:'a6', day:'d1', t:'11:00', min:60,  who:'celine',    client:'Karla Jiménez',     phone:'83338877', svc:'Tratamientos hidratantes',           price:15000, status:'no',    pay:'sinpe' },
+  { id:'a7', day:'d2', t:'13:00', min:120, who:'priscilla', client:'Valeria Núñez',     phone:'82227766', svc:'Maquillaje y peinado',               price:45000, status:'conf',  pay:'sinpe' },
+  { id:'a8', day:'d4', t:'9:30',  min:180, who:'ximena',    client:'Daniela Fallas',    phone:'81116655', svc:'Nanoplastia',                        price:50000, status:'conf',  pay:'efectivo' },
+  { id:'a9', day:'d5', t:'10:00', min:135, who:'mariana',   client:'Fiorella Araya',    phone:'87651234', svc:'Volumen · primera colocación',       price:24000, status:'pend',  pay:'sinpe' },
 ];
 
 let BLOCKS = [
@@ -286,7 +303,15 @@ const ST = {
 };
 const PAY = { sinpe:'SINPE Móvil', efectivo:'Efectivo' };
 
-let ui = { tab:'agenda', day:'d3', gView:'cobrado' };
+let ui = { tab:'agenda', day:'d3', gView:'cobrado', staff:'todas' };
+
+/* Los cambios quedan guardados en el teléfono hasta conectar Supabase */
+const STORE = 'bf-admin-data';
+function save(){ try { localStorage.setItem(STORE, JSON.stringify({ APPTS, BLOCKS, SERVICES })); } catch(e){} }
+try {
+  const d = JSON.parse(localStorage.getItem(STORE) || 'null');
+  if (d && Array.isArray(d.APPTS) && d.APPTS.length){ APPTS = d.APPTS; BLOCKS = d.BLOCKS || BLOCKS; SERVICES = d.SERVICES || SERVICES; }
+} catch(e){}
 
 /* ── Utilidades ─────────────────────────────────────────── */
 const el = id => document.getElementById(id);
@@ -348,8 +373,14 @@ function render(){
     el('tab-' + t.id).hidden = ui.tab !== t.id;
   });
 
+  el('staffChips').replaceChildren(...[{ id:'todas', first:'Todas' }, ...STAFF].map(p => {
+    const b = tag(`<button aria-pressed="${ui.staff === p.id}">${p.first}</button>`);
+    b.onclick = () => { ui.staff = p.id; render(); };
+    return b;
+  }));
+
   /* Indicadores del día seleccionado */
-  const list = APPTS.filter(a => a.day === ui.day).sort(byTime);
+  const list = APPTS.filter(a => a.day === ui.day && (ui.staff === 'todas' || a.who === ui.staff)).sort(byTime);
   const activos = list.filter(a => a.status !== 'no');
   el('kCitas').textContent = activos.length;
   el('kMonto').textContent = crc(activos.filter(a => a.status !== 'done').reduce((s,a) => s + a.price, 0));
@@ -374,7 +405,7 @@ function render(){
     const s = ST[r.status];
     const n = tag(`<button class="appt ${r.status}">
       <span class="t">${hr(r.t)}<small>${dur(r.min)}</small></span>
-      <span><span class="who">${r.client}</span><span class="sv">${r.svc}</span>
+      <span><span class="who">${r.client}</span><span class="sv">${r.svc} · ${stf(r.who).first}</span>
         <span class="tag ${s.cls}">${s.label}</span></span>
       <span class="p">${crc(r.price)}<span class="sv" style="display:block">${PAY[r.pay]}</span></span>
     </button>`);
@@ -428,6 +459,7 @@ function render(){
   }));
 
   renderGanancias();
+  save();
 }
 
 /* ── Detalle de cita ────────────────────────────────────── */
@@ -439,6 +471,7 @@ function apptSheet(id){
     <div class="h1" style="margin-top:8px">${a.client}</div>
     <div class="hint">${a.svc} · ${dur(a.min)}<br>${crc(a.price)} · ${PAY[a.pay]}<br>Teléfono ${a.phone}</div>
     <div class="tag ${s.cls}" style="margin-top:12px">${s.label}</div>
+    <label class="fld"><span class="lb">Especialista</span><select id="aWho">${STAFF.map(p => `<option value="${p.id}"${p.id === a.who ? ' selected' : ''}>${p.name}</option>`).join('')}</select></label>
     <div class="acts">
       <button class="btn rose" data-do="conf">Confirmar</button>
       <button class="btn ghost" data-do="done">Marcar atendida</button>
@@ -456,6 +489,11 @@ function apptSheet(id){
     if (act === 'move'){ toast('Aquí se abre el selector de nueva fecha y hora.'); }
     closeSheet(); render();
   });
+  body.querySelector('#aWho').onchange = e => {
+    a.who = e.target.value;
+    toast('Cita reasignada a ' + stf(a.who).first);
+    render();
+  };
   openSheet(body);
 }
 
@@ -468,6 +506,7 @@ el('addAppt').onclick = () => {
     <label class="fld"><span class="lb">Clienta</span><input id="nClient" placeholder="Nombre y apellido"></label>
     <label class="fld"><span class="lb">Teléfono</span><input id="nPhone" placeholder="8888 8888" inputmode="numeric"></label>
     <label class="fld"><span class="lb">Servicio</span><select id="nSvc">${opts}</select></label>
+    <label class="fld"><span class="lb">Especialista</span><select id="nWho">${STAFF.map(p => `<option value="${p.id}">${p.name}</option>`).join('')}</select></label>
     <label class="fld"><span class="lb">Hora de inicio</span><input id="nTime" type="time" value="09:00"></label>
     <label class="fld"><span class="lb">Forma de pago</span><select id="nPay"><option value="sinpe">SINPE Móvil</option><option value="efectivo">Efectivo</option></select></label>
     <div class="acts">
@@ -480,7 +519,7 @@ el('addAppt').onclick = () => {
     if (!client){ toast('Escriba el nombre de la clienta'); return; }
     const svc = SERVICES.find(s => s.id === body.querySelector('#nSvc').value);
     APPTS.push({
-      id:'a' + Date.now(), day: ui.day, t: body.querySelector('#nTime').value,
+      id:'a' + Date.now(), day: ui.day, who: body.querySelector('#nWho').value, t: body.querySelector('#nTime').value,
       min: svc.min, client, phone: body.querySelector('#nPhone').value.trim() || '00000000',
       svc: svc.name, price: svc.price, status:'conf', pay: body.querySelector('#nPay').value,
     });
@@ -589,6 +628,12 @@ function renderGanancias(){
 
   const cats = groupSum(list, a => catOf(a.svc));
   el('gCat').replaceChildren(...(cats.length ? cats.map(g =>
+    mrow(g.key, crc(g.monto), `${g.n} ${g.n === 1 ? 'cita' : 'citas'} · ${dur(g.min)}`,
+      Math.round(g.monto/total*100))
+  ) : [tag('<div class="empty"><div class="hint" style="margin:0">Sin movimientos en el período.</div></div>')]));
+
+  const staff = groupSum(list, a => stf(a.who).name);
+  el('gStaff').replaceChildren(...(staff.length ? staff.map(g =>
     mrow(g.key, crc(g.monto), `${g.n} ${g.n === 1 ? 'cita' : 'citas'} · ${dur(g.min)}`,
       Math.round(g.monto/total*100))
   ) : [tag('<div class="empty"><div class="hint" style="margin:0">Sin movimientos en el período.</div></div>')]));
@@ -722,6 +767,9 @@ function exportarExcel(){
   ];
   groupSum(list, a => PAY[a.pay]).forEach(g => r1.push({ c:[T(g.key,4), T(g.n,8), T(g.monto,5)] }));
   r1.push({ c:[T('Total', 6), T(list.length, 6), T(total, 7)] }, []);
+  r1.push({ h:22, c:[T('POR ESPECIALISTA', 3), T('CITAS', 3), T('MONTO', 3)] });
+  groupSum(list, a => stf(a.who).name).forEach(g => r1.push({ c:[T(g.key,4), T(g.n,8), T(g.monto,5)] }));
+  r1.push({ c:[T('Total', 6), T(list.length, 6), T(total, 7)] }, []);
   r1.push({ h:22, c:[T('POR CATEGORÍA', 3), T('CITAS', 3), T('MONTO', 3)] });
   groupSum(list, a => catOf(a.svc)).forEach(g => r1.push({ c:[T(g.key,4), T(g.n,8), T(g.monto,5)] }));
   r1.push({ c:[T('Total', 6), T(list.length, 6), T(total, 7)] }, []);
@@ -737,14 +785,14 @@ function exportarExcel(){
     { h:30, c:[T('Detalle de citas · ' + etiqueta, 9)] },
     { c:[T(PERIODO, 2)] },
     [],
-    { h:24, c:['Día','Hora','Clienta','Teléfono','Servicio','Categoría','Duración','Estado','Pago','Monto'].map(v => T(v,3)) },
+    { h:24, c:['Día','Hora','Clienta','Especialista','Teléfono','Servicio','Categoría','Duración','Estado','Pago','Monto'].map(v => T(v,3)) },
   ];
   list.forEach(a => r2.push({ c:[
-    T(dayOf(a.day).full, 4), T(hr(a.t) + ' – ' + hr(end(a.t, a.min)), 4), T(a.client, 4),
+    T(dayOf(a.day).full, 4), T(hr(a.t) + ' – ' + hr(end(a.t, a.min)), 4), T(a.client, 4), T(stf(a.who).name, 4),
     T(a.phone, 8), T(a.svc, 4), T(catOf(a.svc), 4), T(dur(a.min), 8),
     T(ST[a.status].label, 4), T(PAY[a.pay], 4), T(a.price, 5),
   ] }));
-  r2.push({ c:[T('Total', 6), T('',6), T('',6), T('',6), T('',6), T('',6), T('',6), T('',6), T(list.length + (list.length===1?' cita':' citas'), 6), T(total, 7)] });
+  r2.push({ c:[T('Total', 6), T('',6), T('',6), T('',6), T('',6), T('',6), T('',6), T('',6), T('',6), T(list.length + (list.length===1?' cita':' citas'), 6), T(total, 7)] });
 
   /* Hoja 3 · Por servicio */
   const r3 = [
@@ -777,7 +825,7 @@ function exportarExcel(){
       + `<Relationship Id="rId4" Type="${rel}/styles" Target="styles.xml"/></Relationships>`),
     F('xl/styles.xml', XSTYLES),
     F('xl/worksheets/sheet1.xml', xsheet(r1, [30, 12, 16], ['A1:C1','A2:C2','A3:C3'])),
-    F('xl/worksheets/sheet2.xml', xsheet(r2, [16, 20, 24, 13, 38, 14, 12, 16, 14, 14], ['A1:J1','A2:J2'])),
+    F('xl/worksheets/sheet2.xml', xsheet(r2, [16, 20, 24, 20, 13, 38, 14, 12, 16, 14, 14], ['A1:K1','A2:K2'])),
     F('xl/worksheets/sheet3.xml', xsheet(r3, [38, 14, 10, 16, 18], ['A1:E1','A2:E2'])),
   ]);
 
