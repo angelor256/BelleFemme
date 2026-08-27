@@ -919,7 +919,18 @@ function showScreen(name){
 document.querySelectorAll('[data-tab]').forEach(elm => {
   elm.addEventListener('click', e => {
     const name = elm.dataset.tab;
-    if (name === 'reservar') { view('reserva', true); return; }
+    if (name === 'reservar') { 
+      e.preventDefault();
+      view('reserva', true); 
+      return; 
+    }
+    if (name === 'celine') { 
+      e.preventDefault();
+      state.who = 'celine';
+      view('reserva', true); 
+      render();
+      return;
+    }
     e.preventDefault();
     showScreen(name);
   });
