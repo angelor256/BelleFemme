@@ -46,7 +46,7 @@
 
   /* Barra superior */
   .nav{position:sticky;top:0;z-index:20;background:rgba(251,243,241,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);box-shadow:0 2px 12px rgba(36,28,31,.04)}
-  .nav .wrap{display:flex;align-items:center;justify-content:space-between;min-height:68px;gap:18px;padding:0 var(--pad)}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;min-height:68px;gap:18px;padding:0 var(--pad);position:relative}
   .nav .mark{font-family:var(--script);font-size:29px;color:var(--accent);line-height:1}
   .nav ul{display:flex;gap:30px;list-style:none;margin:0;padding:0;font:500 10.5px var(--sans);letter-spacing:.14em;text-transform:uppercase}
   .nav ul a{color:#6E6062;transition:color .2s}
@@ -138,6 +138,7 @@
   .screen{display:none}
   .tabbar{display:none}
   @media (max-width:760px){
+    html,body{overflow-x:hidden;touch-action:pan-y}
     .hero,.strip,.install{display:none}
     #servicios,.about,#visita{display:none}
     footer.site-footer{display:none}
@@ -598,26 +599,26 @@
 </div>
 
 <nav class="tabbar" id="tabbar">
-  <a href="#inicio" class="tab active" data-tab="inicio">
+  <button type="button" class="tab active" data-tab="inicio">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 11 12 4l8 7"/><path d="M6 10v9h12v-9"/></svg>
     Inicio
-  </a>
-  <a href="#reserva" class="tab" data-tab="reservar">
+  </button>
+  <button type="button" class="tab" data-tab="reservar">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="5" width="17" height="16" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/></svg>
     Reservar
-  </a>
-  <a href="#servicios" class="tab" data-tab="servicios">
+  </button>
+  <button type="button" class="tab" data-tab="servicios">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="6" cy="6" r="2.6"/><circle cx="6" cy="18" r="2.6"/><path d="M20 4 8.5 15.5M12.5 12 20 20M9.7 8.2 15 13.5"/></svg>
     Servicios
-  </a>
-  <a href="#celine" class="tab" data-tab="celine">
+  </button>
+  <button type="button" class="tab" data-tab="celine">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c1.4-4 4-6 7.5-6s6.1 2 7.5 6"/></svg>
     Celine
-  </a>
-  <a href="#visita" class="tab" data-tab="visita">
+  </button>
+  <button type="button" class="tab" data-tab="visita">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21Z"/><circle cx="12" cy="9.3" r="2.3"/></svg>
     Visítenos
-  </a>
+  </button>
 </nav>
 
 </div><!-- /#sitio -->
@@ -729,22 +730,21 @@ function showScreen(name){
   Object.values(screens).forEach(s => s.classList.remove('active'));
   screens[name].classList.add('active');
   tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === name));
-  screens[name].scrollTop = 0;
   window.scrollTo(0, 0);
 }
 document.querySelectorAll('[data-tab]').forEach(elm => {
   elm.addEventListener('click', e => {
     const name = elm.dataset.tab;
-    if (name === 'reservar') return; /* ya lo maneja el listener de #reserva */
+    if (name === 'reservar') { view('reserva', true); return; }
     e.preventDefault();
     showScreen(name);
   });
 });
 document.getElementById('dashFeatured').addEventListener('click', () => {
-  state.cat = 'unas'; state.picked = ['s1']; state.step = 0;
+  state.cat = 'unas'; state.picked = ['s1']; state.step = 0; state.time = null;
   view('reserva', true); render();
 });
-document.getElementById('bookWithCeline').addEventListener('click', () => { state.who = 'celine'; });
+document.getElementById('bookWithCeline').addEventListener('click', (e) => { e.preventDefault(); state.who = 'celine'; view('reserva', true); render(); });
 
 /* ── Lógica del flujo de reserva ──────────────────────────── */
 /* Datos de demostración. En producción vienen de Supabase:
