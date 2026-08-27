@@ -2,7 +2,7 @@
 <html lang="es-CR">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Belle Femme · Salón de belleza en Pavas, Costa Rica</title>
 <meta name="description" content="Belle Femme by Celine Barrantes. Uñas, pestañas, cejas, cabello y maquillaje en Pavas Centro. Reserve su cita en línea.">
 <meta name="theme-color" content="#FBF3F1">
@@ -26,12 +26,16 @@
     --serif:'Cormorant Garamond',Georgia,serif;
     --sans:'Jost',system-ui,-apple-system,sans-serif;
     --script:'Pinyon Script',cursive;
+ app-design-improvements-9b9a6
     --pad:20px;
     --radius:18px;
     --shadow:0 10px 40px rgba(36,28,31,.08);
     --shadow-sm:0 4px 16px rgba(36,28,31,.06);
     --success:#4A7C59;
     --error:#C44536;
+
+    --pad:26px;
+ main
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -45,6 +49,7 @@
   p{margin:0;font:300 14px/1.75 var(--sans);color:#5E5254}
 
   /* Barra superior */
+ app-design-improvements-9b9a6
   .nav{position:sticky;top:0;z-index:20;background:rgba(251,243,241,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);box-shadow:0 2px 12px rgba(36,28,31,.04)}
   .nav .wrap{display:flex;align-items:center;justify-content:space-between;min-height:68px;gap:18px;padding:0 var(--pad)}
   .nav .mark{font-family:var(--script);font-size:29px;color:var(--accent);line-height:1}
@@ -70,66 +75,87 @@
   .btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(36,28,31,.2)}
   .btn.ghost{background:none;color:var(--ink);border:1.5px solid var(--ink);box-shadow:none}
   .btn.rose{background:linear-gradient(135deg,var(--accent),#C06A7E);color:#fff;box-shadow:0 6px 18px rgba(168,88,110,.25)}
+
+  .nav{position:sticky;top:0;z-index:20;background:rgba(251,243,241,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;min-height:64px;gap:16px}
+  .nav .mark{font-family:var(--script);font-size:27px;color:var(--accent);line-height:1}
+  .nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0;font:400 10.5px var(--sans);letter-spacing:.16em;text-transform:uppercase}
+  .nav ul a{color:#6E6062}
+  .btn{display:inline-block;padding:13px 26px;background:var(--ink);color:var(--paper);font:400 11px var(--sans);letter-spacing:.18em;text-transform:uppercase;border:0;cursor:pointer}
+  .btn.ghost{background:none;color:var(--ink);border:1px solid var(--ink)}
+  .btn.rose{background:var(--accent);color:#fff}
+ main
   @media (max-width:760px){ .nav ul{display:none} }
 
   /* Portada */
-  .hero{padding:80px var(--pad) 64px;background:linear-gradient(180deg,#fff 0%,var(--paper) 100%)}
-  .hero .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
-  .hero h1{font-size:clamp(42px,7vw,72px);line-height:1.08}
+  .hero{padding:64px 0 56px}
+  .hero .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+  .hero h1{font-size:clamp(38px,7vw,68px);line-height:1.06}
   .hero h1 em{font-style:italic;color:var(--accent)}
-  .hero p{margin-top:24px;max-width:48ch;font-size:15.5px;color:#6E6062}
-  .hero .cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
-  .frame{aspect-ratio:4/5;background:linear-gradient(135deg,#F1E1E4,#E8D5D9);display:flex;align-items:flex-end;padding:24px;border-radius:24px;box-shadow:var(--shadow)}
+  .hero p{margin-top:20px;max-width:44ch}
+  .hero .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+  .frame{aspect-ratio:4/5;background:#F1E1E4;display:flex;align-items:flex-end;padding:20px}
   .frame .eyebrow{color:#B08E96}
-  @media (max-width:860px){ .hero .grid{grid-template-columns:1fr;gap:32px} .hero{padding:48px var(--pad)} }
+  @media (max-width:860px){ .hero .grid{grid-template-columns:1fr;gap:28px} .hero{padding:40px 0} }
 
   /* Franja de datos */
-  .strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff;box-shadow:var(--shadow-sm)}
-  .strip .wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;padding:30px var(--pad)}
-  .strip .n{font-family:var(--serif);font-size:28px;color:var(--accent)}
-  @media (max-width:640px){ .strip .wrap{grid-template-columns:1fr;gap:18px} }
+  .strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff}
+  .strip .wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;padding:26px var(--pad)}
+  .strip .n{font-family:var(--serif);font-size:26px}
+  @media (max-width:640px){ .strip .wrap{grid-template-columns:1fr;gap:16px} }
 
   /* Servicios */
-  section.block{padding:72px var(--pad)}
-  .head{display:flex;justify-content:space-between;align-items:baseline;gap:24px;margin-bottom:36px}
-  .head h2{font-size:clamp(30px,4vw,42px)}
-  .cats{display:grid;grid-template-columns:repeat(2,1fr);gap:42px}
-  @media (max-width:760px){ .cats{grid-template-columns:1fr;gap:34px} }
-  .cat h3{font-size:23px;padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:16px}
-  .item{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:15px 0;border-bottom:1px solid #F4EBE9}
-  .item .t{font-family:var(--serif);font-size:18.5px;line-height:1.3;font-weight:400}
-  .item .d{font:400 11.5px var(--sans);color:var(--muted);margin-top:3px}
-  .item .p{font:600 13.5px var(--sans);white-space:nowrap;color:var(--accent)}
-  .note{margin-top:16px;font:400 12px/1.6 var(--sans);color:var(--muted)}
+  section.block{padding:66px 0}
+  .head{display:flex;justify-content:space-between;align-items:baseline;gap:20px;margin-bottom:30px}
+  .head h2{font-size:clamp(28px,4vw,40px)}
+  .cats{display:grid;grid-template-columns:repeat(2,1fr);gap:38px}
+  @media (max-width:760px){ .cats{grid-template-columns:1fr;gap:30px} }
+  .cat h3{font-size:22px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+  .item{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:13px 0;border-bottom:1px solid #F4EBE9}
+  .item .t{font-family:var(--serif);font-size:18px;line-height:1.3}
+  .item .d{font:300 11px var(--sans);color:var(--muted);margin-top:2px}
+  .item .p{font:400 13px var(--sans);white-space:nowrap}
+  .note{margin-top:14px;font:300 11.5px/1.6 var(--sans);color:var(--muted)}
 
   /* Especialista */
-  .about{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);box-shadow:var(--shadow-sm)}
-  .about .grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:52px;align-items:center;padding:72px var(--pad)}
-  .about .frame{aspect-ratio:1;background:linear-gradient(135deg,#E7DAD6,#DFCFD2);border-radius:24px;box-shadow:var(--shadow)}
-  @media (max-width:860px){ .about .grid{grid-template-columns:1fr;gap:30px;padding:48px var(--pad)} }
+  .about{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .about .grid{display:grid;grid-template-columns:.8fr 1.2fr;gap:44px;align-items:center;padding:66px 0}
+  .about .frame{aspect-ratio:1;background:#E7DAD6}
+
+  /* Equipo */
+  .team{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+  .team .p{background:#fff;padding:24px 20px}
+  .team .in{font:400 11px var(--sans);letter-spacing:.2em;color:var(--accent)}
+  .team .n{font-family:var(--serif);font-size:20px;line-height:1.25;margin-top:16px}
+  .team .r{font:500 9px var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-top:9px}
+  .team .d{font:300 11.5px/1.6 var(--sans);color:var(--muted);margin-top:10px}
+  @media (max-width:860px){ .team{grid-template-columns:1fr 1fr} }
+  @media (max-width:460px){ .team{grid-template-columns:1fr} }
+  @media (max-width:860px){ .about .grid{grid-template-columns:1fr;gap:26px;padding:44px 0} }
 
   /* Visita */
-  .visit{display:grid;grid-template-columns:repeat(3,1fr);gap:34px}
-  @media (max-width:760px){ .visit{grid-template-columns:1fr;gap:24px} }
-  .visit h3{font-size:20px;margin-bottom:10px;color:var(--accent)}
+  .visit{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
+  @media (max-width:760px){ .visit{grid-template-columns:1fr;gap:22px} }
+  .visit h3{font-size:19px;margin-bottom:8px}
 
   /* Instalación */
-  .install{background:linear-gradient(135deg,var(--ink),#2F2428);color:#F5E9EA;box-shadow:var(--shadow)}
-  .install .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center;padding:58px var(--pad)}
-  .install h2{color:#F7EFEF;font-size:clamp(28px,3.6vw,36px);font-weight:400}
-  .install p{color:#D0C0C4;font-size:14.5px}
-  .install ol{margin:18px 0 0;padding-left:22px;font:400 13.5px/1.9 var(--sans);color:#D0C0C4}
-  @media (max-width:860px){ .install .grid{grid-template-columns:1fr;padding:44px var(--pad)} }
+  .install{background:var(--ink);color:#F5E9EA}
+  .install .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:34px;align-items:center;padding:52px 0}
+  .install h2{color:#F7EFEF;font-size:clamp(26px,3.6vw,34px)}
+  .install p{color:#C7B4B8}
+  .install ol{margin:16px 0 0;padding-left:20px;font:300 13px/1.9 var(--sans);color:#C7B4B8}
+  @media (max-width:860px){ .install .grid{grid-template-columns:1fr;padding:40px 0} }
 
-  footer{padding:46px var(--pad) 64px;text-align:center;background:linear-gradient(180deg,var(--paper) 0%,#fff 100%)}
-  footer .mark{font-family:var(--script);font-size:32px;color:var(--accent)}
-  footer p{margin-top:12px;font-size:13px;color:#7A6C6E}
+  footer{padding:40px 0 60px;text-align:center}
+  footer .mark{font-family:var(--script);font-size:30px;color:var(--accent)}
+  footer p{margin-top:10px;font-size:12.5px}
 
   /* Aviso flotante de instalación */
-  .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom));z-index:40;display:none;gap:16px;align-items:center;background:#fff;border:0;box-shadow:var(--shadow);padding:14px 16px;max-width:calc(92vw - var(--pad)*2);border-radius:var(--radius)}
+  .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(18px + env(safe-area-inset-bottom));z-index:40;display:none;gap:14px;align-items:center;background:#fff;border:1px solid var(--line);box-shadow:0 8px 30px rgba(36,28,31,.14);padding:12px 14px;max-width:92vw}
   .toast.on{display:flex}
-  .toast .ic{width:42px;height:42px;flex:none;border-radius:10px;overflow:hidden;box-shadow:var(--shadow-sm)}
+  .toast .ic{width:38px;height:38px;flex:none;border-radius:9px;overflow:hidden}
   .toast .ic img{width:100%;height:100%;display:block}
+ app-design-improvements-9b9a6
   .toast .tx{font:400 12.5px/1.45 var(--sans);color:#5E5254}
   .toast button{padding:11px 18px;font-size:11px;border-radius:8px}
   .toast .x{background:none;border:0;color:var(--muted);font-size:18px;cursor:pointer;padding:0 6px}
@@ -216,12 +242,17 @@
   .scr-fine{margin-top:24px;font:400 11.5px/1.8 var(--sans);color:var(--muted);text-align:center}
   @media (max-width:760px){ .toast{bottom:calc(78px + env(safe-area-inset-bottom))} }
   #inicio,#servicios,#celine,#visita{scroll-margin-top:76px}
+  
+  .toast .tx{font:300 12px/1.45 var(--sans);color:#5E5254}
+  .toast button{padding:10px 16px;font-size:10px}
+  .toast .x{background:none;border:0;color:var(--muted);font-size:16px;cursor:pointer;padding:0 4px}
+  main
 </style>
 <style>
 /* ── Flujo de reserva, misma página ── */
-#reserva:not([hidden]){min-height:100vh;display:flex;justify-content:center}
+:is(#reserva,#perfil):not([hidden]){min-height:100vh;display:flex;justify-content:center}
 
-#reserva{
+:is(#reserva,#perfil){
     --accent:#A8586E; --ink:#241C1F; --paper:#FBF3F1; --card:#fff;
     --line:#EFE1E1; --line-2:#EBD9DB; --muted:#9A8C8E; --muted-2:#A08E90;
     --disabled-bg:#F3EAEA; --disabled-fg:#C0B2B4;
@@ -229,63 +260,81 @@
     --sans:'Jost',system-ui,-apple-system,sans-serif;
     --gut:28px;
   }
-#reserva *{box-sizing:border-box}
+:is(#reserva,#perfil) *{box-sizing:border-box}
 
-#reserva{background:var(--paper)}
-#reserva .app{width:100%;max-width:460px;margin:0 auto;min-height:100vh;background:var(--paper);display:flex;flex-direction:column;position:relative}
-#reserva .eyebrow{font:400 9px/1 var(--sans);letter-spacing:.28em;text-transform:uppercase;color:var(--muted-2)}
-#reserva .h1{font-family:var(--serif);font-weight:300;font-size:28px;line-height:1.22}
-#reserva .hint{font:300 11.5px/1.7 var(--sans);color:var(--muted);margin-top:18px}
-#reserva .price{font:400 13px var(--sans)}
-#reserva .name{font-family:var(--serif);font-size:19px;line-height:1.3}
-#reserva header{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px solid var(--line);padding:calc(16px + env(safe-area-inset-top)) var(--gut) 16px}
-#reserva .hrow{display:flex;align-items:center;justify-content:space-between;gap:12px}
-#reserva .back{width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:17px;background:none;border:0;color:var(--ink);cursor:pointer;margin-left:-9px}
-#reserva .bar{margin-top:16px;height:1px;background:var(--line-2);position:relative}
-#reserva .bar span{position:absolute;inset:0 auto 0 0;background:var(--accent);transition:width .3s ease}
-#reserva main{flex:1;padding:26px var(--gut) 30px}
-#reserva section[hidden]{display:none}
-#reserva .chips{display:flex;gap:8px;flex-wrap:wrap}
-#reserva .chip{padding:10px 17px;border-radius:999px;border:1px solid #E0CDD0;background:none;font:400 11px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:#8C7E80;cursor:pointer}
-#reserva .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
-#reserva .list{display:flex;flex-direction:column;gap:11px;margin-top:20px}
-#reserva .row{width:100%;text-align:left;background:var(--card);border:1px solid var(--line);padding:18px 20px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;cursor:pointer;font:inherit;color:inherit;transition:border-color .15s}
-#reserva .row[aria-pressed="true"]{border-color:var(--accent)}
-#reserva .row .meta{font:300 11.5px/1.6 var(--sans);color:var(--muted);margin-top:5px}
-#reserva .dot{width:22px;height:22px;border-radius:50%;border:1px solid #DFCED1;color:#fff;font:400 12px/20px var(--sans);text-align:center;flex:none;margin-left:auto}
-#reserva .row[aria-pressed="true"] .dot{background:var(--accent);border-color:var(--accent)}
-#reserva .row .right{text-align:right;flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
-#reserva .avatar{width:54px;height:54px;border-radius:50%;background:#EEDCE0;flex:none;display:flex;align-items:center;justify-content:center;font:400 10px var(--sans);letter-spacing:.1em;color:var(--accent)}
-#reserva .days{display:flex;gap:8px}
-#reserva .day{flex:1;min-width:0;text-align:center;padding:13px 0;border:1px solid var(--line-2);background:var(--card);cursor:pointer;font:inherit;color:inherit}
-#reserva .day[aria-pressed="true"]{background:var(--ink);border-color:var(--ink)}
-#reserva .day .dw{font:400 8.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2)}
-#reserva .day .dn{font-family:var(--serif);font-size:20px;margin-top:6px}
-#reserva .day[aria-pressed="true"] .dw{color:#D9AEB9}
-#reserva .day[aria-pressed="true"] .dn{color:#fff}
-#reserva .day:disabled{background:var(--disabled-bg);border-color:transparent;color:var(--disabled-fg);cursor:default}
-#reserva .slots{margin-top:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-#reserva .slot{padding:14px 0;border:1px solid var(--line-2);background:var(--card);font:400 12.5px var(--sans);color:var(--ink);cursor:pointer}
-#reserva .slot[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
-#reserva .slot:disabled{background:var(--disabled-bg);border-color:transparent;color:var(--disabled-fg);text-decoration:line-through;cursor:default}
-#reserva .card{background:var(--card);border:1px solid var(--line);padding:22px}
-#reserva .li{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:7px 0}
-#reserva .li .name{font-size:18px}
-#reserva .rule{margin-top:16px;padding-top:16px;border-top:1px solid #F2E7E7}
-#reserva .switchrow{margin-top:18px;background:#F5E9EA;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:16px;border:0;width:100%;cursor:pointer;font:300 12px/1.6 var(--sans);color:#5E5254;text-align:left}
-#reserva .switch{width:40px;height:22px;border-radius:999px;background:#DDCED0;position:relative;flex:none;transition:background .2s}
-#reserva .switch i{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .2s}
-#reserva .switchrow[aria-pressed="true"] .switch{background:var(--accent)}
-#reserva .switchrow[aria-pressed="true"] .switch i{left:20px}
-#reserva .done{text-align:center;padding-top:28px}
-#reserva .tick{width:66px;height:66px;border-radius:50%;border:1px solid #D9AEB9;margin:0 auto;display:flex;align-items:center;justify-content:center;font:300 24px var(--sans);color:var(--accent)}
-#reserva footer{position:sticky;bottom:0;background:var(--paper);border-top:1px solid var(--line);padding:16px var(--gut) calc(18px + env(safe-area-inset-bottom))}
-#reserva .ftop{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:14px}
-#reserva .total{font-family:var(--serif);font-size:21px}
-#reserva .cta{width:100%;padding:17px;border:0;background:var(--ink);color:var(--paper);font:400 11.5px var(--sans);letter-spacing:.18em;text-transform:uppercase;cursor:pointer}
-#reserva .cta:disabled{background:#E4D6D8;color:#A79B9C;cursor:default}
-#reserva .ghost{width:100%;padding:15px;background:none;border:1px solid var(--ink);color:var(--ink);font:400 11.5px var(--sans);letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
-#reserva .link{width:100%;padding:14px;background:none;border:0;color:var(--accent);font:400 11.5px var(--sans);letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
+:is(#reserva,#perfil){background:var(--paper)}
+:is(#reserva,#perfil) .app{width:100%;max-width:460px;margin:0 auto;min-height:100vh;background:var(--paper);display:flex;flex-direction:column;position:relative}
+:is(#reserva,#perfil) .eyebrow{font:400 9px/1 var(--sans);letter-spacing:.28em;text-transform:uppercase;color:var(--muted-2)}
+:is(#reserva,#perfil) .h1{font-family:var(--serif);font-weight:300;font-size:28px;line-height:1.22}
+:is(#reserva,#perfil) .hint{font:300 11.5px/1.7 var(--sans);color:var(--muted);margin-top:18px}
+:is(#reserva,#perfil) .price{font:400 13px var(--sans)}
+:is(#reserva,#perfil) .name{font-family:var(--serif);font-size:19px;line-height:1.3}
+:is(#reserva,#perfil) header{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px solid var(--line);padding:calc(16px + env(safe-area-inset-top)) var(--gut) 16px}
+:is(#reserva,#perfil) .hrow{display:flex;align-items:center;justify-content:space-between;gap:12px}
+:is(#reserva,#perfil) .back{width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:17px;background:none;border:0;color:var(--ink);cursor:pointer;margin-left:-9px}
+:is(#reserva,#perfil) .bar{margin-top:16px;height:1px;background:var(--line-2);position:relative}
+:is(#reserva,#perfil) .bar span{position:absolute;inset:0 auto 0 0;background:var(--accent);transition:width .3s ease}
+:is(#reserva,#perfil) main{flex:1;padding:26px var(--gut) 30px}
+:is(#reserva,#perfil) section[hidden]{display:none}
+:is(#reserva,#perfil) .chips{display:flex;gap:8px;flex-wrap:wrap}
+:is(#reserva,#perfil) .chip{padding:10px 17px;border-radius:999px;border:1px solid #E0CDD0;background:none;font:400 11px var(--sans);letter-spacing:.12em;text-transform:uppercase;color:#8C7E80;cursor:pointer}
+:is(#reserva,#perfil) .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+:is(#reserva,#perfil) .list{display:flex;flex-direction:column;gap:11px;margin-top:20px}
+:is(#reserva,#perfil) .row{width:100%;text-align:left;background:var(--card);border:1px solid var(--line);padding:18px 20px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px;cursor:pointer;font:inherit;color:inherit;transition:border-color .15s}
+:is(#reserva,#perfil) .row[aria-pressed="true"]{border-color:var(--accent)}
+:is(#reserva,#perfil) .row .meta{font:300 11.5px/1.6 var(--sans);color:var(--muted);margin-top:5px}
+:is(#reserva,#perfil) .dot{width:22px;height:22px;border-radius:50%;border:1px solid #DFCED1;color:#fff;font:400 12px/20px var(--sans);text-align:center;flex:none;margin-left:auto}
+:is(#reserva,#perfil) .row[aria-pressed="true"] .dot{background:var(--accent);border-color:var(--accent)}
+:is(#reserva,#perfil) .row .right{text-align:right;flex:none;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+:is(#reserva,#perfil) .avatar{width:54px;height:54px;border-radius:50%;background:#EEDCE0;flex:none;display:flex;align-items:center;justify-content:center;font:400 10px var(--sans);letter-spacing:.1em;color:var(--accent)}
+:is(#reserva,#perfil) .days{display:flex;gap:8px}
+:is(#reserva,#perfil) .day{flex:1;min-width:0;text-align:center;padding:13px 0;border:1px solid var(--line-2);background:var(--card);cursor:pointer;font:inherit;color:inherit}
+:is(#reserva,#perfil) .day[aria-pressed="true"]{background:var(--ink);border-color:var(--ink)}
+:is(#reserva,#perfil) .day .dw{font:400 8.5px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2)}
+:is(#reserva,#perfil) .day .dn{font-family:var(--serif);font-size:20px;margin-top:6px}
+:is(#reserva,#perfil) .day[aria-pressed="true"] .dw{color:#D9AEB9}
+:is(#reserva,#perfil) .day[aria-pressed="true"] .dn{color:#fff}
+:is(#reserva,#perfil) .day:disabled{background:var(--disabled-bg);border-color:transparent;color:var(--disabled-fg);cursor:default}
+:is(#reserva,#perfil) .slots{margin-top:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+:is(#reserva,#perfil) .slot{padding:14px 0;border:1px solid var(--line-2);background:var(--card);font:400 12.5px var(--sans);color:var(--ink);cursor:pointer}
+:is(#reserva,#perfil) .slot[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+:is(#reserva,#perfil) .slot:disabled{background:var(--disabled-bg);border-color:transparent;color:var(--disabled-fg);text-decoration:line-through;cursor:default}
+:is(#reserva,#perfil) .card{background:var(--card);border:1px solid var(--line);padding:22px}
+:is(#reserva,#perfil) .li{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:7px 0}
+:is(#reserva,#perfil) .li .name{font-size:18px}
+:is(#reserva,#perfil) .rule{margin-top:16px;padding-top:16px;border-top:1px solid #F2E7E7}
+:is(#reserva,#perfil) .switchrow{margin-top:18px;background:#F5E9EA;padding:18px 20px;display:flex;justify-content:space-between;align-items:center;gap:16px;border:0;width:100%;cursor:pointer;font:300 12px/1.6 var(--sans);color:#5E5254;text-align:left}
+:is(#reserva,#perfil) .switch{width:40px;height:22px;border-radius:999px;background:#DDCED0;position:relative;flex:none;transition:background .2s}
+:is(#reserva,#perfil) .switch i{position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .2s}
+:is(#reserva,#perfil) .switchrow[aria-pressed="true"] .switch{background:var(--accent)}
+:is(#reserva,#perfil) .switchrow[aria-pressed="true"] .switch i{left:20px}
+:is(#reserva,#perfil) .done{text-align:center;padding-top:28px}
+:is(#reserva,#perfil) .tick{width:66px;height:66px;border-radius:50%;border:1px solid #D9AEB9;margin:0 auto;display:flex;align-items:center;justify-content:center;font:300 24px var(--sans);color:var(--accent)}
+:is(#reserva,#perfil) footer{position:sticky;bottom:0;background:var(--paper);border-top:1px solid var(--line);padding:16px var(--gut) calc(18px + env(safe-area-inset-bottom))}
+:is(#reserva,#perfil) .ftop{display:flex;justify-content:space-between;align-items:baseline;gap:14px;margin-bottom:14px}
+:is(#reserva,#perfil) .total{font-family:var(--serif);font-size:21px}
+:is(#reserva,#perfil) .cta{width:100%;padding:17px;border:0;background:var(--ink);color:var(--paper);font:400 11.5px var(--sans);letter-spacing:.18em;text-transform:uppercase;cursor:pointer}
+:is(#reserva,#perfil) .cta:disabled{background:#E4D6D8;color:#A79B9C;cursor:default}
+:is(#reserva,#perfil) .ghost{width:100%;padding:15px;background:none;border:1px solid var(--ink);color:var(--ink);font:400 11.5px var(--sans);letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
+:is(#reserva,#perfil) .link{width:100%;padding:14px;background:none;border:0;color:var(--accent);font:400 11.5px var(--sans);letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
+/* ── Perfil de la clienta ── */
+#perfil .fld{display:block;margin-top:16px}
+#perfil .lb{font:400 9px/1 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2)}
+#perfil input,#perfil select,#perfil textarea{width:100%;margin-top:8px;padding:14px 15px;border:1px solid var(--line-2);background:var(--card);border-radius:0;-webkit-appearance:none;appearance:none;font:400 14px var(--sans);color:var(--ink)}
+#perfil textarea{min-height:74px;resize:vertical;line-height:1.6}
+#perfil select{padding-right:38px;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 22px) 22px,calc(100% - 17px) 22px;background-size:5px 5px;background-repeat:no-repeat;cursor:pointer}
+#perfil input:focus,#perfil select:focus,#perfil textarea:focus{outline:0;border-color:var(--accent)}
+#perfil .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+#perfil .two .fld{margin-top:0}
+#perfil .pcard{background:var(--card);border:1px solid var(--line);padding:22px}
+#perfil .pv{font-family:var(--serif);font-size:19px;line-height:1.35;margin-top:8px}
+#perfil .dl{display:grid;grid-template-columns:auto 1fr;gap:10px 18px;font:300 12.5px/1.6 var(--sans);color:#7A6C6E}
+#perfil .dl b{font:400 12.5px var(--sans);color:var(--muted-2);white-space:nowrap}
+#perfil .switchrow.sub{margin-top:1px;background:var(--card);border:1px solid var(--line);padding:15px 18px}
+#perfil .switchrow.sub .n{font:400 13px var(--sans);color:var(--ink)}
+#perfil .switchrow.sub .m{font:300 11.5px/1.5 var(--sans);color:var(--muted);margin-top:3px;display:block}
+#perfil .msg{margin-top:14px;font:300 12px/1.6 var(--sans);color:var(--accent)}
+#perfil .danger{width:100%;padding:14px;background:none;border:0;color:var(--muted);font:400 10.5px var(--sans);letter-spacing:.16em;text-transform:uppercase;cursor:pointer}
 
 </style>
 </head>
@@ -298,13 +347,21 @@
     <ul>
       <li><a href="#inicio">Inicio</a></li>
       <li><a href="#servicios">Servicios</a></li>
-      <li><a href="#celine">La especialista</a></li>
+      <li><a href="#celine">El equipo</a></li>
       <li><a href="#visita">Visítenos</a></li>
+      
+app-design-improvements-9b9a6
+                                    
+      <li><a href="#perfil">Mi perfil</a></li>
+      <li><a href="#app">App</a></li>
+    
+    main
     </ul>
     <a class="btn" href="#reserva">Reservar</a>
   </div>
 </nav>
 
+  app-design-improvements-9b9a6
 <section class="dash screen active" id="inicio">
   <div class="wrap">
     <div class="dash-head">
@@ -445,6 +502,7 @@
   </div>
 </section>
 
+  main
 <header class="hero">
   <div class="wrap grid">
     <div>
@@ -513,13 +571,42 @@
   <div class="wrap grid">
     <div class="frame"><span class="eyebrow">Retrato de Celine</span></div>
     <div>
-      <div class="eyebrow">La especialista</div>
+      <div class="eyebrow">Fundadora</div>
       <h2 style="margin-top:12px;font-size:clamp(26px,3.6vw,38px)">Celine Barrantes</h2>
-      <p style="margin-top:16px">Fundadora de Belle Femme. Atiende personalmente cada cita de uñas, pestañas, cabello y maquillaje en el estudio de Pavas Centro.</p>
+      <p style="margin-top:16px">Fundadora de Belle Femme. Atiende uñas, pestañas, cabello y maquillaje, y dirige el equipo del estudio de Pavas Centro.</p>
       <p style="margin-top:12px">La agenda se maneja por bloques según el servicio, de manera que no haya traslapes ni esperas: al reservar en línea usted ve únicamente los horarios en los que hay tiempo real disponible.</p>
       <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap">
         <a class="btn rose" href="#reserva">Ver disponibilidad</a>
         <a class="btn ghost" href="https://instagram.com/bellefemme_costarica">Instagram</a>
+      </div>
+    </div>
+  </div>
+  <div class="wrap" style="padding-bottom:66px">
+    <div class="eyebrow">El equipo</div>
+    <div class="team" style="margin-top:18px">
+      <div class="p">
+        <div class="in">CB</div>
+        <div class="n">Celine Barrantes</div>
+        <div class="r">Fundadora</div>
+        <div class="d">Atiende las cuatro áreas del salón y supervisa la agenda.</div>
+      </div>
+      <div class="p">
+        <div class="in">MC</div>
+        <div class="n">Mariana Céspedes</div>
+        <div class="r">Uñas y pestañas</div>
+        <div class="d">Manicure ruso y extensiones pelo a pelo. Libre los miércoles.</div>
+      </div>
+      <div class="p">
+        <div class="in">XU</div>
+        <div class="n">Ximena Ureña</div>
+        <div class="r">Cabello</div>
+        <div class="d">Color, tratamientos, botox capilar y nanoplastia. Libre los martes.</div>
+      </div>
+      <div class="p">
+        <div class="in">PZ</div>
+        <div class="n">Priscilla Zamora</div>
+        <div class="r">Maquillaje y peinados</div>
+        <div class="d">Novias, quinceañeras y eventos. Libre los sábados.</div>
       </div>
     </div>
   </div>
@@ -567,13 +654,14 @@
   </div>
 </section>
 
-<footer class="site-footer">
+<footer>
   <div class="wrap">
     <div class="mark">Belle Femme</div>
-    <p>by Celine Barrantes · Pavas Centro, Costa Rica<br>SINPE Móvil o efectivo · Cancelación hasta 12 h antes<br><a href="admin.html" style="font-size:11px;color:var(--muted)">Panel del salón</a></p>
+    <p>by Celine Barrantes · Pavas Centro, Costa Rica<br>SINPE Móvil o efectivo · Cancelación hasta 12 h antes<br><a href="#perfil">Mi perfil</a> · <a href="admin.html" style="font-size:11px;color:var(--muted)">Panel del salón</a></p>
   </div>
 </footer>
 
+ app-design-improvements-9b9a6
 <!-- Menú de usuario desktop -->
 <div class="nav-user" id="navUser">
   <button class="nav-user-btn" id="userBtn" type="button">
@@ -620,6 +708,8 @@
   </a>
 </nav>
 
+=======
+ main
 </div><!-- /#sitio -->
 
 <div id="reserva" hidden>
@@ -642,7 +732,7 @@
 
     <section id="step1" hidden>
       <div class="list" id="specialists" style="margin-top:0"></div>
-      <p class="hint">La disponibilidad se calcula con la agenda real de cada especialista, incluyendo almuerzos y días libres.</p>
+      <p class="hint" id="whoNote"></p>
     </section>
 
     <section id="step2" hidden>
@@ -697,6 +787,123 @@
 </div>
 </div>
 
+<div id="perfil" hidden>
+<div class="app">
+  <header>
+    <div class="hrow">
+      <button class="back" id="pBack" aria-label="Atrás">&#8592;</button>
+      <span class="eyebrow" id="pStep">Mi cuenta</span>
+      <button type="button" id="pToSite" style="width:44px;text-align:right;font:400 10px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);background:none;border:0;cursor:pointer">Salón</button>
+    </div>
+    <div class="h1" id="pTitle" style="margin-top:14px">Crear mi perfil</div>
+  </header>
+
+  <main>
+    <!-- Registro -->
+    <section id="pAuth">
+      <p class="hint" style="margin-top:0">Guarde su servicio favorito y su especialista de preferencia para reservar en dos toques, y reciba los recordatorios donde prefiera. No pedimos fotografía.</p>
+
+      <div class="two" style="margin-top:22px">
+        <label class="fld"><span class="lb">Nombre</span><input id="fNombre" autocomplete="given-name" placeholder="María José"></label>
+        <label class="fld"><span class="lb">Apellidos</span><input id="fApellidos" autocomplete="family-name" placeholder="Rojas Vargas"></label>
+      </div>
+      <label class="fld"><span class="lb">Teléfono</span><input id="fTel" type="tel" inputmode="numeric" autocomplete="tel" placeholder="8888 8888"></label>
+      <label class="fld"><span class="lb">Correo</span><input id="fCorreo" type="email" autocomplete="email" placeholder="maria@correo.com"></label>
+
+      <div class="eyebrow" style="margin-top:30px">Para atenderla mejor</div>
+      <div class="two" style="margin-top:14px">
+        <label class="fld"><span class="lb">Cumpleaños</span><input id="fNace" type="date"></label>
+        <label class="fld"><span class="lb">Cantón</span><input id="fCanton" placeholder="Pavas"></label>
+      </div>
+      <label class="fld"><span class="lb">¿Cómo nos conoció?</span><select id="fHow"></select></label>
+      <label class="fld"><span class="lb">Alergias o sensibilidades</span><textarea id="fNotas" placeholder="Alergia a algún producto, uñas quebradizas, piel sensible… (opcional)"></textarea></label>
+
+      <div class="eyebrow" style="margin-top:30px">Permisos</div>
+      <button class="switchrow" id="cWa" aria-pressed="true">
+        <span>Quiero recibir avisos de mis citas por WhatsApp al número que registré</span>
+        <span class="switch"><i></i></span>
+      </button>
+      <button class="switchrow" id="cData" aria-pressed="false">
+        <span>Autorizo a Belle Femme a guardar estos datos para gestionar mis citas y enviarme promociones</span>
+        <span class="switch"><i></i></span>
+      </button>
+      <p class="hint">Sus datos quedan solo en el salón. Puede borrarlos por completo desde su perfil cuando quiera.</p>
+      <p class="msg" id="pAuthMsg" hidden></p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:24px">
+        <button class="cta" id="pCreate">Crear mi perfil</button>
+        <button class="link" id="pHasAcct">Ya tengo perfil en este teléfono</button>
+      </div>
+    </section>
+
+    <!-- Verificación -->
+    <section id="pCode" hidden>
+      <p class="hint" style="margin-top:0">Le enviamos un código de cuatro dígitos por WhatsApp al número <b id="pCodeTel"></b>. Escríbalo para confirmar que el número es suyo.</p>
+      <label class="fld"><span class="lb">Código</span><input id="fCode" inputmode="numeric" maxlength="4" placeholder="0000" style="letter-spacing:.5em;text-align:center;font-size:22px"></label>
+      <p class="hint">En esta demostración el código es <b>1234</b>. Al conectar Twilio, llega de verdad al WhatsApp de la clienta.</p>
+      <p class="msg" id="pCodeMsg" hidden></p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:24px">
+        <button class="cta" id="pVerify">Confirmar</button>
+        <button class="link" id="pCodeBack">Corregir mis datos</button>
+      </div>
+    </section>
+
+    <!-- Perfil -->
+    <section id="pMe" hidden>
+      <div class="pcard">
+        <div class="eyebrow" style="color:var(--accent)">Clienta desde <span id="pDesde"></span></div>
+        <div class="pv" id="pNombre" style="font-size:26px"></div>
+        <div class="dl" style="margin-top:16px">
+          <b>Teléfono</b><span id="pTel"></span>
+          <b>Correo</b><span id="pCorreo"></span>
+          <b>Cumpleaños</b><span id="pNace"></span>
+        </div>
+      </div>
+
+      <div class="eyebrow" style="margin-top:32px">Mis preferencias</div>
+      <label class="fld"><span class="lb">Servicio favorito</span><select id="pFavSvc"></select></label>
+      <label class="fld"><span class="lb">Especialista de preferencia</span><select id="pFavWho"></select></label>
+      <button class="cta" id="pBook" style="margin-top:18px">Reservar mi favorito</button>
+
+      <div class="eyebrow" style="margin-top:34px">Notificaciones en la app</div>
+      <button class="switchrow" id="nApp" aria-pressed="false">
+        <span>Avisos en este teléfono</span>
+        <span class="switch"><i></i></span>
+      </button>
+      <div id="nAppList"></div>
+
+      <div class="eyebrow" style="margin-top:30px">Notificaciones por WhatsApp</div>
+      <button class="switchrow" id="nWa" aria-pressed="true">
+        <span id="nWaLabel">Avisos por WhatsApp</span>
+        <span class="switch"><i></i></span>
+      </button>
+      <div id="nWaList"></div>
+      <p class="msg" id="pMsg" hidden></p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:18px">
+        <button class="ghost" id="pTest">Enviarme una notificación de prueba</button>
+      </div>
+
+      <div class="eyebrow" style="margin-top:34px">Mis datos</div>
+      <div class="two" style="margin-top:14px">
+        <label class="fld"><span class="lb">Nombre</span><input id="eNombre"></label>
+        <label class="fld"><span class="lb">Apellidos</span><input id="eApellidos"></label>
+      </div>
+      <label class="fld"><span class="lb">Correo</span><input id="eCorreo" type="email"></label>
+      <div class="two" style="margin-top:16px">
+        <label class="fld"><span class="lb">Cumpleaños</span><input id="eNace" type="date"></label>
+        <label class="fld"><span class="lb">Cantón</span><input id="eCanton"></label>
+      </div>
+      <label class="fld"><span class="lb">¿Cómo nos conoció?</span><select id="eHow"></select></label>
+      <label class="fld"><span class="lb">Alergias o sensibilidades</span><textarea id="eNotas"></textarea></label>
+      <button class="ghost" id="pSave" style="margin-top:18px">Guardar cambios</button>
+
+      <div style="margin-top:30px">
+        <button class="danger" id="pWipe" style="color:#B4576B">Borrar mi perfil de este teléfono</button>
+      </div>
+    </section>
+  </main>
+</div>
+</div>
+
 <div class="toast" id="toast">
   <span class="ic"><img src="icons/icon-192.png" alt=""></span>
   <span class="tx" id="toastText">Agregue Belle Femme a su pantalla de inicio para abrirla como app.</span>
@@ -709,42 +916,22 @@
 /* ── Navegación entre el sitio y la reserva ───────────────── */
 const sitio = document.getElementById('sitio');
 const reservaView = document.getElementById('reserva');
+const perfilView = document.getElementById('perfil');
 function view(name, push){
-  const booking = name === 'reserva';
-  sitio.hidden = booking;
-  reservaView.hidden = !booking;
-  if (push) history.pushState(null, '', booking ? '#reserva' : location.pathname);
+  sitio.hidden   = name !== 'sitio';
+  reservaView.hidden = name !== 'reserva';
+  perfilView.hidden  = name !== 'perfil';
+  if (push) history.pushState(null, '', name === 'sitio' ? location.pathname : '#' + name);
   window.scrollTo(0, 0);
 }
 document.querySelectorAll('a[href="#reserva"]').forEach(a => {
   a.addEventListener('click', e => { e.preventDefault(); view('reserva', true); });
 });
-window.addEventListener('popstate', () => view(location.hash === '#reserva' ? 'reserva' : 'sitio', false));
-
-/* ── Barra inferior: pantallas reales, no scroll ──────────── */
-const screens = { inicio: document.getElementById('inicio'), servicios: document.getElementById('servicios-screen'), celine: document.getElementById('celine-screen'), visita: document.getElementById('visita-screen') };
-const tabs = document.querySelectorAll('.tab');
-function showScreen(name){
-  if (!screens[name]) return;
-  Object.values(screens).forEach(s => s.classList.remove('active'));
-  screens[name].classList.add('active');
-  tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === name));
-  screens[name].scrollTop = 0;
-  window.scrollTo(0, 0);
-}
-document.querySelectorAll('[data-tab]').forEach(elm => {
-  elm.addEventListener('click', e => {
-    const name = elm.dataset.tab;
-    if (name === 'reservar') return; /* ya lo maneja el listener de #reserva */
-    e.preventDefault();
-    showScreen(name);
-  });
+document.querySelectorAll('a[href="#perfil"]').forEach(a => {
+  a.addEventListener('click', e => { e.preventDefault(); view('perfil', true); });
 });
-document.getElementById('dashFeatured').addEventListener('click', () => {
-  state.cat = 'unas'; state.picked = ['s1']; state.step = 0;
-  view('reserva', true); render();
-});
-document.getElementById('bookWithCeline').addEventListener('click', () => { state.who = 'celine'; });
+const hashView = () => location.hash === '#reserva' ? 'reserva' : location.hash === '#perfil' ? 'perfil' : 'sitio';
+window.addEventListener('popstate', () => view(hashView(), false));
 
 /* ── Lógica del flujo de reserva ──────────────────────────── */
 /* Datos de demostración. En producción vienen de Supabase:
@@ -772,25 +959,36 @@ const SERVICES = [
   { id:'s13', cat:'maquillaje', name:'Maquillaje y peinado',               price:45000, min:120 },
 ];
 
-const SPECIALISTS = [
-  { id:'celine', name:'Celine Barrantes',      note:'Uñas, pestañas, cabello y maquillaje · Fundadora', initials:'CB' },
-  { id:'any',    name:'Cualquiera disponible', note:'Le asignamos la especialista con el horario más cercano', initials:'—' },
+/* cats = categorías que atiende · off = días libres fijos */
+const STAFF = [
+  { id:'celine',    name:'Celine Barrantes',  first:'Celine',    initials:'CB', role:'Fundadora',             note:'Uñas, pestañas, cabello y maquillaje',    cats:['unas','pestanas','cabello','maquillaje'], off:[] },
+  { id:'mariana',   name:'Mariana Céspedes',  first:'Mariana',   initials:'MC', role:'Uñas y pestañas',       note:'Manicure ruso y extensiones pelo a pelo', cats:['unas','pestanas'],           off:['d2'] },
+  { id:'ximena',    name:'Ximena Ureña',      first:'Ximena',    initials:'XU', role:'Cabello',               note:'Color, tratamientos y alisados',          cats:['cabello'],                    off:['d1'] },
+  { id:'priscilla', name:'Priscilla Zamora',  first:'Priscilla', initials:'PZ', role:'Maquillaje y peinados', note:'Novias, quinceañeras y eventos',          cats:['maquillaje','cabello'],       off:['d5'] },
 ];
+const ANY = { id:'any', name:'Cualquiera disponible', note:'Le asignamos la especialista con el horario más cercano', initials:'—' };
 
 const METHODS = [
   { id:'sinpe',    name:'SINPE Móvil',          note:'Transferencia el día de la cita', label:'Pago por SINPE Móvil al finalizar el servicio' },
   { id:'efectivo', name:'Efectivo en el salón', note:'Pago directo en recepción',       label:'Pago en efectivo en recepción' },
 ];
 
-/* busy[] simula appointments ya reservados para esa fecha */
 const DAYS = [
-  { key:'d1', dow:'mar', num:25, busy:['9:00','10:30','15:00'] },
-  { key:'d2', dow:'mié', num:26, busy:['11:00','13:00'] },
-  { key:'d3', dow:'jue', num:27, busy:['9:00','9:45'] },
-  { key:'d4', dow:'vie', num:28, busy:['16:30'] },
-  { key:'d5', dow:'sáb', num:29, busy:['9:00','10:30','11:00','13:00','15:00'] },
+  { key:'d1', dow:'mar', num:25 },
+  { key:'d2', dow:'mié', num:26 },
+  { key:'d3', dow:'jue', num:27 },
+  { key:'d4', dow:'vie', num:28 },
+  { key:'d5', dow:'sáb', num:29 },
   { key:'d6', dow:'dom', num:30, closed:true },
 ];
+
+/* Horas ya reservadas en la agenda de cada especialista */
+const BUSY = {
+  celine:    { d1:['9:00','10:30','15:00'], d3:['9:00','9:45'], d4:['16:30'], d5:['9:00','10:30','13:00'] },
+  mariana:   { d1:['11:00'],                d3:['13:00'],       d5:['9:00','10:30','11:00'] },
+  ximena:    { d2:['11:00','13:00'],        d3:['15:00'],       d4:['9:00'],  d5:['15:00'] },
+  priscilla: { d1:['13:00'],                d2:['15:00'],       d4:['11:00'] },
+};
 const DOW_FULL = { mar:'Martes', 'mié':'Miércoles', jue:'Jueves', vie:'Viernes', 'sáb':'Sábado', dom:'Domingo' };
 const AM = ['9:00','9:45','10:30','11:00','11:45'];
 const PM = ['13:00','13:45','15:00','15:45','16:30','17:15'];
@@ -799,7 +997,6 @@ const TITLES = ['Elija sus servicios','¿Con quién desea atenderse?','Fecha y h
 const CTAS   = ['Continuar','Elegir fecha','Revisar','Confirmar cita',''];
 
 const state = { step:0, cat:'unas', picked:['s1'], who:'celine', day:'d3', time:null, method:'sinpe', reminder:true };
-let scrCat = 'unas';
 
 const crc = n => '₡' + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 const dur = m => m < 60 ? m + ' min' : Math.floor(m/60) + ' h' + (m%60 ? ' ' + (m%60) + ' min' : '');
@@ -810,9 +1007,44 @@ const total = () => chosen().reduce((a,s) => a + s.price, 0);
 const minutes = () => chosen().reduce((a,s) => a + s.min, 0);
 const today = () => DAYS.find(d => d.key === state.day);
 
+/* ── Disponibilidad ──────────────────────────────────────── */
+const OPEN = 9*60, CLOSE = 18*60, LUNCH_A = 12*60, LUNCH_B = 13*60;
+const toMin = t => +t.split(':')[0]*60 + +t.split(':')[1];
+/* Solo aparecen las especialistas que cubren todas las categorías elegidas */
+const staffFor = () => { const cs = [...new Set(chosen().map(s => s.cat))]; return STAFF.filter(p => cs.every(c => p.cats.includes(c))); };
+const whoName = id => id === 'any' ? ANY.name : (STAFF.find(p => p.id === id) || ANY).name;
+const worksOn = (id, dk) => id === 'any'
+  ? staffFor().some(p => !p.off.includes(dk))
+  : !((STAFF.find(p => p.id === id) || { off:[] }).off.includes(dk));
+/* El bloque completo debe caber antes del cierre y no cruzar el almuerzo */
+const fits = t => { const a = toMin(t), b = a + minutes(); return a >= OPEN && b <= CLOSE && !(a < LUNCH_B && b > LUNCH_A); };
+const freeAt = (id, dk, t) => {
+  if (!worksOn(id, dk)) return false;
+  const a = toMin(t), b = a + minutes();
+  return !(((BUSY[id] || {})[dk]) || []).some(x => { const s = toMin(x); return a < s + 90 && b > s; });
+};
+const slotOpen = (dk, t) => {
+  const d = DAYS.find(x => x.key === dk);
+  if (!d || d.closed || !fits(t)) return false;
+  return state.who === 'any' ? staffFor().some(p => freeAt(p.id, dk, t)) : freeAt(state.who, dk, t);
+};
+const assigned = () => state.who !== 'any' ? whoName(state.who)
+  : (staffFor().find(p => state.time && freeAt(p.id, state.day, state.time)) || staffFor()[0] || ANY).name;
+
+/* Corrige selecciones que dejaron de ser válidas al cambiar de servicio */
+function normalize(){
+  if (state.who !== 'any' && !staffFor().some(p => p.id === state.who)) state.who = 'any';
+  if (today().closed || !worksOn(state.who, state.day)){
+    const alt = DAYS.find(d => !d.closed && worksOn(state.who, d.key));
+    if (alt){ state.day = alt.key; state.time = null; }
+  }
+  if (state.time && !slotOpen(state.day, state.time)) state.time = null;
+}
+
 function tag(html){ const t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstElementChild; }
 
 function render(){
+  normalize();
   const s = state.step;
 
   el('stepLabel').textContent = s < 4 ? 'Paso ' + (s+1) + ' de 4' : 'Reserva confirmada';
@@ -830,7 +1062,7 @@ function render(){
   el('services').replaceChildren(...SERVICES.filter(x => x.cat === state.cat).map(x => {
     const on = state.picked.includes(x.id);
     const r = tag(`<button class="row" aria-pressed="${on}">
-      <span><span class="name">${x.name}</span><span class="meta" style="display:block">${dur(x.min)} · con Celine</span></span>
+      <span><span class="name">${x.name}</span><span class="meta" style="display:block">${dur(x.min)} · ${STAFF.filter(p => p.cats.includes(x.cat)).map(p => p.first).join(', ')}</span></span>
       <span class="right"><span class="price">${crc(x.price)}</span><span class="dot">${on?'&#10003;':''}</span></span>
     </button>`);
     r.onclick = () => {
@@ -841,19 +1073,25 @@ function render(){
     return r;
   }));
 
-  el('specialists').replaceChildren(...SPECIALISTS.map(p => {
+  const elig = staffFor();
+  el('specialists').replaceChildren(...[...elig, ANY].map(p => {
     const on = state.who === p.id;
+    const meta = p.role ? p.role + ' · ' + p.note : p.note;
     const r = tag(`<button class="row" aria-pressed="${on}" style="align-items:center">
       <span class="avatar">${p.initials}</span>
-      <span style="flex:1"><span class="name" style="font-size:20px">${p.name}</span><span class="meta" style="display:block">${p.note}</span></span>
+      <span style="flex:1"><span class="name" style="font-size:20px">${p.name}</span><span class="meta" style="display:block">${meta}</span></span>
       <span class="dot">${on?'&#10003;':''}</span>
     </button>`);
     r.onclick = () => { state.who = p.id; state.time = null; render(); };
     return r;
   }));
+  el('whoNote').textContent = elig.length < STAFF.length
+    ? 'Se muestran únicamente las especialistas que pueden realizar todos los servicios elegidos.'
+    : 'La disponibilidad se calcula con la agenda de cada especialista, incluyendo almuerzos y días libres.';
 
   el('days').replaceChildren(...DAYS.map(d => {
-    const b = tag(`<button class="day" aria-pressed="${state.day===d.key}" ${d.closed?'disabled':''}>
+    const off = d.closed || !worksOn(state.who, d.key);
+    const b = tag(`<button class="day" aria-pressed="${state.day===d.key}" ${off?'disabled':''}>
       <span class="dw">${d.dow}</span><span class="dn" style="display:block">${d.num}</span>
     </button>`);
     b.onclick = () => { state.day = d.key; state.time = null; render(); };
@@ -861,19 +1099,20 @@ function render(){
   }));
   const day = today();
   const slotBtns = list => list.map(t => {
-    const open = !day.closed && !(day.busy || []).includes(t);
+    const open = slotOpen(state.day, t);
     const b = tag(`<button class="slot" aria-pressed="${state.time===t}" ${open?'':'disabled'}>${hr(t)}</button>`);
     b.onclick = () => { state.time = t; render(); };
     return b;
   });
   el('amSlots').replaceChildren(...slotBtns(AM));
   el('pmSlots').replaceChildren(...slotBtns(PM));
-  el('slotNote').textContent = 'Los horarios tachados ya están ocupados o no alcanzan para ' + dur(minutes()) + ' de servicio.';
+  el('slotNote').textContent = 'Se muestran solo los horarios con ' + dur(minutes()) + ' libres'
+    + (state.who === 'any' ? ' con alguna especialista.' : ' en la agenda de ' + whoName(state.who).split(' ')[0] + '.');
 
   const lines = () => chosen().map(x => tag(`<div class="li"><span class="name">${x.name}</span><span class="price">${crc(x.price)}</span></div>`));
   el('sumLines').replaceChildren(...lines());
   const when = (DOW_FULL[day.dow] || '') + ' ' + day.num + ' de agosto · ' + hr(state.time);
-  const who = SPECIALISTS.find(p => p.id === state.who).name;
+  const who = (state.who === 'any' ? 'Le asignamos a ' : '') + assigned();
   el('sumWhen').innerHTML = when + '<br>' + who + ' · ' + dur(minutes());
   el('methods').replaceChildren(...METHODS.map(m => {
     const on = state.method === m.id;
@@ -908,28 +1147,176 @@ el('ics').onclick = () => alert('Aquí se genera el archivo .ics o se llama al c
 
 render();
 document.getElementById('backToSite').addEventListener('click', () => view('sitio', true));
-if (location.hash === '#reserva') view('reserva', false);
+if (location.hash === '#reserva' || location.hash === '#perfil') view(hashView(), false);
 
-/* ── Pantalla “Servicios” de la barra inferior ────────────── */
-function renderServiciosScreen(){
-  el('scrChips').replaceChildren(...CATS.map(c => {
-    const b = tag(`<button class="scr-chip ${scrCat===c.id?'on':''}">${c.name}</button>`);
-    b.onclick = () => { scrCat = c.id; renderServiciosScreen(); };
+/* ── Perfil de la clienta ─────────────────────────────────
+   Se guarda en este teléfono. En producción: tabla profiles
+   de Supabase + push web y WhatsApp por Twilio.
+   ───────────────────────────────────────────────────────── */
+const PKEY = 'bf-cliente';
+const pel = id => document.getElementById(id);
+let me = null;
+try { me = JSON.parse(localStorage.getItem(PKEY) || 'null'); } catch(e){}
+const saveMe = () => { try { localStorage.setItem(PKEY, JSON.stringify(me)); } catch(e){} };
+
+const HOW = ['Instagram','Recomendación de una amiga','Pasé frente al salón','Búsqueda en Google','TikTok','Otro'];
+const NOTIF = [
+  { id:'recordatorio', n:'Recordatorio de la cita',      m:'24 horas antes, con hora y servicio' },
+  { id:'confirmacion', n:'Confirmación y cambios',       m:'Cuando el salón aprueba, mueve o cancela su cita' },
+  { id:'promos',       n:'Promociones y cupos libres',   m:'Espacios de última hora y descuentos' },
+  { id:'cumple',       n:'Saludo de cumpleaños',         m:'Con un detalle de regalo ese mes' },
+];
+const fillSel = (id, list, val) => {
+  pel(id).replaceChildren(...list.map(o => {
+    const op = document.createElement('option');
+    op.value = o.v; op.textContent = o.t; op.selected = o.v === val;
+    return op;
+  }));
+};
+const howOpts = () => [{ v:'', t:'Prefiero no decir' }, ...HOW.map(h => ({ v:h, t:h }))];
+const telFmt = t => t.length === 8 ? t.slice(0,4) + ' ' + t.slice(4) : t;
+const fechaFmt = d => {
+  if (!d) return 'Sin registrar';
+  const [y,m,dd] = d.split('-');
+  const M = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  return +dd + ' de ' + M[+m - 1];
+};
+const msg = (id, text) => { const n = pel(id); n.textContent = text || ''; n.hidden = !text; };
+
+/* Registro */
+fillSel('fHow', howOpts(), '');
+let draft = null;
+const swap = (auth, code, mine) => {
+  pel('pAuth').hidden = !auth; pel('pCode').hidden = !code; pel('pMe').hidden = !mine;
+  pel('pTitle').textContent = auth ? 'Crear mi perfil' : code ? 'Confirme su número' : 'Mi perfil';
+  pel('pStep').textContent = auth ? 'Mi cuenta' : code ? 'Verificación' : 'Mi cuenta';
+  window.scrollTo(0, 0);
+};
+[['cWa', true], ['cData', false]].forEach(([id]) => {
+  pel(id).onclick = () => {
+    const b = pel(id);
+    b.setAttribute('aria-pressed', b.getAttribute('aria-pressed') !== 'true');
+  };
+});
+pel('pCreate').onclick = () => {
+  const tel = pel('fTel').value.replace(/\D/g, '');
+  if (!pel('fNombre').value.trim()) return msg('pAuthMsg', 'Escriba su nombre.');
+  if (tel.length !== 8) return msg('pAuthMsg', 'El teléfono debe tener ocho dígitos.');
+  if (pel('cData').getAttribute('aria-pressed') !== 'true')
+    return msg('pAuthMsg', 'Necesitamos su autorización para guardar los datos.');
+  msg('pAuthMsg', '');
+  const on = pel('cWa').getAttribute('aria-pressed') === 'true';
+  draft = {
+    nombre: pel('fNombre').value.trim(), apellidos: pel('fApellidos').value.trim(),
+    tel, correo: pel('fCorreo').value.trim(), nace: pel('fNace').value,
+    canton: pel('fCanton').value.trim(), how: pel('fHow').value, notas: pel('fNotas').value.trim(),
+    favSvc:'', favWho:'', desde:'agosto 2026',
+    app:{ on:false, recordatorio:true, confirmacion:true, promos:false, cumple:true },
+    wa:{ on, recordatorio:true, confirmacion:true, promos:false, cumple:true },
+  };
+  pel('pCodeTel').textContent = telFmt(tel);
+  pel('fCode').value = '';
+  swap(false, true, false);
+};
+pel('pHasAcct').onclick = () => msg('pAuthMsg', me
+  ? 'Ya hay un perfil guardado en este teléfono. Recargue la página para entrar.'
+  : 'No encontramos un perfil guardado en este teléfono. Créelo aquí y quedará listo.');
+pel('pCodeBack').onclick = () => swap(true, false, false);
+pel('pVerify').onclick = () => {
+  if (pel('fCode').value.trim() !== '1234') return msg('pCodeMsg', 'El código no coincide.');
+  msg('pCodeMsg', '');
+  me = draft; saveMe(); renderPerfil();
+};
+
+/* Perfil */
+function notifRows(host, group){
+  pel(host).replaceChildren(...NOTIF.map(t => {
+    const b = tag(`<button class="switchrow sub" aria-pressed="${!!me[group][t.id]}">
+      <span><span class="n">${t.n}</span><span class="m">${t.m}</span></span>
+      <span class="switch"><i></i></span></button>`);
+    b.disabled = !me[group].on;
+    b.style.opacity = me[group].on ? 1 : .45;
+    b.onclick = () => { me[group][t.id] = !me[group][t.id]; saveMe(); renderPerfil(); };
     return b;
   }));
-  el('scrServices').replaceChildren(...SERVICES.filter(x => x.cat === scrCat).map(x => {
-    const r = tag(`<button class="scr-row">
-      <span><span class="name">${x.name}</span><span class="meta" style="display:block">${dur(x.min)} · con Celine</span></span>
-      <span class="right"><span class="price">${crc(x.price)}</span><span class="go">&#8250;</span></span>
-    </button>`);
-    r.onclick = () => {
-      state.cat = x.cat; state.picked = [x.id]; state.step = 0; state.time = null;
-      view('reserva', true); render();
-    };
-    return r;
-  }));
 }
-renderServiciosScreen();
+
+function renderPerfil(){
+  if (!me) { swap(true, false, false); return; }
+  swap(false, false, true);
+
+  pel('pDesde').textContent = me.desde;
+  pel('pNombre').textContent = (me.nombre + ' ' + me.apellidos).trim();
+  pel('pTel').textContent = telFmt(me.tel);
+  pel('pCorreo').textContent = me.correo || 'Sin registrar';
+  pel('pNace').textContent = fechaFmt(me.nace);
+
+  fillSel('pFavSvc', [{ v:'', t:'Sin favorito' }, ...SERVICES.map(s => ({ v:s.id, t:s.name + ' · ' + crc(s.price) }))], me.favSvc);
+  fillSel('pFavWho', [{ v:'', t:'Sin preferencia' }, ...STAFF.map(p => ({ v:p.id, t:p.name + ' · ' + p.role }))], me.favWho);
+  pel('pBook').textContent = me.favSvc ? 'Reservar mi favorito' : 'Reservar una cita';
+
+  pel('nApp').setAttribute('aria-pressed', me.app.on);
+  pel('nWa').setAttribute('aria-pressed', me.wa.on);
+  pel('nWaLabel').textContent = 'Avisos al WhatsApp ' + telFmt(me.tel);
+  notifRows('nAppList', 'app');
+  notifRows('nWaList', 'wa');
+
+  pel('eNombre').value = me.nombre; pel('eApellidos').value = me.apellidos;
+  pel('eCorreo').value = me.correo; pel('eNace').value = me.nace;
+  pel('eCanton').value = me.canton; pel('eNotas').value = me.notas;
+  fillSel('eHow', howOpts(), me.how);
+}
+
+pel('pFavSvc').onchange = e => { me.favSvc = e.target.value; saveMe(); renderPerfil(); };
+pel('pFavWho').onchange = e => { me.favWho = e.target.value; saveMe(); renderPerfil(); };
+pel('pBook').onclick = () => {
+  if (me.favSvc){ state.picked = [me.favSvc]; state.step = 2; }
+  else state.step = 0;
+  if (me.favWho) state.who = me.favWho;
+  state.time = null;
+  view('reserva', true); render();
+};
+
+pel('nApp').onclick = async () => {
+  if (me.app.on){ me.app.on = false; saveMe(); renderPerfil(); return msg('pMsg', ''); }
+  if (!('Notification' in window)) return msg('pMsg', 'Este navegador no admite avisos. Instale la app desde el sitio para recibirlos.');
+  const p = Notification.permission === 'granted' ? 'granted' : await Notification.requestPermission();
+  if (p !== 'granted') return msg('pMsg', 'El teléfono bloqueó los avisos. Actívelos en los ajustes del navegador.');
+  me.app.on = true; saveMe(); renderPerfil();
+  msg('pMsg', 'Listo. Los avisos llegan a este teléfono aunque la app esté cerrada.');
+};
+pel('nWa').onclick = () => { me.wa.on = !me.wa.on; saveMe(); renderPerfil(); };
+pel('pTest').onclick = () => {
+  if (me.app.on && 'Notification' in window && Notification.permission === 'granted'){
+    new Notification('Belle Femme', {
+      body: 'Le recordamos su cita de mañana a las 10:00 a. m. con ' + (me.favWho ? whoName(me.favWho).split(' ')[0] : 'su especialista') + '.',
+      icon: 'icons/icon-192.png',
+    });
+    return msg('pMsg', 'Aviso enviado a este teléfono.');
+  }
+  if (me.wa.on){
+    window.open('https://wa.me/506' + me.tel + '?text=' + encodeURIComponent('Belle Femme · Le recordamos su cita de mañana. Responda CAMBIAR si necesita moverla.'), '_blank');
+    return msg('pMsg', 'Se abrió WhatsApp con el mensaje de ejemplo.');
+  }
+  msg('pMsg', 'Active primero los avisos en la app o por WhatsApp.');
+};
+
+pel('pSave').onclick = () => {
+  Object.assign(me, {
+    nombre: pel('eNombre').value.trim(), apellidos: pel('eApellidos').value.trim(),
+    correo: pel('eCorreo').value.trim(), nace: pel('eNace').value,
+    canton: pel('eCanton').value.trim(), how: pel('eHow').value, notas: pel('eNotas').value.trim(),
+  });
+  saveMe(); renderPerfil(); msg('pMsg', 'Datos actualizados.');
+};
+pel('pWipe').onclick = () => {
+  if (!confirm('Se borran su perfil, sus preferencias y sus permisos de notificación en este teléfono. ¿Continuar?')) return;
+  localStorage.removeItem(PKEY); me = null; swap(true, false, false); view('sitio', true);
+};
+pel('pBack').onclick = () => view('sitio', true);
+pel('pToSite').onclick = () => view('sitio', true);
+
+renderPerfil();
 
 /* Service worker: permite abrirla sin conexión y en modo app */
 if ('serviceWorker' in navigator) {
@@ -942,21 +1329,21 @@ const toastBtn = document.getElementById('toastBtn');
 const installBtn = document.getElementById('installBtn');
 const standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
 const dismissed = localStorage.getItem('bf-install-dismissed') === '1';
-let prompt = null;
+let installEv = null;
 
 window.addEventListener('beforeinstallprompt', e => {
   e.preventDefault();
-  prompt = e;
+  installEv = e;
   installBtn.style.display = 'inline-block';
   if (!dismissed && !standalone) toast.classList.add('on');
 });
 
 const install = async () => {
-  if (!prompt) return;
+  if (!installEv) return;
   toast.classList.remove('on');
-  prompt.prompt();
-  await prompt.userChoice;
-  prompt = null;
+  installEv.prompt();
+  await installEv.userChoice;
+  installEv = null;
   installBtn.style.display = 'none';
 };
 toastBtn.onclick = install;
