@@ -1,43 +1,70 @@
-/* Belle Femme · service worker
-   Cache-first para los archivos propios, red para lo demás.
-   Suba la versión cada vez que publique cambios. */
-const VERSION = 'bf-v4';
-const ASSETS = [
+// sw.js
+const CACHE_NAME = 'bellefemme-v2'; // He incrementado la versión a v2 para forzar la actualización
+const urlsToCache = [
   './',
   './index.html',
-  './admin.html',
-  './manifest.webmanifest',
-  './manifest-admin.webmanifest',
-  './icons/admin-192.png',
-  './icons/admin-512.png',
-  './icons/admin-apple-touch-icon.png',
-  './icons/icon-192.png',
-  './icons/icon-512.png',
-  './icons/apple-touch-icon.png',
+  './manifest.json'
+  // Si tienes archivos CSS o JS separados, agrégalos aquí. 
+  // Al estar todo en el HTML, con cachear el index es suficiente.
 ];
 
-self.addEventListener('install', e => {
-  e.waitUntil(caches.open(VERSION).then(c => c.addAll(ASSETS)).then(() => self.skipWaiting()));
-});
-
-self.addEventListener('activate', e => {
-  e.waitUntil(
-    caches.keys()
-      .then(keys => Promise.all(keys.filter(k => k !== VERSION).map(k => caches.delete(k))))
-      .then(() => self.clients.claim())
+// 1. Instalación: Abre la caché y añade los recursos
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        console.log('Caché abierta');
+        return cache.addAll(urlsToCache);
+      })
+      .catch(err => console.error('Error al cachear:', err))
   );
+  // Forzar la activación inmediata sin esperar a que se cierren las pestañas anteriores
+  self.skipWaiting();
 });
 
-self.addEventListener('fetch', e => {
-  const req = e.request;
-  if (req.method !== 'GET') return;
-  e.respondWith(
-    caches.match(req).then(hit => hit || fetch(req).then(res => {
-      if (res.ok && new URL(req.url).origin === location.origin) {
-        const copy = res.clone();
-        caches.open(VERSION).then(c => c.put(req, copy));
-      }
-      return res;
-    }).catch(() => caches.match('./index.html')))
+// 2. Activación: Limpia las cachés antiguas
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheName !== CACHE_NAME) {
+            console.log('Eliminando caché antigua:', cacheName);
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
+  // Toma el control de todas las pestañas inmediatamente
+  self.clients.claim();
+});
+
+// 3. Fetch: Estrategia Cache First con fallback a red
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        // Si existe en caché, lo devuelve
+        if (response) {
+          return response;
+        }
+        // Si no, hace la petición a la red
+        return fetch(event.request).then(
+          response => {
+            // Comprueba si es una respuesta válida
+            if(!response || response.status !== 200 || response.type !== 'basic') {
+              return response;
+            }
+            // Clona la respuesta para guardarla en caché y devolverla
+            const responseToCache = response.clone();
+            caches.open(CACHE_NAME)
+              .then(cache => {
+                cache.put(event.request, responseToCache);
+              });
+            return response;
+          }
+        );
+      })
   );
 });
