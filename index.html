@@ -371,9 +371,9 @@
         <span class="qi"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8.3"/><path d="M12 7.5V12l3 2"/></svg></span>
         Horario
       </button>
-      <button type="button" data-tab="celine">
+      <button type="button" data-tab="perfil">
         <span class="qi"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c1.4-4 4-6 7.5-6s6.1 2 7.5 6"/></svg></span>
-        Celine
+        Perfil
       </button>
       <a href="https://wa.me/50687299860">
         <span class="qi"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 11.5a8.38 8.38 0 0 1-4.8 7.6 8.5 8.5 0 0 1-8.4-.3L3 20l1.3-4.5A8.5 8.5 0 1 1 21 11.5Z"/></svg></span>
@@ -433,22 +433,53 @@
   </div>
 </section>
 
-<section class="screen" id="celine-screen">
+<section class="screen" id="perfil-screen">
   <div class="scr-top wrap">
-    <h2>Celine Barrantes</h2>
-    <p>Especialista y fundadora</p>
+    <h2>Mi Perfil</h2>
+    <p>Crea o edita tu perfil para guardar tus preferencias</p>
   </div>
   <div class="scr-body wrap">
-    <div class="profile-card">
-      <div class="profile-avatar">CB</div>
-      <div class="profile-name">Celine Barrantes</div>
-      <div class="profile-role">UÑAS · PESTAÑAS · CABELLO · MAQUILLAJE</div>
-    </div>
-    <p style="margin-top:20px">Fundadora de Belle Femme. Atiende personalmente cada cita de uñas, pestañas, cabello y maquillaje en el estudio de Pavas Centro.</p>
-    <p style="margin-top:12px">La agenda se maneja por bloques según el servicio, de manera que no haya traslapes ni esperas: al reservar en línea usted ve únicamente los horarios en los que hay tiempo real disponible.</p>
-    <div style="margin-top:22px;display:flex;gap:10px">
-      <a class="btn rose" href="#reserva" id="bookWithCeline" style="flex:1;text-align:center">Ver disponibilidad</a>
-      <a class="btn ghost" href="https://instagram.com/bellefemme_costarica" style="flex:1;text-align:center">Instagram</a>
+    <!-- Formulario de registro / login simulado -->
+    <div class="user-prefs-card" id="perfilCard">
+      <h3 style="font-family:var(--serif);font-size:18px;margin-bottom:14px;color:var(--accent)">Datos Personales</h3>
+      
+      <div class="pref-row">
+        <label>Nombre completo</label>
+        <input type="text" id="perfilName" placeholder="Tu nombre" style="width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;font:400 13px var(--sans);color:var(--ink);background:#fff;margin-top:6px">
+      </div>
+      
+      <div class="pref-row">
+        <label>Correo electrónico</label>
+        <input type="email" id="perfilEmail" placeholder="tu@correo.com" style="width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;font:400 13px var(--sans);color:var(--ink);background:#fff;margin-top:6px">
+      </div>
+      
+      <button class="pref-save" id="perfilSaveBtn" style="margin-top:16px">Guardar datos</button>
+      <div class="pref-saved" id="perfilSavedMsg" style="color:var(--success);font:400 11px var(--sans);text-align:center;margin-top:10px;display:none">¡Datos guardados!</div>
+      
+      <div class="divider" style="height:1px;background:var(--line);margin:20px 0"></div>
+      
+      <h3 style="font-family:var(--serif);font-size:18px;margin-bottom:14px;color:var(--accent)">Mis Preferencias</h3>
+      
+      <div class="pref-row">
+        <label>Servicio favorito</label>
+        <select id="perfilFavSvc" style="width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;font:400 13px var(--sans);color:var(--ink);background:#fff;margin-top:6px">
+          <option value="">Selecciona un servicio</option>
+        </select>
+      </div>
+      
+      <div class="pref-row">
+        <label>Estilista de preferencia</label>
+        <select id="perfilFavWho" style="width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;font:400 13px var(--sans);color:var(--ink);background:#fff;margin-top:6px">
+          <option value="">Selecciona un estilista</option>
+        </select>
+      </div>
+      
+      <button class="pref-save" id="perfilPrefsSaveBtn" style="margin-top:16px">Guardar preferencias</button>
+      <div class="pref-saved" id="perfilPrefsSavedMsg" style="color:var(--success);font:400 11px var(--sans);text-align:center;margin-top:10px;display:none">¡Preferencias guardadas!</div>
+      
+      <div class="divider" style="height:1px;background:var(--line);margin:20px 0"></div>
+      
+      <button class="ghost" id="perfilLogoutBtn" style="width:100%;padding:14px;background:none;border:1.5px solid var(--ink);border-radius:12px;font:500 11px var(--sans);cursor:pointer;color:var(--ink);display:none">Cerrar sesión</button>
     </div>
   </div>
 </section>
@@ -678,13 +709,13 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="6" cy="6" r="2.6"/><circle cx="6" cy="18" r="2.6"/><path d="M20 4 8.5 15.5M12.5 12 20 20M9.7 8.2 15 13.5"/></svg>
     Servicios
   </button>
-  <button type="button" class="tab" data-tab="celine">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c1.4-4 4-6 7.5-6s6.1 2 7.5 6"/></svg>
-    Celine
-  </button>
   <button type="button" class="tab" data-tab="visita">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-6.1-7-11.5A7 7 0 0 1 19 9.5C19 14.9 12 21 12 21Z"/><circle cx="12" cy="9.3" r="2.3"/></svg>
     Visítenos
+  </button>
+  <button type="button" class="tab" data-tab="perfil">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c1.4-4 4-6 7.5-6s6.1 2 7.5 6"/></svg>
+    Perfil
   </button>
 </nav>
 
@@ -908,7 +939,7 @@ document.querySelectorAll('a[href="#reserva"]').forEach(a => {
 window.addEventListener('popstate', () => view(location.hash === '#reserva' ? 'reserva' : 'sitio', false));
 
 /* ── Barra inferior: pantallas reales, no scroll ──────────── */
-const screens = { inicio: document.getElementById('inicio'), servicios: document.getElementById('servicios-screen'), celine: document.getElementById('celine-screen'), visita: document.getElementById('visita-screen') };
+const screens = { inicio: document.getElementById('inicio'), servicios: document.getElementById('servicios-screen'), visita: document.getElementById('visita-screen'), perfil: document.getElementById('perfil-screen') };
 const tabs = document.querySelectorAll('.tab');
 function showScreen(name){
   if (!screens[name]) return;
@@ -924,11 +955,10 @@ document.querySelectorAll('[data-tab]').forEach(elm => {
       view('reserva', true); 
       return; 
     }
-    if (name === 'celine') { 
+    if (name === 'perfil') { 
       e.preventDefault();
-      state.who = 'celine';
-      view('reserva', true); 
-      render();
+      showScreen('perfil');
+      renderPerfilForm();
       return;
     }
     e.preventDefault();
@@ -1567,12 +1597,103 @@ function showLoginModal() {
 function initDemoUser() {
   let user = loadUser();
   if (!user) {
-    // Crear usuario demo automáticamente
-    user = { name: 'Cliente Belle', email: 'cliente@ejemplo.com' };
-    saveUser(user);
+    // No crear usuario automáticamente, esperar a que el usuario se registre
+    renderUserUI();
+    fillPrefSelects();
+    return;
   }
   renderUserUI();
   fillPrefSelects();
+  renderPerfilForm();
+}
+
+// Renderizar formulario de perfil con datos del usuario
+function renderPerfilForm() {
+  const user = loadUser();
+  const prefs = loadPrefs();
+  
+  if (!user) return;
+  
+  // Llenar datos personales
+  const nameInput = document.getElementById('perfilName');
+  const emailInput = document.getElementById('perfilEmail');
+  if (nameInput) nameInput.value = user.name || '';
+  if (emailInput) emailInput.value = user.email || '';
+  
+  // Llenar selects de preferencias
+  const serviceOpts = '<option value="">Selecciona un servicio</option>' + 
+    serviceOptions.map(o => `<option value="${o.value}" ${prefs.favoriteService === o.value ? 'selected' : ''}>${o.label}</option>`).join('');
+  
+  const stylistOpts = '<option value="">Selecciona un estilista</option>' + 
+    stylistOptions.map(o => `<option value="${o.value}" ${prefs.favoriteStylist === o.value ? 'selected' : ''}>${o.label}</option>`).join('');
+  
+  const favSvcSel = document.getElementById('perfilFavSvc');
+  const favWhoSel = document.getElementById('perfilFavWho');
+  if (favSvcSel) favSvcSel.innerHTML = serviceOpts;
+  if (favWhoSel) favWhoSel.innerHTML = stylistOpts;
+  
+  // Mostrar botón de logout si hay usuario
+  const logoutBtn = document.getElementById('perfilLogoutBtn');
+  if (logoutBtn && user) logoutBtn.style.display = 'block';
+}
+
+// Guardar datos personales desde el perfil
+const perfilSaveBtn = document.getElementById('perfilSaveBtn');
+if (perfilSaveBtn) {
+  perfilSaveBtn.addEventListener('click', () => {
+    const name = document.getElementById('perfilName').value.trim();
+    const email = document.getElementById('perfilEmail').value.trim();
+    
+    if (!name || !email) {
+      alert('Por favor completa nombre y correo electrónico');
+      return;
+    }
+    
+    const user = { name, email };
+    saveUser(user);
+    
+    const savedMsg = document.getElementById('perfilSavedMsg');
+    savedMsg.style.display = 'block';
+    setTimeout(() => savedMsg.style.display = 'none', 3000);
+  });
+}
+
+// Guardar preferencias desde el perfil
+const perfilPrefsSaveBtn = document.getElementById('perfilPrefsSaveBtn');
+if (perfilPrefsSaveBtn) {
+  perfilPrefsSaveBtn.addEventListener('click', () => {
+    const prefs = {
+      favoriteService: document.getElementById('perfilFavSvc').value,
+      favoriteStylist: document.getElementById('perfilFavWho').value
+    };
+    
+    savePrefs(prefs);
+    
+    const savedMsg = document.getElementById('perfilPrefsSavedMsg');
+    savedMsg.style.display = 'block';
+    setTimeout(() => savedMsg.style.display = 'none', 3000);
+  });
+}
+
+// Cerrar sesión
+const perfilLogoutBtn = document.getElementById('perfilLogoutBtn');
+if (perfilLogoutBtn) {
+  perfilLogoutBtn.addEventListener('click', () => {
+    if (!confirm('¿Estás segura de que deseas cerrar sesión?')) return;
+    
+    localStorage.removeItem(USER_KEY);
+    localStorage.removeItem(PREFS_KEY);
+    
+    document.getElementById('perfilName').value = '';
+    document.getElementById('perfilEmail').value = '';
+    document.getElementById('perfilFavSvc').value = '';
+    document.getElementById('perfilFavWho').value = '';
+    document.getElementById('perfilLogoutBtn').style.display = 'none';
+    
+    renderUserUI();
+    fillPrefSelects();
+    alert('Sesión cerrada exitosamente.');
+  });
 }
 
 // Inicializar módulo de usuario
