@@ -1375,7 +1375,7 @@ const PREFS_KEY = 'bellefemme_prefs';
 
 // Datos para selects de preferencias
 const serviceOptions = SERVICES.map(s => ({ value: s.id, label: s.name }));
-const stylistOptions = SPECIALISTS.map(s => ({ value: s.id, label: s.name }));
+const stylistOptions = STAFF.map(s => ({ value: s.id, label: s.name }));
 
 // Inicializar usuario desde localStorage
 function loadUser() {
@@ -1442,6 +1442,12 @@ const userMenu = document.getElementById('userMenu');
 if (userBtn) {
   userBtn.addEventListener('click', (e) => {
     e.stopPropagation();
+    const user = loadUser();
+    if (!user) {
+      // Si no hay usuario, mostrar modal de login
+      showLoginModal();
+      return;
+    }
     const isOn = userMenu.classList.contains('on');
     if (isOn) {
       userMenu.classList.remove('on');
@@ -1451,6 +1457,11 @@ if (userBtn) {
   });
 
   document.addEventListener('click', (e) => {
+    if (!userMenu.contains(e.target) && e.target !== userBtn) {
+      userMenu.classList.remove('on');
+    }
+  });
+}
 
 // Guardar preferencias desktop
 const prefSaveDesktop = document.getElementById('prefSaveDesktop');
@@ -1489,8 +1500,66 @@ const logoutBtn = document.getElementById('logoutBtn');
 if (logoutBtn) {
   logoutBtn.addEventListener('click', () => {
     localStorage.removeItem(USER_KEY);
+    localStorage.removeItem(PREFS_KEY);
     renderUserUI();
     userMenu.classList.remove('on');
+    // Recargar preferencias vacías
+    fillPrefSelects();
+  });
+}
+
+// Módulo de autenticación simulada (registro/login)
+function showLoginModal() {
+  const user = loadUser();
+  if (user) return; // Ya hay sesión iniciada
+  
+  const modal = document.createElement('div');
+  modal.id = 'loginModal';
+  modal.style.cssText = 'position:fixed;inset:0;background:rgba(36,28,31,0.5);backdrop-filter:blur(4px);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px';
+  modal.innerHTML = `
+    <div style="background:#fff;border-radius:24px;padding:32px;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(36,28,31,0.2);position:relative">
+      <button id="closeLoginModal" style="position:absolute;top:16px;right:16px;background:none;border:0;font-size:24px;color:var(--muted);cursor:pointer;line-height:1">&times;</button>
+      <h2 style="font-family:var(--serif);font-size:28px;margin:0 0 8px;color:var(--accent)">Bienvenida a Belle Femme</h2>
+      <p style="font:300 14px/1.6 var(--sans);color:#6E6062;margin:0 0 24px">Crea tu cuenta o inicia sesión para guardar tus preferencias y reservar citas.</p>
+      
+      <form id="loginForm" style="display:flex;flex-direction:column;gap:16px">
+        <div>
+          <label style="display:block;font:500 11px var(--sans);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:6px">Nombre completo</label>
+          <input type="text" id="loginName" required style="width:100%;padding:14px;border:1px solid var(--line);border-radius:12px;font:400 14px var(--sans);outline:none;transition:border .2s" placeholder="Ej: María González">
+        </div>
+        <div>
+          <label style="display:block;font:500 11px var(--sans);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:6px">Correo electrónico</label>
+          <input type="email" id="loginEmail" required style="width:100%;padding:14px;border:1px solid var(--line);border-radius:12px;font:400 14px var(--sans);outline:none;transition:border .2s" placeholder="ejemplo@correo.com">
+        </div>
+        <button type="submit" class="btn rose" style="width:100%;margin-top:8px">Iniciar sesión / Registrarse</button>
+      </form>
+      
+      <p style="font:300 11px var(--sans);color:var(--muted);text-align:center;margin-top:20px">Al continuar, aceptas nuestros términos de servicio.</p>
+    </div>
+  `;
+  
+  document.body.appendChild(modal);
+  
+  // Cerrar modal
+  const closeBtn = document.getElementById('closeLoginModal');
+  closeBtn.addEventListener('click', () => modal.remove());
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.remove();
+  });
+  
+  // Manejar formulario
+  const form = document.getElementById('loginForm');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('loginName').value.trim();
+    const email = document.getElementById('loginEmail').value.trim();
+    
+    if (name && email) {
+      const user = { name, email };
+      saveUser(user);
+      modal.remove();
+      fillPrefSelects();
+    }
   });
 }
 
