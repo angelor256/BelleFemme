@@ -213,6 +213,17 @@
   .scr-row .right{text-align:right;flex:none;display:flex;align-items:center;gap:12px}
   .scr-row .price{font:600 13px var(--sans);color:var(--accent)}
   .scr-row .go{color:var(--muted-2)}
+  .scr-row.on{box-shadow:0 0 0 1.5px var(--accent),var(--shadow-sm)}
+  .scr-check{width:26px;height:26px;border-radius:50%;border:1px solid #E0CDD0;display:flex;align-items:center;justify-content:center;flex:none;color:transparent;font-size:13px;transition:all .18s}
+  .scr-row.on .scr-check{background:var(--accent);border-color:var(--accent);color:#fff}
+  .scr-cat{font:500 10.5px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);margin:18px 0 -2px}
+  .scr-cat:first-child{margin-top:2px}
+  .svc-bar{position:fixed;left:0;right:0;bottom:calc(75px + env(safe-area-inset-bottom));z-index:29;display:none;align-items:center;justify-content:space-between;gap:14px;padding:12px var(--pad);background:rgba(255,255,255,.98);backdrop-filter:blur(12px);border-top:1px solid var(--line)}
+  .svc-bar.show{display:flex}
+  #servicios-screen.picking .scr-body{padding-bottom:150px}
+  .svc-bar .sum{font:400 11.5px/1.5 var(--sans);color:var(--muted)}
+  .svc-bar .sum b{display:block;font:600 14px var(--sans);color:var(--ink)}
+  .svc-bar button{padding:13px 22px;border:0;border-radius:999px;background:var(--ink);color:var(--paper);font:500 11px var(--sans);letter-spacing:.1em;text-transform:uppercase;cursor:pointer}
   .profile-card{margin-top:6px;background:var(--card);border:0;padding:30px 24px;text-align:center;border-radius:var(--radius);box-shadow:var(--shadow-sm)}
   .profile-avatar{width:78px;height:78px;border-radius:50%;background:linear-gradient(135deg,#F7EAEC,#F1DEE3);color:var(--accent);display:flex;align-items:center;justify-content:center;font:600 20px var(--sans);margin:0 auto;box-shadow:var(--shadow-sm)}
   .profile-name{font-family:var(--serif);font-size:24px;margin-top:16px;font-weight:500}
@@ -420,11 +431,16 @@
 <section class="screen" id="servicios-screen">
   <div class="scr-top wrap">
     <h2>Servicios</h2>
-    <p>Precios en colones · toque un servicio para reservarlo</p>
+    <p>Precios en colones · toque uno o varios servicios</p>
     <div class="scr-chips" id="scrChips"></div>
   </div>
   <div class="scr-body wrap">
     <div class="scr-list" id="scrServices"></div>
+    <p class="scr-fine">Puede elegir varios servicios y reservarlos en una sola cita.</p>
+  </div>
+  <div class="svc-bar" id="svcBar">
+    <div class="sum"><b id="svcBarCount">0 servicios</b><span id="svcBarMeta"></span></div>
+    <button type="button" id="svcBarGo">Reservar</button>
   </div>
 </section>
 
@@ -886,6 +902,8 @@ function showScreen(name){
   Object.values(screens).forEach(s => s.classList.remove('active'));
   screens[name].classList.add('active');
   tabs.forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+  if (name === 'servicios' && typeof renderServicios === 'function') renderServicios();
+  window.scrollTo(0, 0);
 }
 document.querySelectorAll('[data-tab]').forEach(elm => {
   elm.addEventListener('click', e => {
@@ -941,9 +959,9 @@ const SERVICES = [
 /* cats = categorías que atiende · off = días libres fijos */
 const STAFF = [
   { id:'celine',    name:'Celine Barrantes',  first:'Celine',    initials:'CB', role:'Fundadora',             note:'Uñas, pestañas, cabello y maquillaje',    cats:['unas','pestanas','cabello','maquillaje'], off:[] },
-  { id:'mariana',   name:'Mariana Céspedes',  first:'Mariana',   initials:'MC', role:'Uñas y pestañas',       note:'Manicure ruso y extensiones pelo a pelo', cats:['unas','pestanas'],           off:['d2'] },
-  { id:'ximena',    name:'Ximena Ureña',      first:'Ximena',    initials:'XU', role:'Cabello',               note:'Color, tratamientos y alisados',          cats:['cabello'],                    off:['d1'] },
-  { id:'priscilla', name:'Priscilla Zamora',  first:'Priscilla', initials:'PZ', role:'Maquillaje y peinados', note:'Novias, quinceañeras y eventos',          cats:['maquillaje','cabello'],       off:['d5'] },
+  { id:'mariana',   name:'Mariana Céspedes',  first:'Mariana',   initials:'MC', role:'Uñas y pestañas',       note:'Manicure ruso y extensiones pelo a pelo', cats:['unas','pestanas'],           off:[3] },
+  { id:'ximena',    name:'Ximena Ureña',      first:'Ximena',    initials:'XU', role:'Cabello',               note:'Color, tratamientos y alisados',          cats:['cabello'],                    off:[2] },
+  { id:'priscilla', name:'Priscilla Zamora',  first:'Priscilla', initials:'PZ', role:'Maquillaje y peinados', note:'Novias, quinceañeras y eventos',          cats:['maquillaje','cabello'],       off:[6] },
 ];
 const ANY = { id:'any', name:'Cualquiera disponible', note:'Le asignamos la especialista con el horario más cercano', initials:'—' };
 
@@ -952,14 +970,23 @@ const METHODS = [
   { id:'efectivo', name:'Efectivo en el salón', note:'Pago directo en recepción',       label:'Pago en efectivo en recepción' },
 ];
 
-const DAYS = [
-  { key:'d1', dow:'mar', num:25 },
-  { key:'d2', dow:'mié', num:26 },
-  { key:'d3', dow:'jue', num:27 },
-  { key:'d4', dow:'vie', num:28 },
-  { key:'d5', dow:'sáb', num:29 },
-  { key:'d6', dow:'dom', num:30, closed:true },
-];
+/* La semana se calcula sola: martes a domingo. De viernes en adelante
+   ya se muestra la semana siguiente, para no ofrecer fechas pasadas. */
+const MESES = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const DOW_AB = ['dom','lun','mar','mié','jue','vie','sáb'];
+const DOW_LG = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+const semanaBase = (() => {
+  const t = new Date(); t.setHours(0,0,0,0);
+  const w = t.getDay(), b = new Date(t);
+  if (w >= 2 && w <= 4) b.setDate(t.getDate() - (w - 2));
+  else b.setDate(t.getDate() + ((9 - w) % 7 || 7));
+  return b;
+})();
+const DAYS = Array.from({ length:6 }, (_, i) => {
+  const d = new Date(semanaBase); d.setDate(semanaBase.getDate() + i);
+  const w = d.getDay();
+  return { key:'d' + (i+1), w, dow:DOW_AB[w], dowFull:DOW_LG[w], num:d.getDate(), mes:MESES[d.getMonth()], date:d, closed:w === 0 };
+});
 
 /* Horas ya reservadas en la agenda de cada especialista */
 const BUSY = {
@@ -968,14 +995,13 @@ const BUSY = {
   ximena:    { d2:['11:00','13:00'],        d3:['15:00'],       d4:['9:00'],  d5:['15:00'] },
   priscilla: { d1:['13:00'],                d2:['15:00'],       d4:['11:00'] },
 };
-const DOW_FULL = { mar:'Martes', 'mié':'Miércoles', jue:'Jueves', vie:'Viernes', 'sáb':'Sábado', dom:'Domingo' };
 const AM = ['9:00','9:45','10:30','11:00','11:45'];
 const PM = ['13:00','13:45','15:00','15:45','16:30','17:15'];
 
 const TITLES = ['Elija sus servicios','¿Con quién desea atenderse?','Fecha y hora','Confirme su reserva',''];
 const CTAS   = ['Continuar','Elegir fecha','Revisar','Confirmar cita',''];
 
-const state = { step:0, cat:'unas', picked:['s1'], who:'celine', day:'d3', time:null, method:'sinpe', reminder:true };
+const state = { step:0, cat:'unas', picked:[], who:'celine', day:(DAYS.find(d => !d.closed) || DAYS[0]).key, time:null, method:'sinpe', reminder:true };
 
 const crc = n => '₡' + String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 const dur = m => m < 60 ? m + ' min' : Math.floor(m/60) + ' h' + (m%60 ? ' ' + (m%60) + ' min' : '');
@@ -992,9 +1018,14 @@ const toMin = t => +t.split(':')[0]*60 + +t.split(':')[1];
 /* Solo aparecen las especialistas que cubren todas las categorías elegidas */
 const staffFor = () => { const cs = [...new Set(chosen().map(s => s.cat))]; return STAFF.filter(p => cs.every(c => p.cats.includes(c))); };
 const whoName = id => id === 'any' ? ANY.name : (STAFF.find(p => p.id === id) || ANY).name;
-const worksOn = (id, dk) => id === 'any'
-  ? staffFor().some(p => !p.off.includes(dk))
-  : !((STAFF.find(p => p.id === id) || { off:[] }).off.includes(dk));
+const dayW = dk => (DAYS.find(d => d.key === dk) || {}).w;
+const worksOn = (id, dk) => {
+  const d = DAYS.find(x => x.key === dk);
+  if (!d || d.closed) return false;
+  return id === 'any'
+    ? staffFor().some(p => !p.off.includes(d.w))
+    : !((STAFF.find(p => p.id === id) || { off:[] }).off.includes(d.w));
+};
 /* El bloque completo debe caber antes del cierre y no cruzar el almuerzo */
 const fits = t => { const a = toMin(t), b = a + minutes(); return a >= OPEN && b <= CLOSE && !(a < LUNCH_B && b > LUNCH_A); };
 const freeAt = (id, dk, t) => {
@@ -1090,7 +1121,7 @@ function render(){
 
   const lines = () => chosen().map(x => tag(`<div class="li"><span class="name">${x.name}</span><span class="price">${crc(x.price)}</span></div>`));
   el('sumLines').replaceChildren(...lines());
-  const when = (DOW_FULL[day.dow] || '') + ' ' + day.num + ' de agosto · ' + hr(state.time);
+  const when = day.dowFull + ' ' + day.num + ' de ' + day.mes + ' · ' + hr(state.time);
   const who = (state.who === 'any' ? 'Le asignamos a ' : '') + assigned();
   el('sumWhen').innerHTML = when + '<br>' + who + ' · ' + dur(minutes());
   el('methods').replaceChildren(...METHODS.map(m => {
@@ -1120,11 +1151,78 @@ function render(){
 const go = n => { state.step = Math.max(0, Math.min(4, n)); window.scrollTo(0,0); render(); };
 el('cta').onclick = () => go(state.step + 1);
 el('back').onclick = () => go(state.step - 1);
-el('restart').onclick = () => { Object.assign(state, { step:0, picked:['s1'], time:null }); render(); };
+el('restart').onclick = () => { Object.assign(state, { step:0, picked:[], time:null }); render(); renderServicios(); };
 el('reminder').onclick = () => { state.reminder = !state.reminder; render(); };
-el('ics').onclick = () => alert('Aquí se genera el archivo .ics o se llama al calendario nativo.');
+el('ics').onclick = () => {
+  if (!state.time) return;
+  const d = today(), [h, m] = state.time.split(':').map(Number);
+  const ini = new Date(d.date); ini.setHours(h, m, 0, 0);
+  const fin = new Date(ini.getTime() + minutes() * 60000);
+  const z = n => String(n).padStart(2, '0');
+  const utc = x => x.getUTCFullYear() + z(x.getUTCMonth()+1) + z(x.getUTCDate()) + 'T' + z(x.getUTCHours()) + z(x.getUTCMinutes()) + '00Z';
+  const ics = [
+    'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Belle Femme//Reservas//ES','CALSCALE:GREGORIAN','BEGIN:VEVENT',
+    'UID:' + Date.now() + '@bellefemme.cr', 'DTSTAMP:' + utc(new Date()),
+    'DTSTART:' + utc(ini), 'DTEND:' + utc(fin),
+    'SUMMARY:Belle Femme · ' + chosen().map(s => s.name).join(', '),
+    'LOCATION:Pavas Centro, San José, Costa Rica',
+    'DESCRIPTION:Con ' + assigned() + '. Total ' + crc(total()) + '. Pago al finalizar el servicio.',
+    'BEGIN:VALARM','TRIGGER:-PT24H','ACTION:DISPLAY','DESCRIPTION:Su cita en Belle Femme es mañana','END:VALARM',
+    'END:VEVENT','END:VCALENDAR',
+  ].join('\r\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([ics], { type:'text/calendar;charset=utf-8' }));
+  a.download = 'belle-femme-cita.ics';
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+};
+
+/* ── Pantalla Servicios (app) ─────────────────────────────── */
+let scrCat = 'todas';
+function renderServicios(){
+  const chips = el('scrChips'), list = el('scrServices');
+  if (!chips || !list) return;
+  chips.replaceChildren(...[{ id:'todas', name:'Todos' }, ...CATS].map(c => {
+    const b = tag(`<button type="button" class="scr-chip${scrCat===c.id?' on':''}">${c.name}</button>`);
+    b.onclick = () => { scrCat = c.id; renderServicios(); };
+    return b;
+  }));
+  const cats = scrCat === 'todas' ? CATS : CATS.filter(c => c.id === scrCat);
+  const nodes = [];
+  cats.forEach(c => {
+    const items = SERVICES.filter(s => s.cat === c.id);
+    if (!items.length) return;
+    if (scrCat === 'todas') nodes.push(tag(`<div class="scr-cat">${c.name}</div>`));
+    items.forEach(x => {
+      const on = state.picked.includes(x.id);
+      const who = STAFF.filter(p => p.cats.includes(x.cat)).map(p => p.first).join(', ');
+      const r = tag(`<button type="button" class="scr-row${on?' on':''}" aria-pressed="${on}">
+        <span><span class="name">${x.name}</span><span class="meta" style="display:block">${dur(x.min)} · ${who}</span></span>
+        <span class="right"><span class="price">${crc(x.price)}</span><span class="scr-check">&#10003;</span></span>
+      </button>`);
+      r.onclick = () => {
+        state.picked = on ? state.picked.filter(id => id !== x.id) : [...state.picked, x.id];
+        if (!state.picked.includes(state.cat)) state.cat = x.cat;
+        renderServicios(); render();
+      };
+      nodes.push(r);
+    });
+  });
+  list.replaceChildren(...nodes);
+  const n = state.picked.length, bar = el('svcBar');
+  bar.classList.toggle('show', n > 0);
+  el('servicios-screen').classList.toggle('picking', n > 0);
+  el('svcBarCount').textContent = n + (n === 1 ? ' servicio' : ' servicios');
+  el('svcBarMeta').textContent = n ? dur(minutes()) + ' · ' + crc(total()) : '';
+}
+el('svcBarGo').onclick = () => {
+  if (!state.picked.length) return;
+  state.cat = chosen()[0].cat; state.step = 1; state.time = null;
+  view('reserva', true); render();
+};
 
 render();
+renderServicios();
 document.getElementById('backToSite').addEventListener('click', () => view('sitio', true));
 if (location.hash === '#reserva' || location.hash === '#perfil') view(hashView(), false);
 
@@ -1201,7 +1299,7 @@ pel('pCreate').onclick = () => {
     nombre: pel('fNombre').value.trim(), apellidos: pel('fApellidos').value.trim(),
     tel, correo: pel('fCorreo').value.trim(), nace: pel('fNace').value,
     canton: pel('fCanton').value.trim(), how: pel('fHow').value, notas: pel('fNotas').value.trim(),
-    favSvc:'', favWho:'', desde:'agosto 2026',
+    favSvc:'', favWho:'', desde: MESES[new Date().getMonth()] + ' ' + new Date().getFullYear(),
     app:{ on:false, recordatorio:true, confirmacion:true, promos:false, cumple:true },
     wa:{ on, recordatorio:true, confirmacion:true, promos:false, cumple:true },
   };
