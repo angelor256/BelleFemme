@@ -1,18 +1,23 @@
 {
-  "name": "Belle Femme · Panel de administración",
-  "short_name": "BF Panel",
-  "description": "Agenda, bloqueos de horario y catálogo de servicios de Belle Femme.",
+  "name": "Belle Femme · Salón de belleza",
+  "short_name": "Belle Femme",
+  "description": "Salón de belleza en Pavas, Costa Rica. Uñas, pestañas, cabello y maquillaje. Reserve su cita en línea.",
   "lang": "es-CR",
   "dir": "ltr",
-  "start_url": "./admin.html",
+  "start_url": "./#reserva",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#241C1F",
-  "theme_color": "#241C1F",
+  "background_color": "#FBF3F1",
+  "theme_color": "#FBF3F1",
+  "categories": ["beauty", "lifestyle"],
   "icons": [
-    { "src": "icons/admin-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "icons/admin-512.png", "sizes": "512x512", "type": "image/png" },
-    { "src": "icons/admin-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Reservar cita", "url": "./#reserva" },
+    { "name": "Servicios y precios", "url": "./#servicios" }
   ]
 }
