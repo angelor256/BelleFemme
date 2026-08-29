@@ -143,7 +143,7 @@
   .acts .full{grid-column:1 / -1}
 
   /* Barra de pestañas */
-  nav.tabs{position:fixed;left:50%;transform:translateX(-50%);bottom:0;z-index:30;width:100%;max-width:480px;background:rgba(247,243,242,.94);backdrop-filter:blur(10px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding-bottom:env(safe-area-inset-bottom)}
+  nav.tabs{position:fixed;left:50%;transform:translateX(-50%);bottom:0;z-index:30;width:100%;max-width:480px;background:rgba(247,243,242,.94);backdrop-filter:blur(10px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(6,1fr);padding-bottom:env(safe-area-inset-bottom)}
   nav.tabs button{background:none;border:0;padding:14px 2px 16px;font:500 8.5px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:var(--muted-2)}
   nav.tabs button[aria-pressed="true"]{color:var(--ink)}
   nav.tabs button span{display:block;font-size:15px;margin-bottom:5px;font-weight:300}
@@ -228,6 +228,14 @@
       <div class="wk" id="gDays"></div>
       <button class="btn rose" id="gExport" style="margin-top:26px">Exportar a Excel</button>
       <p class="hint">El archivo trae tres hojas: resumen del período, el detalle de cada cita y el total por servicio. Se abre en Excel, Numbers y Google Sheets.</p>
+    </section>
+
+    <!-- Clientas -->
+    <section id="tab-clientas" hidden>
+      <div class="secthd"><div><div class="eyebrow">Base de clientas</div><div class="h1" style="margin-top:8px">Clientas registradas</div></div></div>
+      <div class="tot" id="cTot"></div>
+      <div id="cList" style="margin-top:18px;display:flex;flex-direction:column;gap:12px"></div>
+      <p class="hint">Las clientas que crean su cuenta en la app aparecen aquí con sus preferencias y sus permisos de aviso. Al conectar Supabase, la lista será la misma para todos los dispositivos del salón.</p>
     </section>
 
   </main>
@@ -359,6 +367,7 @@ const TABS = [
   { id:'bloqueos', icon:'◫', label:'Bloqueos' },
   { id:'servicios',icon:'✦', label:'Servicios' },
   { id:'ganancias',icon:'₡', label:'Ganancias' },
+  { id:'clientas', icon:'☺', label:'Clientas' },
 ];
 el('tabs').replaceChildren(...TABS.map(t => {
   const b = tag(`<button aria-pressed="false"><span>${t.icon}</span>${t.label}</button>`);
@@ -372,6 +381,7 @@ function render(){
     el('tabs').children[i].setAttribute('aria-pressed', ui.tab === t.id);
     el('tab-' + t.id).hidden = ui.tab !== t.id;
   });
+  if (ui.tab === 'clientas') renderClientas();
 
   el('staffChips').replaceChildren(...[{ id:'todas', first:'Todas' }, ...STAFF].map(p => {
     const b = tag(`<button aria-pressed="${ui.staff === p.id}">${p.first}</button>`);
@@ -840,9 +850,96 @@ el('gExport').onclick = exportarExcel;
 
 render();
 
-/* Service worker: permite abrirla sin conexión y en modo app */
+/* ── Clientas registradas en la app ─────────────────────── */
+const REG_KEY = 'bf-clientas';
+function leerClientas(){
+  try { return JSON.parse(localStorage.getItem(REG_KEY) || '[]'); } catch(e){ return []; }
+}
+const telFmt = t => (t && t.length === 8) ? t.slice(0,4) + ' ' + t.slice(4) : (t || '—');
+const nombreSvc = id => { const s = (SERVICES || []).find(x => x.id === id); return s ? s.name : ''; };
+const nombreWho = id => { const p = (STAFF || []).find(x => x.id === id); return p ? p.name : ''; };
+const fechaCorta = iso => {
+  if (!iso) return '';
+  const d = new Date(iso);
+  if (isNaN(d)) return '';
+  return d.toLocaleDateString('es-CR', { day:'numeric', month:'long', year:'numeric' });
+};
+
+function renderClientas(){
+  const list = leerClientas().slice().sort((x,y) => (y.creado||'').localeCompare(x.creado||''));
+  const conWa = list.filter(c => c.wa && c.wa.on).length;
+  const conApp = list.filter(c => c.app && c.app.on).length;
+  el('cTot').innerHTML = '<div class="eyebrow">Registradas</div><div class="n">' + list.length + '</div>' +
+    '<div class="hint" style="margin-top:6px">' + conWa + ' con avisos por WhatsApp · ' + conApp + ' con avisos en la app</div>';
+
+  if (!list.length){
+    el('cList').replaceChildren(tag('<p class="hint" style="margin:0">Todavía no hay cuentas creadas desde la app.</p>'));
+    return;
+  }
+
+  el('cList').replaceChildren(...list.map(c => {
+    const nom = ((c.nombre || '') + ' ' + (c.apellidos || '')).trim() || 'Sin nombre';
+    const favs = [nombreSvc(c.favSvc), nombreWho(c.favWho)].filter(Boolean).join(' · ') || 'Sin preferencias guardadas';
+    const avisos = [c.app && c.app.on ? 'App' : null, c.wa && c.wa.on ? 'WhatsApp' : null].filter(Boolean).join(' + ') || 'Sin avisos';
+    const extra = [c.canton, c.how].filter(Boolean).join(' · ');
+    const card = tag('<div style="background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px"></div>');
+    card.innerHTML =
+      '<div style="display:flex;justify-content:space-between;gap:12px;align-items:baseline">' +
+        '<div style="font:400 19px var(--serif);color:var(--ink)">' + nom + '</div>' +
+        '<div style="font:300 11px var(--sans);color:var(--muted-2);white-space:nowrap">' + (fechaCorta(c.creado) || '') + '</div>' +
+      '</div>' +
+      '<div style="font:300 12.5px/1.9 var(--sans);color:#6E6062;margin-top:8px">' +
+        telFmt(c.tel) + (c.correo ? ' · ' + c.correo : '') +
+        (c.nace ? '<br>Cumpleaños: ' + c.nace : '') +
+        (extra ? '<br>' + extra : '') +
+        '<br>Favoritos: ' + favs +
+        '<br>Avisos: ' + avisos +
+        (c.notas ? '<br>Notas: ' + c.notas : '') +
+      '</div>';
+    const wa = tag('<a class="btn rose" style="display:inline-block;margin-top:12px;padding:9px 16px;font-size:10px">Escribir por WhatsApp</a>');
+    wa.href = 'https://wa.me/506' + (c.tel || '');
+    wa.target = '_blank';
+    card.appendChild(wa);
+    return card;
+  }));
+}
+
+/* Service worker: sin conexión, modo app y aviso cuando hay versión nueva */
+function bfUpdateBar(worker){
+  if (document.getElementById('bfUpd')) return;
+  const b = document.createElement('div');
+  b.id = 'bfUpd';
+  b.style.cssText = 'position:fixed;left:50%;transform:translateX(-50%);bottom:calc(96px + env(safe-area-inset-bottom));z-index:95;display:flex;align-items:center;gap:14px;max-width:calc(100% - 32px);background:#241C1F;color:#F5E9EA;padding:12px 14px 12px 18px;border-radius:16px;font:300 12px/1.4 Jost,system-ui,sans-serif;box-shadow:0 12px 40px rgba(36,28,31,.28)';
+  const t = document.createElement('span');
+  t.textContent = 'Hay una versión nueva del panel.';
+  const btn = document.createElement('button');
+  btn.textContent = 'Actualizar';
+  btn.style.cssText = 'flex:0 0 auto;background:#A8586E;color:#fff;border:0;border-radius:999px;padding:9px 16px;font:500 10.5px Jost,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;cursor:pointer';
+  btn.onclick = () => { btn.textContent = 'Actualizando'; worker.postMessage({ type:'SKIP_WAITING' }); };
+  b.append(t, btn);
+  document.body.appendChild(b);
+}
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+  let bfReloading = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (bfReloading) return; bfReloading = true; location.reload();
+  });
+  window.addEventListener('load', async () => {
+    try {
+      const reg = await navigator.serviceWorker.register('sw.js');
+      if (reg.waiting && navigator.serviceWorker.controller) bfUpdateBar(reg.waiting);
+      reg.addEventListener('updatefound', () => {
+        const w = reg.installing;
+        if (!w) return;
+        w.addEventListener('statechange', () => {
+          if (w.state === 'installed' && navigator.serviceWorker.controller) bfUpdateBar(w);
+        });
+      });
+      const check = () => reg.update().catch(() => {});
+      setInterval(check, 30 * 60 * 1000);
+      document.addEventListener('visibilitychange', () => { if (!document.hidden) check(); });
+    } catch(e){}
+  });
 }
 </script>
 </body>
