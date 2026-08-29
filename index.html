@@ -405,20 +405,15 @@
       <span>&#8250;</span>
     </a>
     
-    <!-- Preferencias de usuario móvil -->
-    <div class="user-prefs-card" id="userPrefsCard">
-      <h3>Mis Preferencias</h3>
-      <div class="pref-row">
-        <label>Servicio favorito</label>
-        <select id="prefServiceMobile"></select>
-      </div>
-      <div class="pref-row">
-        <label>Estilista preferida</label>
-        <select id="prefStylistMobile"></select>
-      </div>
-      <button class="pref-save" id="prefSaveMobile">Guardar preferencias</button>
-      <div class="pref-saved" id="prefSavedMobile">¡Preferencias guardadas!</div>
-    </div>
+    <!-- Mi cuenta -->
+    <button type="button" id="acctCard" style="display:flex;align-items:center;gap:14px;width:100%;margin-top:18px;padding:16px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);cursor:pointer;text-align:left">
+      <span id="acctAv" style="flex:0 0 auto;width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#C06A7E);color:#fff;display:flex;align-items:center;justify-content:center;font:400 17px var(--serif)">+</span>
+      <span style="flex:1;min-width:0">
+        <span id="acctT" style="display:block;font:400 16px var(--serif);color:var(--ink)">Crear mi cuenta</span>
+        <span id="acctS" style="display:block;font:300 11.5px var(--sans);color:var(--muted);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Guarde sus datos y sus preferencias</span>
+      </span>
+      <span style="color:var(--muted-2);font-size:20px;line-height:1">&#8250;</span>
+    </button>
   </div>
 </section>
 
@@ -430,57 +425,6 @@
   </div>
   <div class="scr-body wrap">
     <div class="scr-list" id="scrServices"></div>
-  </div>
-</section>
-
-<section class="screen" id="perfil-screen">
-  <div class="scr-top wrap">
-    <h2>Mi Perfil</h2>
-    <p>Crea o edita tu perfil para guardar tus preferencias</p>
-  </div>
-  <div class="scr-body wrap">
-    <!-- Formulario de registro / login simulado -->
-    <div class="user-prefs-card" id="perfilCard">
-      <h3 style="font-family:var(--serif);font-size:18px;margin-bottom:14px;color:var(--accent)">Datos Personales</h3>
-      
-      <div class="pref-row">
-        <label>Nombre completo</label>
-        <input type="text" id="perfilName" placeholder="Tu nombre" style="width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;font:400 13px var(--sans);color:var(--ink);background:#fff;margin-top:6px">
-      </div>
-      
-      <div class="pref-row">
-        <label>Correo electrónico</label>
-        <input type="email" id="perfilEmail" placeholder="tu@correo.com" style="width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;font:400 13px var(--sans);color:var(--ink);background:#fff;margin-top:6px">
-      </div>
-      
-      <button class="pref-save" id="perfilSaveBtn" style="margin-top:16px">Guardar datos</button>
-      <div class="pref-saved" id="perfilSavedMsg" style="color:var(--success);font:400 11px var(--sans);text-align:center;margin-top:10px;display:none">¡Datos guardados!</div>
-      
-      <div class="divider" style="height:1px;background:var(--line);margin:20px 0"></div>
-      
-      <h3 style="font-family:var(--serif);font-size:18px;margin-bottom:14px;color:var(--accent)">Mis Preferencias</h3>
-      
-      <div class="pref-row">
-        <label>Servicio favorito</label>
-        <select id="perfilFavSvc" style="width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;font:400 13px var(--sans);color:var(--ink);background:#fff;margin-top:6px">
-          <option value="">Selecciona un servicio</option>
-        </select>
-      </div>
-      
-      <div class="pref-row">
-        <label>Estilista de preferencia</label>
-        <select id="perfilFavWho" style="width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:12px;font:400 13px var(--sans);color:var(--ink);background:#fff;margin-top:6px">
-          <option value="">Selecciona un estilista</option>
-        </select>
-      </div>
-      
-      <button class="pref-save" id="perfilPrefsSaveBtn" style="margin-top:16px">Guardar preferencias</button>
-      <div class="pref-saved" id="perfilPrefsSavedMsg" style="color:var(--success);font:400 11px var(--sans);text-align:center;margin-top:10px;display:none">¡Preferencias guardadas!</div>
-      
-      <div class="divider" style="height:1px;background:var(--line);margin:20px 0"></div>
-      
-      <button class="ghost" id="perfilLogoutBtn" style="width:100%;padding:14px;background:none;border:1.5px solid var(--ink);border-radius:12px;font:500 11px var(--sans);cursor:pointer;color:var(--ink);display:none">Cerrar sesión</button>
-    </div>
   </div>
 </section>
 
@@ -679,21 +623,6 @@
     <span class="nav-user-avatar" id="userAvatar">U</span>
     <span id="userNameDisplay">Usuario</span>
   </button>
-  <div class="user-menu" id="userMenu">
-    <div class="pref-label">Preferencias</div>
-    <label style="padding:4px 18px;display:block">
-      <span style="font:400 11px var(--sans);color:var(--muted);display:block;margin-bottom:4px">Servicio favorito</span>
-      <select id="prefService"></select>
-    </label>
-    <label style="padding:4px 18px;display:block">
-      <span style="font:400 11px var(--sans);color:var(--muted);display:block;margin-bottom:4px">Estilista preferida</span>
-      <select id="prefStylist"></select>
-    </label>
-    <button class="pref-save" id="prefSaveDesktop" style="margin:8px 18px;width:calc(100% - 36px)">Guardar preferencias</button>
-    <div class="pref-saved" id="prefSavedDesktop">¡Preferencias guardadas!</div>
-    <div class="divider"></div>
-    <button id="logoutBtn" style="color:var(--error)">Cerrar sesión</button>
-  </div>
 </div>
 
 <nav class="tabbar" id="tabbar">
@@ -856,6 +785,17 @@
       </div>
     </section>
 
+    <!-- Entrar -->
+    <section id="pLogin" hidden>
+      <p class="hint" style="margin-top:0">Escriba el número con el que creó su cuenta. Le enviamos un código por WhatsApp para entrar.</p>
+      <label class="fld"><span class="lb">Teléfono</span><input id="lTel" type="tel" inputmode="numeric" autocomplete="tel" placeholder="8888 8888"></label>
+      <p class="msg" id="pLoginMsg" hidden></p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-top:24px">
+        <button class="cta" id="pLoginSend">Enviarme el código</button>
+        <button class="link" id="pLoginBack">Crear una cuenta nueva</button>
+      </div>
+    </section>
+
     <!-- Perfil -->
     <section id="pMe" hidden>
       <div class="pcard">
@@ -936,10 +876,10 @@ function view(name, push){
 document.querySelectorAll('a[href="#reserva"]').forEach(a => {
   a.addEventListener('click', e => { e.preventDefault(); view('reserva', true); });
 });
-window.addEventListener('popstate', () => view(location.hash === '#reserva' ? 'reserva' : 'sitio', false));
+window.addEventListener('popstate', () => view(location.hash === '#reserva' ? 'reserva' : location.hash === '#perfil' ? 'perfil' : 'sitio', false));
 
 /* ── Barra inferior: pantallas reales, no scroll ──────────── */
-const screens = { inicio: document.getElementById('inicio'), servicios: document.getElementById('servicios-screen'), visita: document.getElementById('visita-screen'), perfil: document.getElementById('perfil-screen') };
+const screens = { inicio: document.getElementById('inicio'), servicios: document.getElementById('servicios-screen'), visita: document.getElementById('visita-screen') };
 const tabs = document.querySelectorAll('.tab');
 function showScreen(name){
   if (!screens[name]) return;
@@ -957,8 +897,8 @@ document.querySelectorAll('[data-tab]').forEach(elm => {
     }
     if (name === 'perfil') { 
       e.preventDefault();
-      showScreen('perfil');
-      renderPerfilForm();
+      view('perfil', true);
+      renderPerfil();
       return;
     }
     e.preventDefault();
@@ -969,7 +909,8 @@ document.getElementById('dashFeatured').addEventListener('click', () => {
   state.cat = 'unas'; state.picked = ['s1']; state.step = 0; state.time = null;
   view('reserva', true); render();
 });
-document.getElementById('bookWithCeline').addEventListener('click', (e) => { e.preventDefault(); state.who = 'celine'; view('reserva', true); render(); });
+const celineBtn = document.getElementById('bookWithCeline');
+if (celineBtn) celineBtn.addEventListener('click', (e) => { e.preventDefault(); state.who = 'celine'; view('reserva', true); render(); });
 
 /* ── Lógica del flujo de reserva ──────────────────────────── */
 /* Datos de demostración. En producción vienen de Supabase:
@@ -1195,7 +1136,19 @@ const PKEY = 'bf-cliente';
 const pel = id => document.getElementById(id);
 let me = null;
 try { me = JSON.parse(localStorage.getItem(PKEY) || 'null'); } catch(e){}
-const saveMe = () => { try { localStorage.setItem(PKEY, JSON.stringify(me)); } catch(e){} };
+const REG_KEY = 'bf-clientas';
+const readReg = () => { try { return JSON.parse(localStorage.getItem(REG_KEY) || '[]'); } catch(e){ return []; } };
+const writeReg = list => { try { localStorage.setItem(REG_KEY, JSON.stringify(list)); } catch(e){} };
+function syncReg(){
+  if (!me || !me.tel) return;
+  const list = readReg();
+  const i = list.findIndex(c => c.tel === me.tel);
+  const rec = Object.assign({}, me, { actualizado: new Date().toISOString() });
+  if (i >= 0) list[i] = Object.assign({ creado: list[i].creado }, rec);
+  else list.push(Object.assign({ creado: new Date().toISOString() }, rec));
+  writeReg(list);
+}
+const saveMe = () => { try { localStorage.setItem(PKEY, JSON.stringify(me)); } catch(e){} syncReg(); };
 
 const HOW = ['Instagram','Recomendación de una amiga','Pasé frente al salón','Búsqueda en Google','TikTok','Otro'];
 const NOTIF = [
@@ -1224,10 +1177,10 @@ const msg = (id, text) => { const n = pel(id); n.textContent = text || ''; n.hid
 /* Registro */
 fillSel('fHow', howOpts(), '');
 let draft = null;
-const swap = (auth, code, mine) => {
-  pel('pAuth').hidden = !auth; pel('pCode').hidden = !code; pel('pMe').hidden = !mine;
-  pel('pTitle').textContent = auth ? 'Crear mi perfil' : code ? 'Confirme su número' : 'Mi perfil';
-  pel('pStep').textContent = auth ? 'Mi cuenta' : code ? 'Verificación' : 'Mi cuenta';
+const swap = (auth, code, mine, login) => {
+  pel('pAuth').hidden = !auth; pel('pCode').hidden = !code; pel('pMe').hidden = !mine; pel('pLogin').hidden = !login;
+  pel('pTitle').textContent = auth ? 'Crear mi cuenta' : login ? 'Entrar a mi cuenta' : code ? 'Confirme su número' : 'Mi cuenta';
+  pel('pStep').textContent = code ? 'Verificación' : 'Mi cuenta';
   window.scrollTo(0, 0);
 };
 [['cWa', true], ['cData', false]].forEach(([id]) => {
@@ -1252,13 +1205,25 @@ pel('pCreate').onclick = () => {
     app:{ on:false, recordatorio:true, confirmacion:true, promos:false, cumple:true },
     wa:{ on, recordatorio:true, confirmacion:true, promos:false, cumple:true },
   };
+  const ya = readReg().find(c => c.tel === tel);
+  if (ya) draft = Object.assign({}, ya, { nombre: draft.nombre, apellidos: draft.apellidos || ya.apellidos, correo: draft.correo || ya.correo });
   pel('pCodeTel').textContent = telFmt(tel);
   pel('fCode').value = '';
+  msg('pCodeMsg', '');
   swap(false, true, false);
 };
-pel('pHasAcct').onclick = () => msg('pAuthMsg', me
-  ? 'Ya hay un perfil guardado en este teléfono. Recargue la página para entrar.'
-  : 'No encontramos un perfil guardado en este teléfono. Créelo aquí y quedará listo.');
+pel('pHasAcct').onclick = () => { msg('pAuthMsg', ''); msg('pLoginMsg', ''); pel('lTel').value = ''; swap(false, false, false, true); };
+pel('pLoginBack').onclick = () => swap(true, false, false);
+pel('pLoginSend').onclick = () => {
+  const tel = pel('lTel').value.replace(/\D/g, '');
+  if (tel.length !== 8) return msg('pLoginMsg', 'El teléfono debe tener ocho dígitos.');
+  const found = readReg().find(c => c.tel === tel);
+  if (!found) return msg('pLoginMsg', 'No encontramos una cuenta con ese número. Créela con el botón de abajo.');
+  draft = found;
+  pel('pCodeTel').textContent = telFmt(tel);
+  pel('fCode').value = ''; msg('pCodeMsg', '');
+  swap(false, true, false);
+};
 pel('pCodeBack').onclick = () => swap(true, false, false);
 pel('pVerify').onclick = () => {
   if (pel('fCode').value.trim() !== '1234') return msg('pCodeMsg', 'El código no coincide.');
@@ -1303,6 +1268,7 @@ function renderPerfil(){
   pel('eCorreo').value = me.correo; pel('eNace').value = me.nace;
   pel('eCanton').value = me.canton; pel('eNotas').value = me.notas;
   fillSel('eHow', howOpts(), me.how);
+  paintAcct();
 }
 
 pel('pFavSvc').onchange = e => { me.favSvc = e.target.value; saveMe(); renderPerfil(); };
@@ -1349,16 +1315,50 @@ pel('pSave').onclick = () => {
 };
 pel('pWipe').onclick = () => {
   if (!confirm('Se borran su perfil, sus preferencias y sus permisos de notificación en este teléfono. ¿Continuar?')) return;
-  localStorage.removeItem(PKEY); me = null; swap(true, false, false); view('sitio', true);
+  writeReg(readReg().filter(c => c.tel !== me.tel));
+  localStorage.removeItem(PKEY); me = null; paintAcct(); swap(true, false, false); view('sitio', true);
 };
 pel('pBack').onclick = () => view('sitio', true);
 pel('pToSite').onclick = () => view('sitio', true);
 
 renderPerfil();
 
-/* Service worker: permite abrirla sin conexión y en modo app */
+/* Service worker: sin conexión, modo app y aviso cuando hay versión nueva */
+function bfUpdateBar(worker){
+  if (document.getElementById('bfUpd')) return;
+  const b = document.createElement('div');
+  b.id = 'bfUpd';
+  b.style.cssText = 'position:fixed;left:50%;transform:translateX(-50%);bottom:calc(96px + env(safe-area-inset-bottom));z-index:95;display:flex;align-items:center;gap:14px;max-width:calc(100% - 32px);background:#241C1F;color:#F5E9EA;padding:12px 14px 12px 18px;border-radius:16px;font:300 12px/1.4 Jost,system-ui,sans-serif;box-shadow:0 12px 40px rgba(36,28,31,.28)';
+  const t = document.createElement('span');
+  t.textContent = 'Hay una versión nueva de la app.';
+  const btn = document.createElement('button');
+  btn.textContent = 'Actualizar';
+  btn.style.cssText = 'flex:0 0 auto;background:#A8586E;color:#fff;border:0;border-radius:999px;padding:9px 16px;font:500 10.5px Jost,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;cursor:pointer';
+  btn.onclick = () => { btn.textContent = 'Actualizando'; worker.postMessage({ type:'SKIP_WAITING' }); };
+  b.append(t, btn);
+  document.body.appendChild(b);
+}
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+  let bfReloading = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (bfReloading) return; bfReloading = true; location.reload();
+  });
+  window.addEventListener('load', async () => {
+    try {
+      const reg = await navigator.serviceWorker.register('sw.js');
+      if (reg.waiting && navigator.serviceWorker.controller) bfUpdateBar(reg.waiting);
+      reg.addEventListener('updatefound', () => {
+        const w = reg.installing;
+        if (!w) return;
+        w.addEventListener('statechange', () => {
+          if (w.state === 'installed' && navigator.serviceWorker.controller) bfUpdateBar(w);
+        });
+      });
+      const check = () => reg.update().catch(() => {});
+      setInterval(check, 30 * 60 * 1000);
+      document.addEventListener('visibilitychange', () => { if (!document.hidden) check(); });
+    } catch(e){}
+  });
 }
 
 /* Invitación a instalar */
@@ -1399,305 +1399,36 @@ if (iOS && !standalone && !dismissed) {
   toast.classList.add('on');
 }
 
-/* ── Módulo de Usuario y Preferencias ─────────────────────── */
-const USER_KEY = 'bellefemme_user';
-const PREFS_KEY = 'bellefemme_prefs';
+/* ── Cuenta en la barra superior y en la pantalla de inicio ── */
+function paintAcct(){
+  const inicial = me && me.nombre ? me.nombre.trim().charAt(0).toUpperCase() : '+';
+  const av = document.getElementById('userAvatar');
+  const nm = document.getElementById('userNameDisplay');
+  if (av) av.textContent = inicial;
+  if (nm) nm.textContent = me ? me.nombre.split(' ')[0] : 'Crear cuenta';
 
-// Datos para selects de preferencias
-const serviceOptions = SERVICES.map(s => ({ value: s.id, label: s.name }));
-const stylistOptions = STAFF.map(s => ({ value: s.id, label: s.name }));
-
-// Inicializar usuario desde localStorage
-function loadUser() {
-  const saved = localStorage.getItem(USER_KEY);
-  return saved ? JSON.parse(saved) : null;
-}
-
-function saveUser(user) {
-  localStorage.setItem(USER_KEY, JSON.stringify(user));
-  renderUserUI();
-}
-
-function loadPrefs() {
-  const saved = localStorage.getItem(PREFS_KEY);
-  return saved ? JSON.parse(saved) : { favoriteService: '', favoriteStylist: '' };
-}
-
-function savePrefs(prefs) {
-  localStorage.setItem(PREFS_KEY, JSON.stringify(prefs));
-}
-
-// Renderizar UI de usuario
-function renderUserUI() {
-  const user = loadUser();
-  const avatarEl = document.getElementById('userAvatar');
-  const nameEl = document.getElementById('userNameDisplay');
-  
-  if (user) {
-    avatarEl.textContent = user.name.charAt(0).toUpperCase();
-    nameEl.textContent = user.name.split(' ')[0];
+  const cAv = document.getElementById('acctAv');
+  const cT  = document.getElementById('acctT');
+  const cS  = document.getElementById('acctS');
+  if (!cT) return;
+  cAv.textContent = inicial;
+  if (me){
+    cT.textContent = 'Hola, ' + me.nombre.split(' ')[0];
+    const svc = me.favSvc ? (SERVICES.find(s => s.id === me.favSvc) || {}).name : '';
+    const who = me.favWho ? whoName(me.favWho).split(' ')[0] : '';
+    const detalle = [svc, who].filter(Boolean).join(' · ');
+    cS.textContent = detalle || 'Elija su servicio y su especialista favorita';
   } else {
-    avatarEl.textContent = 'U';
-    nameEl.textContent = 'Usuario';
+    cT.textContent = 'Crear mi cuenta';
+    cS.textContent = 'Guarde sus datos y sus preferencias';
   }
 }
-
-// Llenar selects de preferencias
-function fillPrefSelects() {
-  const prefs = loadPrefs();
-  
-  // Desktop selects
-  const prefServiceDesk = document.getElementById('prefService');
-  const prefStylistDesk = document.getElementById('prefStylist');
-  
-  // Mobile selects
-  const prefServiceMob = document.getElementById('prefServiceMobile');
-  const prefStylistMob = document.getElementById('prefStylistMobile');
-  
-  const serviceOpts = '<option value="">Seleccione un servicio</option>' + 
-    serviceOptions.map(o => `<option value="${o.value}" ${prefs.favoriteService === o.value ? 'selected' : ''}>${o.label}</option>`).join('');
-  
-  const stylistOpts = stylistOptions.map(o => `<option value="${o.value}" ${prefs.favoriteStylist === o.value ? 'selected' : ''}>${o.label}</option>`).join('');
-  
-  if (prefServiceDesk) prefServiceDesk.innerHTML = serviceOpts;
-  if (prefStylistDesk) prefStylistDesk.innerHTML = stylistOpts;
-  if (prefServiceMob) prefServiceMob.innerHTML = serviceOpts;
-  if (prefStylistMob) prefStylistMob.innerHTML = stylistOpts;
-}
-
-// Mostrar/ocultar menú de usuario
+const abrirCuenta = () => { view('perfil', true); renderPerfil(); };
+const acctCardBtn = document.getElementById('acctCard');
+if (acctCardBtn) acctCardBtn.addEventListener('click', abrirCuenta);
 const userBtn = document.getElementById('userBtn');
-const userMenu = document.getElementById('userMenu');
-
-if (userBtn) {
-  userBtn.addEventListener('click', (e) => {
-    e.stopPropagation();
-    const user = loadUser();
-    if (!user) {
-      // Si no hay usuario, mostrar modal de login
-      showLoginModal();
-      return;
-    }
-    const isOn = userMenu.classList.contains('on');
-    if (isOn) {
-      userMenu.classList.remove('on');
-    } else {
-      userMenu.classList.add('on');
-    }
-  });
-
-  document.addEventListener('click', (e) => {
-    if (!userMenu.contains(e.target) && e.target !== userBtn) {
-      userMenu.classList.remove('on');
-    }
-  });
-}
-
-// Guardar preferencias desktop
-const prefSaveDesktop = document.getElementById('prefSaveDesktop');
-const prefSavedDesktop = document.getElementById('prefSavedDesktop');
-
-if (prefSaveDesktop) {
-  prefSaveDesktop.addEventListener('click', () => {
-    const prefs = {
-      favoriteService: document.getElementById('prefService').value,
-      favoriteStylist: document.getElementById('prefStylist').value
-    };
-    savePrefs(prefs);
-    prefSavedDesktop.style.display = 'block';
-    setTimeout(() => prefSavedDesktop.style.display = 'none', 2500);
-  });
-}
-
-// Guardar preferencias móvil
-const prefSaveMobile = document.getElementById('prefSaveMobile');
-const prefSavedMobile = document.getElementById('prefSavedMobile');
-
-if (prefSaveMobile) {
-  prefSaveMobile.addEventListener('click', () => {
-    const prefs = {
-      favoriteService: document.getElementById('prefServiceMobile').value,
-      favoriteStylist: document.getElementById('prefStylistMobile').value
-    };
-    savePrefs(prefs);
-    prefSavedMobile.style.display = 'block';
-    setTimeout(() => prefSavedMobile.style.display = 'none', 2500);
-  });
-}
-
-// Cerrar sesión
-const logoutBtn = document.getElementById('logoutBtn');
-if (logoutBtn) {
-  logoutBtn.addEventListener('click', () => {
-    localStorage.removeItem(USER_KEY);
-    localStorage.removeItem(PREFS_KEY);
-    renderUserUI();
-    userMenu.classList.remove('on');
-    // Recargar preferencias vacías
-    fillPrefSelects();
-  });
-}
-
-// Módulo de autenticación simulada (registro/login)
-function showLoginModal() {
-  const user = loadUser();
-  if (user) return; // Ya hay sesión iniciada
-  
-  const modal = document.createElement('div');
-  modal.id = 'loginModal';
-  modal.style.cssText = 'position:fixed;inset:0;background:rgba(36,28,31,0.5);backdrop-filter:blur(4px);z-index:100;display:flex;align-items:center;justify-content:center;padding:20px';
-  modal.innerHTML = `
-    <div style="background:#fff;border-radius:24px;padding:32px;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(36,28,31,0.2);position:relative">
-      <button id="closeLoginModal" style="position:absolute;top:16px;right:16px;background:none;border:0;font-size:24px;color:var(--muted);cursor:pointer;line-height:1">&times;</button>
-      <h2 style="font-family:var(--serif);font-size:28px;margin:0 0 8px;color:var(--accent)">Bienvenida a Belle Femme</h2>
-      <p style="font:300 14px/1.6 var(--sans);color:#6E6062;margin:0 0 24px">Crea tu cuenta o inicia sesión para guardar tus preferencias y reservar citas.</p>
-      
-      <form id="loginForm" style="display:flex;flex-direction:column;gap:16px">
-        <div>
-          <label style="display:block;font:500 11px var(--sans);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:6px">Nombre completo</label>
-          <input type="text" id="loginName" required style="width:100%;padding:14px;border:1px solid var(--line);border-radius:12px;font:400 14px var(--sans);outline:none;transition:border .2s" placeholder="Ej: María González">
-        </div>
-        <div>
-          <label style="display:block;font:500 11px var(--sans);text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:6px">Correo electrónico</label>
-          <input type="email" id="loginEmail" required style="width:100%;padding:14px;border:1px solid var(--line);border-radius:12px;font:400 14px var(--sans);outline:none;transition:border .2s" placeholder="ejemplo@correo.com">
-        </div>
-        <button type="submit" class="btn rose" style="width:100%;margin-top:8px">Iniciar sesión / Registrarse</button>
-      </form>
-      
-      <p style="font:300 11px var(--sans);color:var(--muted);text-align:center;margin-top:20px">Al continuar, aceptas nuestros términos de servicio.</p>
-    </div>
-  `;
-  
-  document.body.appendChild(modal);
-  
-  // Cerrar modal
-  const closeBtn = document.getElementById('closeLoginModal');
-  closeBtn.addEventListener('click', () => modal.remove());
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) modal.remove();
-  });
-  
-  // Manejar formulario
-  const form = document.getElementById('loginForm');
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const name = document.getElementById('loginName').value.trim();
-    const email = document.getElementById('loginEmail').value.trim();
-    
-    if (name && email) {
-      const user = { name, email };
-      saveUser(user);
-      modal.remove();
-      fillPrefSelects();
-    }
-  });
-}
-
-// Simular registro/login al cargar (para demo)
-function initDemoUser() {
-  let user = loadUser();
-  if (!user) {
-    // No crear usuario automáticamente, esperar a que el usuario se registre
-    renderUserUI();
-    fillPrefSelects();
-    return;
-  }
-  renderUserUI();
-  fillPrefSelects();
-  renderPerfilForm();
-}
-
-// Renderizar formulario de perfil con datos del usuario
-function renderPerfilForm() {
-  const user = loadUser();
-  const prefs = loadPrefs();
-  
-  if (!user) return;
-  
-  // Llenar datos personales
-  const nameInput = document.getElementById('perfilName');
-  const emailInput = document.getElementById('perfilEmail');
-  if (nameInput) nameInput.value = user.name || '';
-  if (emailInput) emailInput.value = user.email || '';
-  
-  // Llenar selects de preferencias
-  const serviceOpts = '<option value="">Selecciona un servicio</option>' + 
-    serviceOptions.map(o => `<option value="${o.value}" ${prefs.favoriteService === o.value ? 'selected' : ''}>${o.label}</option>`).join('');
-  
-  const stylistOpts = '<option value="">Selecciona un estilista</option>' + 
-    stylistOptions.map(o => `<option value="${o.value}" ${prefs.favoriteStylist === o.value ? 'selected' : ''}>${o.label}</option>`).join('');
-  
-  const favSvcSel = document.getElementById('perfilFavSvc');
-  const favWhoSel = document.getElementById('perfilFavWho');
-  if (favSvcSel) favSvcSel.innerHTML = serviceOpts;
-  if (favWhoSel) favWhoSel.innerHTML = stylistOpts;
-  
-  // Mostrar botón de logout si hay usuario
-  const logoutBtn = document.getElementById('perfilLogoutBtn');
-  if (logoutBtn && user) logoutBtn.style.display = 'block';
-}
-
-// Guardar datos personales desde el perfil
-const perfilSaveBtn = document.getElementById('perfilSaveBtn');
-if (perfilSaveBtn) {
-  perfilSaveBtn.addEventListener('click', () => {
-    const name = document.getElementById('perfilName').value.trim();
-    const email = document.getElementById('perfilEmail').value.trim();
-    
-    if (!name || !email) {
-      alert('Por favor completa nombre y correo electrónico');
-      return;
-    }
-    
-    const user = { name, email };
-    saveUser(user);
-    
-    const savedMsg = document.getElementById('perfilSavedMsg');
-    savedMsg.style.display = 'block';
-    setTimeout(() => savedMsg.style.display = 'none', 3000);
-  });
-}
-
-// Guardar preferencias desde el perfil
-const perfilPrefsSaveBtn = document.getElementById('perfilPrefsSaveBtn');
-if (perfilPrefsSaveBtn) {
-  perfilPrefsSaveBtn.addEventListener('click', () => {
-    const prefs = {
-      favoriteService: document.getElementById('perfilFavSvc').value,
-      favoriteStylist: document.getElementById('perfilFavWho').value
-    };
-    
-    savePrefs(prefs);
-    
-    const savedMsg = document.getElementById('perfilPrefsSavedMsg');
-    savedMsg.style.display = 'block';
-    setTimeout(() => savedMsg.style.display = 'none', 3000);
-  });
-}
-
-// Cerrar sesión
-const perfilLogoutBtn = document.getElementById('perfilLogoutBtn');
-if (perfilLogoutBtn) {
-  perfilLogoutBtn.addEventListener('click', () => {
-    if (!confirm('¿Estás segura de que deseas cerrar sesión?')) return;
-    
-    localStorage.removeItem(USER_KEY);
-    localStorage.removeItem(PREFS_KEY);
-    
-    document.getElementById('perfilName').value = '';
-    document.getElementById('perfilEmail').value = '';
-    document.getElementById('perfilFavSvc').value = '';
-    document.getElementById('perfilFavWho').value = '';
-    document.getElementById('perfilLogoutBtn').style.display = 'none';
-    
-    renderUserUI();
-    fillPrefSelects();
-    alert('Sesión cerrada exitosamente.');
-  });
-}
-
-// Inicializar módulo de usuario
-initDemoUser();
+if (userBtn) userBtn.addEventListener('click', abrirCuenta);
+paintAcct();
 </script>
 </body>
 </html>
