@@ -1,70 +1,73 @@
-// sw.js
-const CACHE_NAME = 'bellefemme-v2'; // He incrementado la versión a v2 para forzar la actualización
-const urlsToCache = [
+const VERSION = 'bf-v5';
+const SHELL = [
   './',
   './index.html',
-  './manifest.json'
-  // Si tienes archivos CSS o JS separados, agrégalos aquí. 
-  // Al estar todo en el HTML, con cachear el index es suficiente.
+  './admin.html',
+  './manifest.webmanifest',
+  './manifest-admin.webmanifest',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
+  './icons/icon-maskable-512.png',
+  './icons/apple-touch-icon.png',
 ];
 
-// 1. Instalación: Abre la caché y añade los recursos
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('Caché abierta');
-        return cache.addAll(urlsToCache);
-      })
-      .catch(err => console.error('Error al cachear:', err))
+    caches.open(VERSION).then(c => Promise.allSettled(SHELL.map(u => c.add(u))))
   );
-  // Forzar la activación inmediata sin esperar a que se cierren las pestañas anteriores
-  self.skipWaiting();
 });
 
-// 2. Activación: Limpia las cachés antiguas
 self.addEventListener('activate', event => {
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
-            console.log('Eliminando caché antigua:', cacheName);
-            return caches.delete(cacheName);
-          }
-        })
-      );
-    })
-  );
-  // Toma el control de todas las pestañas inmediatamente
-  self.clients.claim();
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(keys.filter(k => k !== VERSION).map(k => caches.delete(k)));
+    if (self.registration.navigationPreload) {
+      try { await self.registration.navigationPreload.enable(); } catch (e) {}
+    }
+    await self.clients.claim();
+  })());
 });
 
-// 3. Fetch: Estrategia Cache First con fallback a red
+/* La página pide instalar la versión nueva desde el aviso "Actualizar" */
+self.addEventListener('message', event => {
+  if (event.data && event.data.type === 'SKIP_WAITING') self.skipWaiting();
+});
+
+const esHTML = req =>
+  req.mode === 'navigate' ||
+  (req.headers.get('accept') || '').includes('text/html');
+
 self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Si existe en caché, lo devuelve
-        if (response) {
-          return response;
-        }
-        // Si no, hace la petición a la red
-        return fetch(event.request).then(
-          response => {
-            // Comprueba si es una respuesta válida
-            if(!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
-            }
-            // Clona la respuesta para guardarla en caché y devolverla
-            const responseToCache = response.clone();
-            caches.open(CACHE_NAME)
-              .then(cache => {
-                cache.put(event.request, responseToCache);
-              });
-            return response;
-          }
-        );
-      })
-  );
+  const req = event.request;
+  if (req.method !== 'GET') return;
+  const url = new URL(req.url);
+  if (url.origin !== location.origin) return; // tipografías de Google: al navegador
+
+  /* HTML: red primero. Así la app instalada siempre abre la última versión. */
+  if (esHTML(req)) {
+    event.respondWith((async () => {
+      try {
+        const pre = await event.preloadResponse;
+        const net = pre || await fetch(req, { cache: 'no-store' });
+        const cache = await caches.open(VERSION);
+        cache.put(req, net.clone());
+        return net;
+      } catch (e) {
+        const cache = await caches.open(VERSION);
+        return (await cache.match(req)) || (await cache.match('./index.html')) || Response.error();
+      }
+    })());
+    return;
+  }
+
+  /* Resto: caché primero y se refresca por detrás. */
+  event.respondWith((async () => {
+    const cache = await caches.open(VERSION);
+    const hit = await cache.match(req);
+    const red = fetch(req).then(res => {
+      if (res && res.status === 200 && res.type === 'basic') cache.put(req, res.clone());
+      return res;
+    }).catch(() => hit);
+    return hit || red;
+  })());
 });
