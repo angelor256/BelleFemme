@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Belle Femme · Panel</title>
 <meta name="robots" content="noindex">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="theme-color" content="#241C1F">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -346,6 +347,8 @@ const end = (t, min) => { const [h,m] = t.split(':').map(Number); const x = h*60
 const byTime = (a,b) => a.t.split(':').map(Number)[0]*60 + +a.t.split(':')[1] - (b.t.split(':').map(Number)[0]*60 + +b.t.split(':')[1]);
 const dayOf = k => DAYS.find(d => d.key === k);
 function tag(html){ const t = document.createElement('template'); t.innerHTML = html.trim(); return t.content.firstElementChild; }
+/* Todo texto que escribió una clienta pasa por aquí antes de mostrarse */
+function esc(v){ return String(v == null ? '' : v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 let toastT;
 function toast(msg){ const t = el('toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 2200); }
 
@@ -512,7 +515,7 @@ function apptSheet(id){
     if (act === 'conf'){ a.status = 'conf'; toast('Cita confirmada. Se envía el aviso a la clienta.'); }
     if (act === 'done'){ a.status = 'done'; toast('Cita marcada como atendida y cobrada.'); }
     if (act === 'no'){ a.status = 'no'; toast('Registrada como no asistió.'); }
-    if (act === 'wa'){ window.open('https://wa.me/506' + a.phone, '_blank'); return; }
+    if (act === 'wa'){ window.open('https://wa.me/506' + String(a.phone || '').replace(/\D/g, ''), '_blank', 'noopener'); return; }
     if (act === 'move'){ toast('Aquí se abre el selector de nueva fecha y hora.'); }
     closeSheet(); render();
   });
@@ -895,7 +898,7 @@ function renderClientas(){
   }
 
   el('cList').replaceChildren(...list.map(c => {
-    const nom = ((c.nombre || '') + ' ' + (c.apellidos || '')).trim() || 'Sin nombre';
+    const nom = esc(((c.nombre || '') + ' ' + (c.apellidos || '')).trim()) || 'Sin nombre';
     const favs = [nombreSvc(c.favSvc), nombreWho(c.favWho)].filter(Boolean).join(' · ') || 'Sin preferencias guardadas';
     const avisos = [c.app && c.app.on ? 'App' : null, c.wa && c.wa.on ? 'WhatsApp' : null].filter(Boolean).join(' + ') || 'Sin avisos';
     const extra = [c.canton, c.how].filter(Boolean).join(' · ');
@@ -906,16 +909,17 @@ function renderClientas(){
         '<div style="font:300 11px var(--sans);color:var(--muted-2);white-space:nowrap">' + (fechaCorta(c.creado) || '') + '</div>' +
       '</div>' +
       '<div style="font:300 12.5px/1.9 var(--sans);color:#6E6062;margin-top:8px">' +
-        telFmt(c.tel) + (c.correo ? ' · ' + c.correo : '') +
-        (c.nace ? '<br>Cumpleaños: ' + c.nace : '') +
-        (extra ? '<br>' + extra : '') +
-        '<br>Favoritos: ' + favs +
-        '<br>Avisos: ' + avisos +
-        (c.notas ? '<br>Notas: ' + c.notas : '') +
+        esc(telFmt(c.tel)) + (c.correo ? ' · ' + esc(c.correo) : '') +
+        (c.nace ? '<br>Cumpleaños: ' + esc(c.nace) : '') +
+        (extra ? '<br>' + esc(extra) : '') +
+        '<br>Favoritos: ' + esc(favs) +
+        '<br>Avisos: ' + esc(avisos) +
+        (c.notas ? '<br>Notas: ' + esc(c.notas) : '') +
       '</div>';
     const wa = tag('<a class="btn rose" style="display:inline-block;margin-top:12px;padding:9px 16px;font-size:10px">Escribir por WhatsApp</a>');
-    wa.href = 'https://wa.me/506' + (c.tel || '');
+    wa.href = 'https://wa.me/506' + String(c.tel || '').replace(/\D/g, '');
     wa.target = '_blank';
+    wa.rel = 'noopener noreferrer';
     card.appendChild(wa);
     return card;
   }));
