@@ -10,6 +10,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Belle Femme">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="icon" href="icons/icon-192.png">
@@ -378,7 +379,7 @@
         <span class="qi"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="6" cy="6" r="2.6"/><circle cx="6" cy="18" r="2.6"/><path d="M20 4 8.5 15.5M12.5 12 20 20M9.7 8.2 15 13.5"/></svg></span>
         Servicios
       </button>
-      <button type="button" data-tab="visita">
+      <button type="button" data-tab="horario">
         <span class="qi"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8.3"/><path d="M12 7.5V12l3 2"/></svg></span>
         Horario
       </button>
@@ -672,7 +673,7 @@
     <div class="hrow">
       <button class="back" id="back" aria-label="Volver">&#8592;</button>
       <div class="eyebrow" id="stepLabel">Paso 1 de 4</div>
-      <button type="button" id="backToSite" style="width:44px;text-align:right;font:400 10px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);background:none;border:0;cursor:pointer">Salón</button>
+      <button type="button" id="backToSite" style="width:44px;text-align:right;font:400 10px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);background:none;border:0;cursor:pointer">Volver</button>
     </div>
     <div class="h1" id="stepTitle" style="margin-top:14px">Elija sus servicios</div>
     <div class="bar"><span id="progress" style="width:25%"></span></div>
@@ -747,7 +748,7 @@
     <div class="hrow">
       <button class="back" id="pBack" aria-label="Atrás">&#8592;</button>
       <span class="eyebrow" id="pStep">Mi cuenta</span>
-      <button type="button" id="pToSite" style="width:44px;text-align:right;font:400 10px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);background:none;border:0;cursor:pointer">Salón</button>
+      <button type="button" id="pToSite" style="width:44px;text-align:right;font:400 10px var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--muted-2);background:none;border:0;cursor:pointer">Volver</button>
     </div>
     <div class="h1" id="pTitle" style="margin-top:14px">Crear mi perfil</div>
   </header>
@@ -912,6 +913,14 @@ document.querySelectorAll('[data-tab]').forEach(elm => {
       e.preventDefault();
       view('reserva', true); 
       return; 
+    }
+    if (name === 'horario') {
+      e.preventDefault();
+      state.step = 2;
+      state.time = null;
+      view('reserva', true);
+      render();
+      return;
     }
     if (name === 'perfil') { 
       e.preventDefault();
@@ -1116,8 +1125,13 @@ function render(){
   });
   el('amSlots').replaceChildren(...slotBtns(AM));
   el('pmSlots').replaceChildren(...slotBtns(PM));
-  el('slotNote').textContent = 'Se muestran solo los horarios con ' + dur(minutes()) + ' libres'
-    + (state.who === 'any' ? ' con alguna especialista.' : ' en la agenda de ' + whoName(state.who).split(' ')[0] + '.');
+  const libres = AM.concat(PM).filter(t => slotOpen(state.day, t)).length;
+  el('slotNote').textContent = !state.picked.length
+    ? 'Atendemos de martes a sábado, 9:00 a. m. a 6:00 p. m. Elija sus servicios para ver los cupos disponibles.'
+    : !libres
+      ? 'Este día ya no tiene cupos de ' + dur(minutes()) + '. Pruebe otro día o quite un servicio.'
+      : 'Se muestran solo los horarios con ' + dur(minutes()) + ' libres'
+        + (state.who === 'any' ? ' con alguna especialista.' : ' en la agenda de ' + whoName(state.who).split(' ')[0] + '.');
 
   const lines = () => chosen().map(x => tag(`<div class="li"><span class="name">${x.name}</span><span class="price">${crc(x.price)}</span></div>`));
   el('sumLines').replaceChildren(...lines());
@@ -1291,13 +1305,15 @@ pel('pCreate').onclick = () => {
   const tel = pel('fTel').value.replace(/\D/g, '');
   if (!pel('fNombre').value.trim()) return msg('pAuthMsg', 'Escriba su nombre.');
   if (tel.length !== 8) return msg('pAuthMsg', 'El teléfono debe tener ocho dígitos.');
+  const correo = pel('fCorreo').value.trim();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(correo)) return msg('pAuthMsg', 'Revise el correo electrónico.');
   if (pel('cData').getAttribute('aria-pressed') !== 'true')
     return msg('pAuthMsg', 'Necesitamos su autorización para guardar los datos.');
   msg('pAuthMsg', '');
   const on = pel('cWa').getAttribute('aria-pressed') === 'true';
   draft = {
     nombre: pel('fNombre').value.trim(), apellidos: pel('fApellidos').value.trim(),
-    tel, correo: pel('fCorreo').value.trim(), nace: pel('fNace').value,
+    tel, correo, nace: pel('fNace').value,
     canton: pel('fCanton').value.trim(), how: pel('fHow').value, notas: pel('fNotas').value.trim(),
     favSvc:'', favWho:'', desde: MESES[new Date().getMonth()] + ' ' + new Date().getFullYear(),
     app:{ on:false, recordatorio:true, confirmacion:true, promos:false, cumple:true },
@@ -1397,7 +1413,7 @@ pel('pTest').onclick = () => {
     return msg('pMsg', 'Aviso enviado a este teléfono.');
   }
   if (me.wa.on){
-    window.open('https://wa.me/506' + me.tel + '?text=' + encodeURIComponent('Belle Femme · Le recordamos su cita de mañana. Responda CAMBIAR si necesita moverla.'), '_blank');
+    window.open('https://wa.me/506' + String(me.tel || '').replace(/\D/g, '') + '?text=' + encodeURIComponent('Belle Femme · Le recordamos su cita de mañana. Responda CAMBIAR si necesita moverla.'), '_blank');
     return msg('pMsg', 'Se abrió WhatsApp con el mensaje de ejemplo.');
   }
   msg('pMsg', 'Active primero los avisos en la app o por WhatsApp.');
