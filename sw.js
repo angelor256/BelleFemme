@@ -2,7 +2,7 @@
    v6 — red primero para el HTML (las apps instaladas reciben cada
    actualización) y caché para íconos, tipografías y uso sin conexión. */
 
-const VERSION = 'bf-v7';
+const VERSION = 'bf-v8';
 const SHELL = [
   './',
   './index.html',
